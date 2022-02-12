@@ -17,7 +17,6 @@ public abstract class Unit {
     // The value of defensive resistance
     private int armor;
 
-
     /**
      * Works as the blueprint for creating a Unit object
      *
@@ -37,7 +36,7 @@ public abstract class Unit {
      * Attack an opponent. Health impact on opponent equals
      * the difference between the units attack-force and the
      * opponents defensive resistance.
-     * 
+     *
      * @param opponent The opponent unit that gets attacked
      */
     public void attack(Unit opponent){
