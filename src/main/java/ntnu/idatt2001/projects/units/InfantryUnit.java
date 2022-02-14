@@ -1,4 +1,4 @@
-package ntnu.idatt2001.projects;
+package ntnu.idatt2001.projects.units;
 
 /**
  * Infantry unit is a low-mobility close combat unit.
@@ -28,7 +28,7 @@ public class InfantryUnit extends Unit{
      * @param attack The attack value of the unit
      * @param armor  The defensive resistance of the unit
      */
-    public InfantryUnit(String name, int health, int attack, int armor) {
+    public InfantryUnit(String name, int health, int attack, int armor) throws IllegalArgumentException{
         super(name, health, attack, armor);
     }
 

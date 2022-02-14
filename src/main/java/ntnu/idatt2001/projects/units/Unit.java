@@ -1,4 +1,4 @@
-package ntnu.idatt2001.projects;
+package ntnu.idatt2001.projects.units;
 
 /**
  * Unit is an abstract class representing the shared characteristics
@@ -96,7 +96,7 @@ public abstract class Unit {
      */
     public void setHealth(int health) {
         if(health <= 0) this.health = 0;
-        this.health = health;
+        else this.health = health;
     }
 
     /**

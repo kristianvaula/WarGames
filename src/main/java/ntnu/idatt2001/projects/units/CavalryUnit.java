@@ -1,4 +1,4 @@
-package ntnu.idatt2001.projects;
+package ntnu.idatt2001.projects.units;
 
 /**
  * Cavalry unit is a high-mobility close combat

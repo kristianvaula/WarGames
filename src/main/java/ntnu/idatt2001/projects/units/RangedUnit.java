@@ -1,4 +1,4 @@
-package ntnu.idatt2001.projects;
+package ntnu.idatt2001.projects.units;
 
 /**
  * Ranged units are low-mobility long range units.
