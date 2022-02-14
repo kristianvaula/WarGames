@@ -48,7 +48,7 @@ public abstract class Unit {
         //Ensures that an opponent cannot gain health if resistance is greater than attack
         if ((attForce-oppDefense) >= 0){
             int attCalc = opponent.getHealth() - attForce + oppDefense;
-            opponent.setHealth(attCalc);
+            opponent.takeDamage(attCalc);
         }
     }
 
@@ -100,6 +100,17 @@ public abstract class Unit {
     }
 
     /**
+     * Calls for setHealth method with value that unit
+     * takes damage. This way we can Override the method
+     * to create specified takeDamage methods in subclasses
+     *
+     * @param health The value in which the unit takes damage
+     */
+    public void takeDamage(int health){
+        this.setHealth(health);
+    }
+
+    /**
      * Returns a text-representation of a
      * unit object. Contains all information
      * about the unit.
@@ -117,18 +128,16 @@ public abstract class Unit {
     }
 
     /**
-     * Abstract method for unit subclasses to get
-     * attack bonus
-     * TODO add return javaDoc for abstract methods?
-     * @return
+     * Returns the default units attack bonus.
+     *
+     * @return The attack bonus
      */
     public abstract int getAttackBonus();
 
     /**
-     * Abstract method for unit sunclasses to get
-     * resistance bonus
-     * TODO add return javaDoc for abstract methods?
-     * @return
+     * Returns the default units resistance bonus
+     *
+     * @return The resistance bonus
      */
     public abstract int getResistBonus();
 }

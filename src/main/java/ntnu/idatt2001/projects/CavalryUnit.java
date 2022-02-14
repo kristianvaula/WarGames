@@ -10,10 +10,16 @@ package ntnu.idatt2001.projects;
  */
 public class CavalryUnit extends Unit{
 
-    //Constants that makes returning cavalry attack and
-    //resistance bonuses more perceptible.
-    private static final int CAVALRY_ATTACK_BONUS = 2;
+    //Tracks if the cavalry unit has been attacked
+    private boolean hasBeenAttacked = false;
+
+    //Constant representing the cavalry attack bonus at first attack
+    private static final int CAVALRY_CHARGE_ATTACK_BONUS = 6;
+    //Constant representing cavalry attack once it has been attacked
+    private static final int CAVALRY_COMBAT_ATTACK_BONUS = 2;
+    //Constant representing cavalry unit resistance bonus
     private static final int CAVALRY_RESISTANCE_BONUS = 1;
+
 
     //Constants used as default values if no attack and health
     // values are passed to the constructor under initiation.
@@ -46,24 +52,33 @@ public class CavalryUnit extends Unit{
     }
 
     /**
-     * Gets the cavalry default attack bonus
+     * Calls for superclass takeDamage and changes
+     * hasBeenAttacked field to true;
+     *
+     * @param health The value in which the unit takes damage
+     */
+    @Override
+    public void takeDamage(int health){
+        super.takeDamage(health);
+        hasBeenAttacked = true;
+    }
+
+    /**
+     * Because the cavalry is stronger the first time
+     * it charges, we return a higher constant if
+     * hasBeenAttacked is false. Else we return the
+     * combat attack constant which is set lower.
      *
      * @return The attack bonus
      */
     @Override
     public int getAttackBonus() {
-        //TODO make bonuses dynamic
-        return CAVALRY_ATTACK_BONUS;
+        if(hasBeenAttacked) return CAVALRY_COMBAT_ATTACK_BONUS;
+        return CAVALRY_CHARGE_ATTACK_BONUS;
     }
 
-    /**
-     * Gets the cavalry default resistance bonus
-     *
-     * @return The resistance bonus
-     */
     @Override
     public int getResistBonus() {
-        //TODO make bonuses dynamic
         return CAVALRY_RESISTANCE_BONUS;
     }
 }

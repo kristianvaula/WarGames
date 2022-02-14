@@ -44,21 +44,11 @@ public class InfantryUnit extends Unit{
         super(name, health, DEFAULT_INFANTRY_ATTACK, DEFAULT_INFANTRY_ARMOR);
     }
 
-    /**
-     * Gets the infantry default attack bonus
-     *
-     * @return The attack bonus
-     */
     @Override
     public int getAttackBonus() {
         return INFANTRY_ATTACK_BONUS;
     }
 
-    /**
-     * Gets the infantry default resistance bonus
-     *
-     * @return The resistance bonus
-     */
     @Override
     public int getResistBonus() {
         return INFANTRY_RESISTANCE_BONUS;

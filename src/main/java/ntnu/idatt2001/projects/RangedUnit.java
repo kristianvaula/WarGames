@@ -10,13 +10,18 @@ package ntnu.idatt2001.projects;
  */
 public class RangedUnit extends Unit{
 
-    //Constants that makes returning ranged unit attack
-    //and resistance bonuses more perceptible.
-    private static final int RANGED_ATTACK_BONUS = 3;
-    private static final int RANGED_RESISTANCE_BONUS = 1;
+    //Tracks how many times the ranged unit has been attacked
+    private int timesAttacked = 0;
 
-    //Constants passed to superclass constructor if attack
-    //and armor is not stated in initiation.
+    //Constant for attack bonus.
+    private static final int RANGED_ATTACK_BONUS = 3;
+    //Constant for the resistance bonus at first attack
+    private static final int RANGED_MAXIMUM_RANGE_BONUS = 6;
+    //Constant for the reduction in bonus as the unit gets attacked
+    private static final int RANGE_BONUS_REDUCTION = 2;
+
+    //Constants passed to default attack and armor if
+    //not stated in initiation.
     private static final int DEFAULT_RANGED_ATTACK = 15;
     private static final int DEFAULT_RANGED_ARMOR = 8;
 
@@ -46,24 +51,35 @@ public class RangedUnit extends Unit{
     }
 
     /**
-     * Gets the ranged default attack bonus
+     * Calls for superclass takeDamage and increments
+     * timesAttacked field to track times attacked.
      *
-     * @return The attack bonus
+     * @param health The value in which the unit takes damage
      */
     @Override
+    public void takeDamage(int health){
+        super.takeDamage(health);
+        timesAttacked = timesAttacked + 1;
+    }
+
+    @Override
     public int getAttackBonus() {
-        //TODO make bonuses dynamic
         return RANGED_ATTACK_BONUS;
     }
 
     /**
-     * Gets the ranged default resistance bonus
+     * Calculates the ranged units resistance bonus. Ranged units
+     * resistance is based on how far away he is from his opponent.
+     * Resistance bonus is therefore the max bonus subtracted times
+     * attacked multiplied with a reduction constant. Resistance bonus
+     * is never below the reduction constant itself.
      *
      * @return The resistance bonus
      */
     @Override
     public int getResistBonus() {
-        //TODO make bonuses dynamic
-        return RANGED_RESISTANCE_BONUS;
+        int resistanceBonus = RANGED_MAXIMUM_RANGE_BONUS - (RANGE_BONUS_REDUCTION * timesAttacked);
+        //If resistanceBonus bonus can never be below reduction constant.
+        return Math.max(resistanceBonus, RANGE_BONUS_REDUCTION);
     }
 }
