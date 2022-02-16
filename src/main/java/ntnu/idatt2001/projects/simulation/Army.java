@@ -1,5 +1,8 @@
 package ntnu.idatt2001.projects.simulation;
 
+import ntnu.idatt2001.projects.units.CavalryUnit;
+import ntnu.idatt2001.projects.units.InfantryUnit;
+import ntnu.idatt2001.projects.units.RangedUnit;
 import ntnu.idatt2001.projects.units.Unit;
 
 import java.util.*;
@@ -135,8 +138,26 @@ public class Army{
      */
     @Override
     public String toString(){
-        String output = "";
-        return output;
+        StringBuilder infantry = new StringBuilder();
+        StringBuilder cavalry = new StringBuilder();
+        StringBuilder ranged = new StringBuilder();
+
+        for (Unit unit : getAllUnits()){
+            if(unit instanceof InfantryUnit){
+                infantry.append(unit.toString());
+            }
+            else if(unit instanceof CavalryUnit){
+                cavalry.append(unit.toString());
+            }
+            else if(unit instanceof RangedUnit){
+                ranged.append(unit.toString());
+            }
+        }
+        StringBuilder output = new StringBuilder(name);
+        output.append("Infantry: \n").append(infantry);
+        output.append("Cavalry: \n").append(cavalry);
+        output.append("Ranged: \n").append(ranged);
+        return output.toString();
     }
 
     /**
