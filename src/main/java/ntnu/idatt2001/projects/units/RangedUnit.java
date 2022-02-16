@@ -14,11 +14,11 @@ public class RangedUnit extends Unit{
     private int timesAttacked = 0;
 
     //Constant for attack bonus.
-    private static final int RANGED_ATTACK_BONUS = 3;
+    protected static final int RANGED_ATTACK_BONUS = 3;
     //Constant for the resistance bonus at first attack
-    private static final int RANGED_MAXIMUM_RANGE_BONUS = 6;
+    protected static final int RANGED_MAXIMUM_RANGE_BONUS = 6;
     //Constant for the reduction in bonus as the unit gets attacked
-    private static final int RANGE_BONUS_REDUCTION = 2;
+    protected static final int RANGE_BONUS_REDUCTION = 2;
 
     //Constants passed to default attack and armor if
     //not stated in initiation.

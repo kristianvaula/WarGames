@@ -1,6 +1,5 @@
-package ntnu.idatt2001.projects.unitstest;
+package ntnu.idatt2001.projects.units;
 
-import ntnu.idatt2001.projects.units.InfantryUnit;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -52,7 +51,8 @@ public class InfantryUnitTest {
         @Test
         public void getCorrectBonuses(){
             InfantryUnit testUnit = new InfantryUnit("Name",20);
-            assertTrue(testUnit.getAttackBonus() == 2 && testUnit.getResistBonus() == 1);
+            assertTrue(testUnit.getAttackBonus() == InfantryUnit.INFANTRY_ATTACK_BONUS
+                        && testUnit.getResistBonus() == InfantryUnit.INFANTRY_RESISTANCE_BONUS);
         }
     }
 

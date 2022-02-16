@@ -14,11 +14,11 @@ public class CavalryUnit extends Unit{
     private boolean hasBeenAttacked = false;
 
     //Constant representing the cavalry attack bonus at first attack
-    private static final int CAVALRY_CHARGE_ATTACK_BONUS = 6;
+    protected static final int CAVALRY_CHARGE_ATTACK_BONUS = 6;
     //Constant representing cavalry attack once it has been attacked
-    private static final int CAVALRY_COMBAT_ATTACK_BONUS = 2;
+    protected static final int CAVALRY_COMBAT_ATTACK_BONUS = 2;
     //Constant representing cavalry unit resistance bonus
-    private static final int CAVALRY_RESISTANCE_BONUS = 1;
+    protected static final int CAVALRY_RESISTANCE_BONUS = 1;
 
 
     //Constants used as default values if no attack and health

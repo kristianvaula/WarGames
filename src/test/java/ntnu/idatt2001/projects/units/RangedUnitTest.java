@@ -1,7 +1,6 @@
-package ntnu.idatt2001.projects.unitstest;
+package ntnu.idatt2001.projects.units;
 
 
-import ntnu.idatt2001.projects.units.RangedUnit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -59,7 +58,8 @@ public class RangedUnitTest {
         @DisplayName("Ranged has 3 attack bonus and 6 resistance before being attacked")
         public void getCorrectStartBonuses(){
             RangedUnit testUnit = new RangedUnit("Name",20);
-            assertTrue(testUnit.getAttackBonus() == 3 && testUnit.getResistBonus() == 6);
+            assertTrue(testUnit.getAttackBonus() == RangedUnit.RANGED_ATTACK_BONUS
+                        && testUnit.getResistBonus() == RangedUnit.RANGED_MAXIMUM_RANGE_BONUS);
         }
 
         @Test
