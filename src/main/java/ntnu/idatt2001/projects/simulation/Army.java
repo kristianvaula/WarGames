@@ -64,21 +64,15 @@ public class Army{
 
     /**
      * Adds a list of units to an army. Iterates through
-     * the list and calls the Army.add() methods. If add
-     * returns false we increment the fails value.
+     * the list and calls the Army.add() methods.
      *
      * @param units The units we are adding to the army
-     * @return Failed additions to the army, duplicates
      */
-    public int addAll(List<Unit> units){
-        int fails = 0;
+    public void addAll(List<Unit> units){
         Iterator<Unit> it = units.iterator();
         while(it.hasNext()){
-            if(!this.add(it.next())){
-                fails = fails + 1;
-            }
+            this.add(it.next());
         }
-        return fails;
     }
 
     /**
