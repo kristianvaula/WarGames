@@ -11,7 +11,7 @@ import java.util.*;
  *
  * @author Kristian Vaula Jensen
  */
-public class Army {
+public class Army{
     //The army name
     private String name;
     //The list that keeps all the units
@@ -146,8 +146,11 @@ public class Army {
     }
 
     /**
-     * Checks if two armies are equal. Returns
-     * true if the armies have the same name.
+     * Checks if two armies are equal. For two armies
+     * to be equal they need to have the same name
+     * and the same exact units. We check this by
+     * creating sorted lists with stream and comparing
+     * the content.
      *
      * @param o The army we are comparing to
      * @return True if armies are equal.
@@ -155,19 +158,26 @@ public class Army {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Army)) return false;
         Army army = (Army) o;
-        return Objects.equals(name, army.name);
+
+        // Creates a stream to ensure that we never change the data, only use
+        // it to do our comparison.
+        List<Unit> oSortedArmy = army.units.stream().sorted(Unit::compareTo).toList();
+        List<Unit> thisSortedArmy = this.units.stream().sorted(Unit::compareTo).toList();
+        return this.getName().equals(army.getName()) && thisSortedArmy.equals(oSortedArmy);
     }
 
     /**
-     * Hashes the army by name.
+     * Hashes the army by name and the sorted
+     * army list we compared in
      *
      * @return The hashcode.
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        List<Unit> sortedArmy = this.units.stream().sorted(Unit::compareTo).toList();
+        return Objects.hash(name,sortedArmy.hashCode());
     }
 }
 
