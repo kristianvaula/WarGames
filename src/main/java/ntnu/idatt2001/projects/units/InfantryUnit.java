@@ -5,12 +5,13 @@ package ntnu.idatt2001.projects.units;
  * Most effective in close vicinity.
  *
  * @author Kristian Vaula Jensen
- * @version 2022.02.09
+ * //@version 2022.02.09
  */
 public class InfantryUnit extends Unit{
 
     //Constants that makes returning infantry attack and
     //resistance bonuses more perceptible.
+    //TODO USE IN TEST
     private static final int INFANTRY_ATTACK_BONUS = 2;
     private static final int INFANTRY_RESISTANCE_BONUS = 1;
 

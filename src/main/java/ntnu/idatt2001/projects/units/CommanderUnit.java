@@ -1,11 +1,15 @@
 package ntnu.idatt2001.projects.units;
 
+/**
+ * A commander is a stronger version of
+ * a cavalry unit.
+ */
 public class CommanderUnit extends CavalryUnit{
 
     //Constants passed to superclass constructor if attack
     //and armor is not stated in initiation.
-    private static final int DEFAULT_COMMANDER_ATTACK = 15;
-    private static final int DEFAULT_COMMANDER_ARMOR = 8;
+    private static final int DEFAULT_COMMANDER_ATTACK = 25;
+    private static final int DEFAULT_COMMANDER_ARMOR = 15;
 
     /**
      * Initiates a new commander unit. Passes arguments for

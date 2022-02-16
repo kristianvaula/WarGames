@@ -6,7 +6,7 @@ package ntnu.idatt2001.projects.units;
  * exposed to enemy close combat units.
  *
  * @author Kristian Vaula Jensen
- * @version 2022.02.09
+ * //@version 2022.02.09
  */
 public class RangedUnit extends Unit{
 

@@ -5,7 +5,7 @@ package ntnu.idatt2001.projects.units;
  * off all types of units.
  *
  * @author Kristian Vaula Jensen
- * @version 2022.02.09
+ * //@version 2022.02.09
  */
 public abstract class Unit {
     // The units descriptive name
