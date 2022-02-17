@@ -52,17 +52,14 @@ public class Army{
     }
 
     /**
-     * Adds a unit to the army. If List doesnt alreadey
-     * contain the object, we call for List method
+     * Adds a unit to the army. We call for List method
      * add() with the argument unit.
      *
      * @param unit The unit we are adding to the army
      * @return True if unit is added to the army
      */
-    public boolean add(Unit unit){
-        if(this.getAllUnits().contains(unit)) return false;
+    public void add(Unit unit){
         this.units.add(unit);
-        return true;
     }
 
     /**
@@ -154,9 +151,9 @@ public class Army{
             }
         }
         StringBuilder output = new StringBuilder(name);
-        output.append("Infantry: \n").append(infantry);
-        output.append("Cavalry: \n").append(cavalry);
-        output.append("Ranged: \n").append(ranged);
+        output.append("\nInfantry: \n").append(infantry);
+        output.append("\nCavalry: \n").append(cavalry);
+        output.append("\nRanged: \n").append(ranged);
         return output.toString();
     }
 
