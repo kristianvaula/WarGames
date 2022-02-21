@@ -99,8 +99,7 @@ public abstract class Unit implements Comparable{
      * @param health The health value
      */
     public void setHealth(int health) {
-        if(health <= 0) this.health = 0;
-        else this.health = health;
+        this.health = Math.max(health, 0);
     }
 
     /**
@@ -191,6 +190,4 @@ public abstract class Unit implements Comparable{
     public int hashCode() {
         return Objects.hash(name, health, attack, armor);
     }
-
-
 }

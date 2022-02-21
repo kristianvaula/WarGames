@@ -83,8 +83,7 @@ public class Battle {
         Army winner = armyOne;
         if(armyTwo.hasUnits()) winner = armyTwo;
 
-        String result = "The winner was " + winner.getName()+ " with " + winner.getArmySize() + " units left";
-        return result;
+        return "The winner was " + winner.getName()+ " with " + winner.getArmySize() + " units left";
     }
 
 

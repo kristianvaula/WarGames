@@ -25,7 +25,7 @@ public class Army{
      * of units as arguments.
      *
      * @param name The name of the army
-     * @param units
+     * @param units The list of units to add to the army
      */
     public Army(String name, List<Unit> units) {
         this.name = name;
@@ -66,7 +66,6 @@ public class Army{
      * add() with the argument unit.
      *
      * @param unit The unit we are adding to the army
-     * @return True if unit is added to the army
      */
     public void add(Unit unit){
         this.units.add(unit);
@@ -151,13 +150,13 @@ public class Army{
 
         for (Unit unit : getAllUnits()){
             if(unit instanceof InfantryUnit){
-                infantry.append("\n  ").append(unit.toString());
+                infantry.append("\n  ").append(unit);
             }
             else if(unit instanceof CavalryUnit){
-                cavalry.append("\n  ").append(unit.toString());
+                cavalry.append("\n  ").append(unit);
             }
             else if(unit instanceof RangedUnit){
-                ranged.append("\n  ").append(unit.toString());
+                ranged.append("\n  ").append(unit);
             }
         }
         StringBuilder output = new StringBuilder(name);
