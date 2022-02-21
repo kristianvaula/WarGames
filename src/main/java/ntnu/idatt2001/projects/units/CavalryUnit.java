@@ -6,7 +6,6 @@ package ntnu.idatt2001.projects.units;
  * close combat
  *
  * @author Kristian Vaula Jensen
- * //@version 2022.02.09
  */
 public class CavalryUnit extends Unit{
 

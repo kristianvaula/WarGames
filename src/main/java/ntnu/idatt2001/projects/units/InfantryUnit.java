@@ -5,7 +5,6 @@ package ntnu.idatt2001.projects.units;
  * Most effective in close vicinity.
  *
  * @author Kristian Vaula Jensen
- * //@version 2022.02.09
  */
 public class InfantryUnit extends Unit{
 

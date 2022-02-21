@@ -7,7 +7,6 @@ import java.util.Objects;
  * off all types of units.
  *
  * @author Kristian Vaula Jensen
- * //@version 2022.02.09
  */
 public abstract class Unit implements Comparable{
     // The units descriptive name
@@ -49,8 +48,8 @@ public abstract class Unit implements Comparable{
 
         //Ensures that an opponent cannot gain health if resistance is greater than attack
         if ((attForce-oppDefense) >= 0){
-            int attCalc = opponent.getHealth() - attForce + oppDefense;
-            opponent.takeDamage(attCalc);
+            int attCalculation = opponent.getHealth() - attForce + oppDefense;
+            opponent.takeDamage(attCalculation);
         }
     }
 
