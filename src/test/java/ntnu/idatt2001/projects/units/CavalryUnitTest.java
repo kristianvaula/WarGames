@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CavalryUnitTest {
 
     @Nested
-    @DisplayName("Testing initiation of a new ranged unit")
+    @DisplayName("Testing initiation of a new cavalry unit")
     class initiationOfObject{
 
         @Test
