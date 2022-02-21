@@ -74,13 +74,13 @@ public class BattleClient {
      * the simulation on the battle show result.
      */
     public void simulateABattle(){
-        if(battle.getArmyOne().hasUnits() && battle.getArmyTwo().hasUnits()){
-            battle.simulate();
-        }
-        else {
+        try {
+            System.out.println(battle.simulate());
+        }catch (IllegalStateException e){
             System.out.println("**** - Both armies need to have units to perform a battle - ****");
             System.out.println("    Add units to both armies before continuing");
         }
+
         System.out.println("\n   1. To continue");
         int continueButton = input.nextInt();
     }

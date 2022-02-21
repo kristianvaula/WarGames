@@ -1,0 +1,116 @@
+package ntnu.idatt2001.projects.simulation;
+
+
+import ntnu.idatt2001.projects.units.InfantryUnit;
+import ntnu.idatt2001.projects.units.Unit;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class BattleTest {
+
+    @Nested
+    @DisplayName("Testing initiation of a new army")
+    class InitiationOfArmy {
+
+        @Test
+        @DisplayName("Initiate a new Battle only using name")
+        public void InitiateBattleWithArmies() {
+            Battle testBattle = new Battle(new Army("testarmy1"), new Army("testarmy2"));
+            assertTrue(testBattle instanceof Battle);
+        }
+
+        @Test
+        @DisplayName("Initiate a new Battle with the same army")
+        public void InitiateBattleWithSameArmy() {
+            Army testArmy = new Army("TestArmy");
+            testArmy.add(new InfantryUnit("Testunit",10));
+
+            try{
+                Battle testBattle = new Battle(testArmy,testArmy);
+                fail("Method did not throw IllegalArgumentException");
+            }catch(IllegalArgumentException e){
+                assertEquals(e.getMessage(),"Battle cannot contain the same army twice");
+            }
+
+        }
+    }
+
+    @Nested
+    @DisplayName("Get methods")
+    class GetMethodTests{
+
+        @Test
+        @DisplayName("Gets army one")
+        public void GetsArmyOne() {
+            Army testArmyOne = new Army("TestArmyOne");
+            Army testArmyTwo = new Army("TestArmyTwo");
+            testArmyOne.add(new InfantryUnit("TestUnit",10));
+            Battle testBattle = new Battle(testArmyOne,testArmyTwo);
+            assertEquals(testBattle.getArmyOne(),testArmyOne);
+        }
+
+        @Test
+        @DisplayName("Gets army two")
+        public void GetsArmytwo() {
+            Army testArmyOne = new Army("TestArmyOne");
+            Army testArmyTwo = new Army("TestArmyTwo");
+            testArmyTwo.add(new InfantryUnit("TestUnit",10));
+            Battle testBattle = new Battle(testArmyOne,testArmyTwo);
+            assertEquals(testBattle.getArmyTwo(),testArmyTwo);
+        }
+    }
+
+    @Nested
+    @DisplayName("Simulation tests")
+    class SimulationTests{
+
+        @Test
+        @DisplayName("Getting result from simulate")
+        public void SimulateReturnsResult(){
+            Army testArmyOne = new Army("TestArmyOne");
+            Army testArmyTwo = new Army("TestArmyTwo");
+            testArmyOne.add(new InfantryUnit("TestUnit",10));
+            testArmyTwo.add(new InfantryUnit("TestUnit",10));
+            Battle testBattle = new Battle(testArmyOne,testArmyTwo);
+
+            String simulationResult = testBattle.simulate();
+            assertTrue(simulationResult.contains(testArmyOne.getName())
+                        || simulationResult.contains(testArmyTwo.getName()));
+        }
+
+        @Test
+        @DisplayName("One of the armies are empty after simulation")
+        public void OneOfArmiesAreEmptyAfterSimulation(){
+            Army testArmyOne = new Army("TestArmyOne");
+            Army testArmyTwo = new Army("TestArmyTwo");
+            testArmyOne.add(new InfantryUnit("TestUnit",10));
+            testArmyTwo.add(new InfantryUnit("TestUnit",10));
+            Battle testBattle = new Battle(testArmyOne,testArmyTwo);
+
+            String simulationResult = testBattle.simulate();
+            assertFalse(testBattle.getArmyOne().hasUnits() && testBattle.getArmyTwo().hasUnits());
+        }
+
+        @Test
+        @DisplayName("Simulation with one empty army")
+        public void SimulationWithOneEmptyArmy(){
+            Army testArmyOne = new Army("TestArmyOne");
+            Army testArmyTwo = new Army("TestArmyTwo");
+            testArmyOne.add(new InfantryUnit("TestUnit",10));
+            Battle testBattle = new Battle(testArmyOne,testArmyTwo);
+
+            try{
+                String result = testBattle.simulate();
+                fail("Simulate did not return IllegalStateException");
+            }catch (IllegalStateException e){
+                assertEquals(e.getMessage(),"Both armies must contain units to simulate a battle");
+            }
+        }
+    }
+}
