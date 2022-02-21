@@ -1,6 +1,5 @@
 package ntnu.idatt2001.projects.units;
 
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -10,19 +9,31 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CavalryUnitTest {
 
     @Nested
+    @DisplayName("Testing initiation of a new ranged unit")
     class initiationOfObject{
+
         @Test
         @DisplayName("Constructor initiates object with all parameters")
         public void initiatingWithAllParameters(){
-            CavalryUnit testUnit = new CavalryUnit("Name",100,14,10);
-            assertTrue(testUnit instanceof CavalryUnit);
+            String name = "TestName";
+            int health = 20;
+            int attack = 15;
+            int armor = 10;
+            CavalryUnit testUnit = new CavalryUnit(name,health,attack,armor);
+            assertSame(name,testUnit.getName());
+            assertSame(health,testUnit.getHealth());
+            assertSame(attack,testUnit.getAttack());
+            assertSame(armor,testUnit.getArmor());
         }
 
         @Test
         @DisplayName("Constructor initiates object without all parameters")
         public void initiatingWithoutAllParameters(){
-            CavalryUnit testUnit = new CavalryUnit("Name",100);
-            assertTrue(testUnit instanceof CavalryUnit);
+            String name = "TestName";
+            int health = 20;
+            CavalryUnit testUnit = new CavalryUnit(name,health);
+            assertSame(name,testUnit.getName());
+            assertSame(health,testUnit.getHealth());
         }
 
         @Test
@@ -49,7 +60,9 @@ public class CavalryUnitTest {
     }
 
     @Nested
+    @DisplayName("Testing attack method")
     public class attackMethod{
+
         @Test
         @DisplayName("Attack method decreases health value")
         public void attackMethodDecreasesHealth(){
@@ -76,7 +89,9 @@ public class CavalryUnitTest {
     }
 
     @Nested
+    @DisplayName("Testing bonus returns")
     public class correctBonusReturns{
+
         @Test
         @DisplayName("Cavalry has 6 attack bonus and 1 resistance before being attacked")
         public void getCorrectStartBonuses(){

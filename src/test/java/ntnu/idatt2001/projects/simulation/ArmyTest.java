@@ -1,6 +1,5 @@
 package ntnu.idatt2001.projects.simulation;
 
-
 import ntnu.idatt2001.projects.units.CavalryUnit;
 import ntnu.idatt2001.projects.units.InfantryUnit;
 import ntnu.idatt2001.projects.units.Unit;
@@ -20,20 +19,23 @@ public class ArmyTest {
     class InitiationOfArmy{
 
         @Test
-        @DisplayName("Initiate a new army only using name")
+        @DisplayName("Initiate a new army using name")
         public void InitiateArmyWithName(){
-            Army testArmy = new Army("Super Army");
-            assertTrue(testArmy instanceof Army);
+            String name = "TestName";
+            Army testArmy = new Army(name);
+            assertSame(name,testArmy.getName());
         }
 
         @Test
-        @DisplayName("Initiate a new army only using name")
+        @DisplayName("Initiate a new army using name and list")
         public void InitiateArmyWithNameAndList(){
+            String name = "TestName";
             List<Unit> testList = new ArrayList<>();
             testList.add(new InfantryUnit("Name",10));
+            Army testArmy = new Army(name,testList);
 
-            Army testArmy = new Army("Super Army",testList);
-            assertTrue(testArmy instanceof Army);
+            assertSame(name,testArmy.getName());
+            assertSame(testList,testArmy.getAllUnits());
         }
     }
 
@@ -162,6 +164,5 @@ public class ArmyTest {
                 assertEquals(testArmy.getRandom(),testUnit);
             }
         }
-
     }
 }

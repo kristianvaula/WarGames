@@ -1,7 +1,5 @@
 package ntnu.idatt2001.projects.units;
 
-
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -11,19 +9,31 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CommanderUnitTest {
 
     @Nested
+    @DisplayName("Testing initiation of a new commander unit")
     class initiationOfObject{
+
         @Test
         @DisplayName("Constructor initiates object with all parameters")
         public void initiatingWithAllParameters(){
-            CommanderUnit testUnit = new CommanderUnit("Name",100,14,10);
-            assertTrue(testUnit instanceof CommanderUnit);
+            String name = "TestName";
+            int health = 20;
+            int attack = 15;
+            int armor = 10;
+            CommanderUnit testUnit = new CommanderUnit(name,health,attack,armor);
+            assertSame(name,testUnit.getName());
+            assertSame(health,testUnit.getHealth());
+            assertSame(attack,testUnit.getAttack());
+            assertSame(armor,testUnit.getArmor());
         }
 
         @Test
         @DisplayName("Constructor initiates object without all parameters")
         public void initiatingWithoutAllParameters(){
-            CommanderUnit testUnit = new CommanderUnit("Name",100);
-            assertTrue(testUnit instanceof CommanderUnit);
+            String name = "TestName";
+            int health = 20;
+            CommanderUnit testUnit = new CommanderUnit(name,health);
+            assertSame(name,testUnit.getName());
+            assertSame(health,testUnit.getHealth());
         }
 
         @Test
@@ -50,7 +60,9 @@ public class CommanderUnitTest {
     }
 
     @Nested
+    @DisplayName("Testing attack method")
     public class attackMethod{
+
         @Test
         @DisplayName("Attack method decreases health value")
         public void attackMethodDecreasesHealth(){
@@ -77,7 +89,9 @@ public class CommanderUnitTest {
     }
 
     @Nested
+    @DisplayName("Testing bonus returns")
     public class correctBonusReturns{
+
         @Test
         @DisplayName("Ranged has 6 attack bonus and 1 resistance before being attacked")
         public void getCorrectStartBonuses(){

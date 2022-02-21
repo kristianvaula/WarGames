@@ -1,14 +1,10 @@
 package ntnu.idatt2001.projects.simulation;
 
-
 import ntnu.idatt2001.projects.units.InfantryUnit;
-import ntnu.idatt2001.projects.units.Unit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,10 +15,13 @@ public class BattleTest {
     class InitiationOfArmy {
 
         @Test
-        @DisplayName("Initiate a new Battle only using name")
+        @DisplayName("Initiate a new Battle with two armies")
         public void InitiateBattleWithArmies() {
-            Battle testBattle = new Battle(new Army("testarmy1"), new Army("testarmy2"));
-            assertTrue(testBattle instanceof Battle);
+            Army testArmyOne = new Army("testarmy1");
+            Army testArmyTwo = new Army("testarmy2");
+            Battle testBattle = new Battle(testArmyOne,testArmyTwo);
+            assertSame(testArmyOne,testBattle.getArmyOne());
+            assertSame(testArmyTwo,testBattle.getArmyTwo());
         }
 
         @Test
@@ -37,7 +36,6 @@ public class BattleTest {
             }catch(IllegalArgumentException e){
                 assertEquals(e.getMessage(),"Battle cannot contain the same army twice");
             }
-
         }
     }
 

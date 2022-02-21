@@ -9,21 +9,31 @@ import static org.junit.jupiter.api.Assertions.*;
 public class InfantryUnitTest {
 
     @Nested
+    @DisplayName("Testing initiation of a new infantry unit")
     class initiationOfObject{
+
         @Test
         @DisplayName("Constructor initiates object with all parameters")
-
         public void initiatingWithAllParameters(){
-            InfantryUnit testUnit = new InfantryUnit("Name",100,14,10);
-            assertTrue(testUnit instanceof InfantryUnit);
+            String name = "TestName";
+            int health = 20;
+            int attack = 15;
+            int armor = 10;
+            InfantryUnit testUnit = new InfantryUnit(name,health,attack,armor);
+            assertSame(name,testUnit.getName());
+            assertSame(health,testUnit.getHealth());
+            assertSame(attack,testUnit.getAttack());
+            assertSame(armor,testUnit.getArmor());
         }
 
         @Test
-        @DisplayName("Constructor throws IllegalArgumentException with negative values")
-
+        @DisplayName("Constructor initiates object without all parameters")
         public void initiatingWithoutAllParameters(){
-            InfantryUnit testUnit = new InfantryUnit("Name",100);
-            assertTrue(testUnit instanceof InfantryUnit);
+            String name = "TestName";
+            int health = 20;
+            InfantryUnit testUnit = new InfantryUnit(name,health);
+            assertSame(name,testUnit.getName());
+            assertSame(health,testUnit.getHealth());
         }
 
         @Test
@@ -50,7 +60,9 @@ public class InfantryUnitTest {
     }
 
     @Nested
+    @DisplayName("Testing attack method")
     public class attackMethod{
+
         @Test
         @DisplayName("Attack method decreases health value")
 
@@ -78,7 +90,9 @@ public class InfantryUnitTest {
     }
 
     @Nested
+    @DisplayName("Testing bonus returns")
     public class correctBonusReturns{
+
         @Test
         @DisplayName("Infantry has 2 attack bonus and 1 resistance")
         public void getCorrectBonuses(){
