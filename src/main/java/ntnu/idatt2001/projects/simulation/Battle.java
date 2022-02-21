@@ -31,6 +31,24 @@ public class Battle {
     }
 
     /**
+     * Gets army one
+     *
+     * @return The army
+     */
+    public Army getArmyOne() {
+        return armyOne;
+    }
+
+    /**
+     * Gets army two
+     *
+     * @return The army
+     */
+    public Army getArmyTwo() {
+        return armyTwo;
+    }
+
+    /**
      * Simulates the battle. While both of the armies have
      * units we choose one from each army. One of these are
      * chosen randomly to attack the other. We then check to
@@ -45,6 +63,8 @@ public class Battle {
             Unit armyOneUnit = armyOne.getRandom();
             Unit armyTwoUnit = armyTwo.getRandom();
 
+            //The nextBoolean() gives a random true or false value which
+            //decides who attacks who
             if(rand.nextBoolean()){
                 armyOneUnit.attack(armyTwoUnit);
                 if(armyTwoUnit.getHealth() == 0) armyTwo.remove(armyTwoUnit);
@@ -53,12 +73,11 @@ public class Battle {
                 armyTwoUnit.attack(armyOneUnit);
                 if(armyOneUnit.getHealth() == 0) armyOne.remove(armyOneUnit);
             }
-            System.out.println(this.toString());
         }
         Army winner = armyOne;
         if(armyTwo.hasUnits()) winner = armyTwo;
 
-        System.out.println("The winner was " + winner.getName());
+        System.out.println("The winner was " + winner.getName()+ " with " + winner.getArmySize() + " units left");
         System.out.println(winner.toString());
     }
 
@@ -71,9 +90,9 @@ public class Battle {
      */
     @Override
     public String toString() {
-        String output = "Army status: ";
-        output += armyOne.toString();
-        output += armyTwo.toString();
+        String output = "Army status: \n";
+        output += armyOne.toString() + "\n\n\n";
+        output += armyTwo.toString() + "\n";
         return output;
     }
 }

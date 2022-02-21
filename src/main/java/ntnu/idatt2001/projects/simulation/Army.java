@@ -45,10 +45,20 @@ public class Army{
 
     /**
      * Gets the name of the army
+     *
      * @return The String name
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Sets the name of the army
+     *
+     * @param name The String name
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -141,13 +151,13 @@ public class Army{
 
         for (Unit unit : getAllUnits()){
             if(unit instanceof InfantryUnit){
-                infantry.append(unit.toString());
+                infantry.append("\n  ").append(unit.toString());
             }
             else if(unit instanceof CavalryUnit){
-                cavalry.append(unit.toString());
+                cavalry.append("\n  ").append(unit.toString());
             }
             else if(unit instanceof RangedUnit){
-                ranged.append(unit.toString());
+                ranged.append("\n  ").append(unit.toString());
             }
         }
         StringBuilder output = new StringBuilder(name);
