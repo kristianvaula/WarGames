@@ -5,7 +5,8 @@ package ntnu.idatt2001.projects.units;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CommanderUnitTest {
 
@@ -23,6 +24,28 @@ public class CommanderUnitTest {
         public void initiatingWithoutAllParameters(){
             CommanderUnit testUnit = new CommanderUnit("Name",100);
             assertTrue(testUnit instanceof CommanderUnit);
+        }
+
+        @Test
+        @DisplayName("Constructor throws IllegalArgumentException with negative values")
+        public void initiatingWithNegativeHealth(){
+            try{
+                RangedUnit testUnit = new RangedUnit("Name",-100);
+                fail("Constructor did not throw exception");
+            }catch (IllegalArgumentException e){
+                assertEquals(e.getMessage(),"Inputs cannot be negative or zero");
+            }
+        }
+
+        @Test
+        @DisplayName("Constructor throws IllegalArgumentException with empty name")
+        public void initiatingWithEmptyName(){
+            try{
+                RangedUnit testUnit = new RangedUnit("",100);
+                fail("Constructor did not throw exception");
+            }catch (IllegalArgumentException e){
+                assertEquals(e.getMessage(),"Name cannot be empty");
+            }
         }
     }
 

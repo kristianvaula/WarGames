@@ -4,7 +4,9 @@ package ntnu.idatt2001.projects.units;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.w3c.dom.ranges.Range;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RangedUnitTest {
 
@@ -22,6 +24,28 @@ public class RangedUnitTest {
         public void initiatingWithoutAllParameters(){
             RangedUnit testUnit = new RangedUnit("Name",100);
             assertTrue(testUnit instanceof RangedUnit);
+        }
+
+        @Test
+        @DisplayName("Constructor throws IllegalArgumentException with negative values")
+        public void initiatingWithNegativeHealth(){
+            try{
+                RangedUnit testUnit = new RangedUnit("Name",-100);
+                fail("Constructor did not throw exception");
+            }catch (IllegalArgumentException e){
+                assertEquals(e.getMessage(),"Inputs cannot be negative or zero");
+            }
+        }
+
+        @Test
+        @DisplayName("Constructor throws IllegalArgumentException with empty name")
+        public void initiatingWithEmptyName(){
+            try{
+                RangedUnit testUnit = new RangedUnit("",100);
+                fail("Constructor did not throw exception");
+            }catch (IllegalArgumentException e){
+                assertEquals(e.getMessage(),"Name cannot be empty");
+            }
         }
     }
 

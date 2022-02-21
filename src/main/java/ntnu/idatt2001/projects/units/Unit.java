@@ -25,8 +25,11 @@ public abstract class Unit implements Comparable{
      * @param health The value of the units health
      * @param attack The attack value of the unit
      * @param armor  The defensive resistance of the unit
+     * @throws IllegalArgumentException If arguments are below or equal zero
      */
-    public Unit(String name, int health, int attack, int armor) {
+    public Unit(String name, int health, int attack, int armor) throws IllegalArgumentException{
+        if(health <= 0 || attack <= 0 || armor <= 0) throw new IllegalArgumentException("Inputs cannot be negative or zero");
+        if(name.isBlank() || name.isEmpty()) throw new IllegalArgumentException("Name cannot be empty");
         this.name = name;
         this.health = health;
         this.attack = attack;
