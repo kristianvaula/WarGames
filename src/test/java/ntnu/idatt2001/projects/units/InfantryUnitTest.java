@@ -11,12 +11,16 @@ public class InfantryUnitTest {
     @Nested
     class initiationOfObject{
         @Test
+        @DisplayName("Constructor initiates object with all parameters")
+
         public void initiatingWithAllParameters(){
             InfantryUnit testUnit = new InfantryUnit("Name",100,14,10);
             assertTrue(testUnit instanceof InfantryUnit);
         }
 
         @Test
+        @DisplayName("Constructor throws IllegalArgumentException with negative values")
+
         public void initiatingWithoutAllParameters(){
             InfantryUnit testUnit = new InfantryUnit("Name",100);
             assertTrue(testUnit instanceof InfantryUnit);
@@ -48,6 +52,8 @@ public class InfantryUnitTest {
     @Nested
     public class attackMethod{
         @Test
+        @DisplayName("Attack method decreases health value")
+
         public void attackMethodDecreasesHealth(){
             int startHealth = 20;
             InfantryUnit testUnit = new InfantryUnit("Name",startHealth);
@@ -58,6 +64,7 @@ public class InfantryUnitTest {
         }
 
         @Test
+        @DisplayName("Health never goes below zero")
         public void healthNeverBelowZero(){
             InfantryUnit testUnit = new InfantryUnit("Name",20);
             InfantryUnit testUnit1 = new InfantryUnit("Name",20);
@@ -73,6 +80,7 @@ public class InfantryUnitTest {
     @Nested
     public class correctBonusReturns{
         @Test
+        @DisplayName("Infantry has 2 attack bonus and 1 resistance")
         public void getCorrectBonuses(){
             InfantryUnit testUnit = new InfantryUnit("Name",20);
             assertTrue(testUnit.getAttackBonus() == InfantryUnit.INFANTRY_ATTACK_BONUS
