@@ -24,8 +24,10 @@ public class Battle {
      *
      * @param armyOne The first army going into battle
      * @param armyTwo The second army going into battle
+     * @throws IllegalArgumentException If the armies har equal
      */
-    public Battle(Army armyOne, Army armyTwo) {
+    public Battle(Army armyOne, Army armyTwo) throws IllegalArgumentException{
+        if(armyOne.equals(armyTwo)) throw new IllegalArgumentException("Battle cannot contain the same army twice");
         this.armyOne = armyOne;
         this.armyTwo = armyTwo;
     }
@@ -55,8 +57,12 @@ public class Battle {
      * see if unit is dead. Continues until one of the armies
      * are defeated.
      *
+     * @throws IllegalStateException If one of the armies are empty
      */
-    public void simulate(){
+    public String simulate() throws IllegalStateException{
+        if(!armyOne.hasUnits() || !armyTwo.hasUnits()){
+            throw new IllegalStateException("Both armies must contain units to simulate a battle");
+        }
         Random rand = new Random();
 
         while(armyOne.hasUnits() && armyTwo.hasUnits()){
@@ -77,8 +83,8 @@ public class Battle {
         Army winner = armyOne;
         if(armyTwo.hasUnits()) winner = armyTwo;
 
-        System.out.println("The winner was " + winner.getName()+ " with " + winner.getArmySize() + " units left");
-        System.out.println(winner.toString());
+        String result = "The winner was " + winner.getName()+ " with " + winner.getArmySize() + " units left";
+        return result;
     }
 
 
