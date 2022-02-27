@@ -82,7 +82,6 @@ public class RangedUnitTest {
 
             while(testUnit1.getHealth() > 0) {
                 testUnit.attack(testUnit1);
-                System.out.println(testUnit1.getHealth());
             }
             assertTrue(testUnit1.getHealth() == 0);
         }
