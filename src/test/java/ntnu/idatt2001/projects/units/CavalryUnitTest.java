@@ -101,12 +101,25 @@ public class CavalryUnitTest {
         }
 
         @Test
-        @DisplayName("Cavalry has less attack bonus after being attacked")
+        @DisplayName("Cavalry has less attack bonus after attacking an opponent")
         public void getCorrectBonusAfterAttacked(){
             CavalryUnit testUnit = new CavalryUnit("Name",20);
             CavalryUnit testUnit1 = new CavalryUnit("Name",20);
+            int attackBonusBeforeAttacking = testUnit.getAttackBonus();
             testUnit.attack(testUnit1);
-            assertTrue(testUnit.getAttackBonus() > testUnit1.getResistBonus());
+
+            assertTrue(testUnit.getAttackBonus() < attackBonusBeforeAttacking);
+        }
+
+        @Test
+        @DisplayName("Cavalry has maximum attack bonus even after being attacked")
+        public void getMaxBonusAfterBeingAttacked(){
+            CavalryUnit testUnit = new CavalryUnit("Name",20);
+            CavalryUnit testUnit1 = new CavalryUnit("Name",20);
+
+            testUnit1.attack(testUnit);
+
+            assertTrue(testUnit.getAttackBonus() == CavalryUnit.CAVALRY_CHARGE_ATTACK_BONUS);
         }
     }
 
