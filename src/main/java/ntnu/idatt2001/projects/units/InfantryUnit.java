@@ -10,7 +10,6 @@ public class InfantryUnit extends Unit{
 
     //Constants that makes returning infantry attack and
     //resistance bonuses more perceptible.
-    //TODO USE IN TEST
     protected static final int INFANTRY_ATTACK_BONUS = 2;
     protected static final int INFANTRY_RESISTANCE_BONUS = 1;
 
