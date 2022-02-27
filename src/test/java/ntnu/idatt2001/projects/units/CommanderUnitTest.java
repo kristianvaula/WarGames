@@ -101,12 +101,25 @@ public class CommanderUnitTest {
         }
 
         @Test
-        @DisplayName("Ranged has less attack bonus after being attacked")
+        @DisplayName("Cavalry has less attack bonus after attacking an opponent")
         public void getCorrectBonusAfterAttacked(){
             CommanderUnit testUnit = new CommanderUnit("Name",20);
             CommanderUnit testUnit1 = new CommanderUnit("Name",20);
+            int attackBonusBeforeAttacking = testUnit.getAttackBonus();
             testUnit.attack(testUnit1);
-            assertTrue(testUnit.getAttackBonus() > testUnit1.getResistBonus());
+
+            assertTrue(testUnit.getAttackBonus() < attackBonusBeforeAttacking);
+        }
+
+        @Test
+        @DisplayName("Cavalry has maximum attack bonus even after being attacked")
+        public void getMaxBonusAfterBeingAttacked(){
+            CommanderUnit testUnit = new CommanderUnit("Name",20);
+            CommanderUnit testUnit1 = new CommanderUnit("Name",20);
+
+            testUnit1.attack(testUnit);
+
+            assertTrue(testUnit.getAttackBonus() == CommanderUnit.CAVALRY_CHARGE_ATTACK_BONUS);
         }
     }
 

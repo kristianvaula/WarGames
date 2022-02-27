@@ -9,8 +9,8 @@ package ntnu.idatt2001.projects.units;
  */
 public class CavalryUnit extends Unit{
 
-    //Tracks if the cavalry unit has been attacked
-    private boolean hasBeenAttacked = false;
+    //Tracks if the cavalry unit has attacked
+    private boolean hasAttacked = false;
 
     //Constant representing the cavalry attack bonus at first attack
     protected static final int CAVALRY_CHARGE_ATTACK_BONUS = 6;
@@ -51,15 +51,16 @@ public class CavalryUnit extends Unit{
     }
 
     /**
-     * Calls for superclass takeDamage and changes
-     * hasBeenAttacked field to true;
+     * Attack an opponent. Calls the Unit attack method
+     * and then changes its hasAttacked field to true as
+     * it now has attacked an opponent.
      *
-     * @param health The value in which the unit takes damage
+     * @param opponent The opponent unit that gets attacked
      */
     @Override
-    public void takeDamage(int health){
-        super.takeDamage(health);
-        hasBeenAttacked = true;
+    public void attack(Unit opponent){
+        super.attack(opponent);
+        this.hasAttacked = true;
     }
 
     /**
@@ -72,7 +73,7 @@ public class CavalryUnit extends Unit{
      */
     @Override
     public int getAttackBonus() {
-        if(hasBeenAttacked) return CAVALRY_COMBAT_ATTACK_BONUS;
+        if(hasAttacked) return CAVALRY_COMBAT_ATTACK_BONUS;
         return CAVALRY_CHARGE_ATTACK_BONUS;
     }
 
