@@ -155,13 +155,16 @@ public class ArmyTest {
             }
 
             @Test
-            @DisplayName("getRandom() returns ")
-            public void getRandomUnitFromList(){
+            @DisplayName("Equal hashCode for two equal armies")
+            public void TwoEqualArmiesHaveTheSameHashcode(){
                 Unit testUnit = new InfantryUnit("Axeman",20);
                 Army testArmy = new Army("Test army");
+                Army testArmy2 = new Army("Test army");
                 testArmy.add(testUnit);
-
-                assertEquals(testArmy.getRandom(),testUnit);
+                testArmy2.add(testUnit);
+                if(testArmy.equals(testArmy2)){
+                    assertEquals(testArmy.hashCode(),testArmy2.hashCode());
+                }
             }
         }
     }
