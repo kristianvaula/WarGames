@@ -104,8 +104,11 @@ public class RangedUnitTest {
         public void getCorrectBonusAfterAttacked(){
             RangedUnit testUnit = new RangedUnit("Name",20);
             RangedUnit testUnit1 = new RangedUnit("Name",20);
+            int resistBonusBeforeAttacked = testUnit1.getResistBonus();
+
             testUnit.attack(testUnit1);
-            assertTrue(testUnit.getResistBonus() > testUnit1.getResistBonus());
+
+            assertTrue(testUnit1.getResistBonus() < resistBonusBeforeAttacked);
         }
     }
 
