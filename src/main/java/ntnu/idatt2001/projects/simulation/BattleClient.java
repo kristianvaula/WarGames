@@ -75,7 +75,7 @@ public class BattleClient {
     public void simulateABattle(){
         try {
             Army winner = battle.simulate();
-            String result = "The winner was " + winner.getName()+ " with " + winner.getArmySize() + " units left";
+            String result = "The winner was " + winner.getName()+ " with " + winner.getArmySize() + " units left\n";
             result += winner.toString();
             System.out.println(result);
         }catch (IllegalStateException e){
