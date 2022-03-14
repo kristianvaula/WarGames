@@ -1,9 +1,6 @@
 package ntnu.idatt2001.projects.simulation;
 
-import ntnu.idatt2001.projects.units.CavalryUnit;
-import ntnu.idatt2001.projects.units.InfantryUnit;
-import ntnu.idatt2001.projects.units.RangedUnit;
-import ntnu.idatt2001.projects.units.Unit;
+import ntnu.idatt2001.projects.units.*;
 
 import java.util.*;
 
