@@ -58,14 +58,13 @@ public class BattleClient {
     /**
      * Method for letting user choose if he wants
      * to add more units
-     * @return
+     * @return true if user wants to add more units
      */
     public boolean addMoreUnits(){
         System.out.println("**** - Do you want to add more units? - ****");
         System.out.println("    1. YES ");
         System.out.println("    2. NO");
-        if(input.nextInt() == 1) return true;
-        else return false;
+        return input.nextInt() == 1;
     }
 
 
@@ -75,7 +74,10 @@ public class BattleClient {
      */
     public void simulateABattle(){
         try {
-            System.out.println(battle.simulate());
+            Army winner = battle.simulate();
+            String result = "The winner was " + winner.getName()+ " with " + winner.getArmySize() + " units left";
+            result += winner.toString();
+            System.out.println(result);
         }catch (IllegalStateException e){
             System.out.println("**** - Both armies need to have units to perform a battle - ****");
             System.out.println("    Add units to both armies before continuing");
@@ -163,9 +165,7 @@ public class BattleClient {
                         success = false;
                     }
                 }
-                default -> {
-                    success = false;
-                }
+                default -> success = false;
             }
 
             //Calls for UnitAssembler on correct army
@@ -253,18 +253,14 @@ public class BattleClient {
 
         int menuChoice = input.nextInt();
         switch (menuChoice){
-            case SIMULATE_A_BATTLE -> {
-                simulateABattle();
-            }
-            case ADD_UNITS_TO_ARMIES -> {
-                addUnitsToArmies();
-            }
-            case EDIT_ARMY_NAMES -> {
-                editArmyNames();
-            }
-            case FILL_ARMIES_BY_DEFAULT -> {
-                fillArmiesByDefault();
-            }
+            case SIMULATE_A_BATTLE -> simulateABattle();
+
+            case ADD_UNITS_TO_ARMIES -> addUnitsToArmies();
+
+            case EDIT_ARMY_NAMES -> editArmyNames();
+
+            case FILL_ARMIES_BY_DEFAULT -> fillArmiesByDefault();
+
             case EXIT -> {
                 System.out.println("**** - Thank you for using Battle Client! - ****");
                 return false;

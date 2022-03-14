@@ -3,7 +3,6 @@ package ntnu.idatt2001.projects.simulation;
 
 import ntnu.idatt2001.projects.units.Unit;
 
-import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -58,8 +57,9 @@ public class Battle {
      * are defeated.
      *
      * @throws IllegalStateException If one of the armies are empty
+     * @return The winning army
      */
-    public String simulate() throws IllegalStateException{
+    public Army simulate() throws IllegalStateException{
         if(!armyOne.hasUnits() || !armyTwo.hasUnits()){
             throw new IllegalStateException("Both armies must contain units to simulate a battle");
         }
@@ -80,12 +80,9 @@ public class Battle {
                 if(armyOneUnit.getHealth() == 0) armyOne.remove(armyOneUnit);
             }
         }
-        Army winner = armyOne;
-        if(armyTwo.hasUnits()) winner = armyTwo;
 
-        String result = "The winner was " + winner.getName()+ " with " + winner.getArmySize() + " units left";
-        result += winner.toString();
-        return result;
+        if(armyTwo.hasUnits()) return armyTwo;
+        return armyOne;
     }
 
 

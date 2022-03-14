@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BattleTest {
@@ -19,9 +18,10 @@ public class BattleTest {
         public void InitiateBattleWithArmies() {
             Army testArmyOne = new Army("testarmy1");
             Army testArmyTwo = new Army("testarmy2");
+
             Battle testBattle = new Battle(testArmyOne,testArmyTwo);
+
             assertSame(testArmyOne,testBattle.getArmyOne());
-            assertSame(testArmyTwo,testBattle.getArmyTwo());
         }
 
         @Test
@@ -34,6 +34,7 @@ public class BattleTest {
                 Battle testBattle = new Battle(testArmy,testArmy);
                 fail("Method did not throw IllegalArgumentException");
             }catch(IllegalArgumentException e){
+
                 assertEquals(e.getMessage(),"Battle cannot contain the same army twice");
             }
         }
@@ -50,7 +51,10 @@ public class BattleTest {
             Army testArmyTwo = new Army("TestArmyTwo");
             testArmyOne.add(new InfantryUnit("TestUnit",10));
             Battle testBattle = new Battle(testArmyOne,testArmyTwo);
-            assertEquals(testBattle.getArmyOne(),testArmyOne);
+
+            Army returnArmy = testBattle.getArmyOne();
+
+            assertEquals(returnArmy,testArmyOne);
         }
 
         @Test
@@ -60,7 +64,10 @@ public class BattleTest {
             Army testArmyTwo = new Army("TestArmyTwo");
             testArmyTwo.add(new InfantryUnit("TestUnit",10));
             Battle testBattle = new Battle(testArmyOne,testArmyTwo);
-            assertEquals(testBattle.getArmyTwo(),testArmyTwo);
+
+            Army returnArmy = testBattle.getArmyTwo();
+
+            assertEquals(returnArmy,testArmyTwo);
         }
     }
 
@@ -77,9 +84,10 @@ public class BattleTest {
             testArmyTwo.add(new InfantryUnit("TestUnit",10));
             Battle testBattle = new Battle(testArmyOne,testArmyTwo);
 
-            String simulationResult = testBattle.simulate();
-            assertTrue(simulationResult.contains(testArmyOne.getName())
-                        || simulationResult.contains(testArmyTwo.getName()));
+            Army winner = testBattle.simulate();
+
+            assertTrue(winner.getName().equals(testArmyOne.getName())
+                        || winner.getName().equals(testArmyTwo.getName()));
         }
 
         @Test
@@ -91,7 +99,7 @@ public class BattleTest {
             testArmyTwo.add(new InfantryUnit("TestUnit",10));
             Battle testBattle = new Battle(testArmyOne,testArmyTwo);
 
-            String simulationResult = testBattle.simulate();
+            Army winner = testBattle.simulate();
             assertFalse(testBattle.getArmyOne().hasUnits() && testBattle.getArmyTwo().hasUnits());
         }
 
@@ -104,7 +112,7 @@ public class BattleTest {
             Battle testBattle = new Battle(testArmyOne,testArmyTwo);
 
             try{
-                String result = testBattle.simulate();
+                Army winner = testBattle.simulate();
                 fail("Simulate did not return IllegalStateException");
             }catch (IllegalStateException e){
                 assertEquals(e.getMessage(),"Both armies must contain units to simulate a battle");
