@@ -16,14 +16,10 @@ public class CommanderUnitTest {
         @DisplayName("Constructor initiates object with all parameters")
         public void initiatingWithAllParameters(){
             String name = "TestName";
-            int health = 20;
-            int attack = 15;
-            int armor = 10;
-            CommanderUnit testUnit = new CommanderUnit(name,health,attack,armor);
-            assertSame(name,testUnit.getName());
-            assertSame(health,testUnit.getHealth());
-            assertSame(attack,testUnit.getAttack());
-            assertSame(armor,testUnit.getArmor());
+
+            CommanderUnit testUnit = new CommanderUnit(name,20,15,10);
+
+            assertEquals(name,testUnit.getName());
         }
 
         @Test
@@ -32,8 +28,7 @@ public class CommanderUnitTest {
             String name = "TestName";
             int health = 20;
             CommanderUnit testUnit = new CommanderUnit(name,health);
-            assertSame(name,testUnit.getName());
-            assertSame(health,testUnit.getHealth());
+            assertEquals(health,testUnit.getHealth());
         }
 
         @Test
