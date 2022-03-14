@@ -1,6 +1,7 @@
 package ntnu.idatt2001.projects.simulation;
 
 import ntnu.idatt2001.projects.units.InfantryUnit;
+import ntnu.idatt2001.projects.units.Unit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -30,13 +31,9 @@ public class BattleTest {
             Army testArmy = new Army("TestArmy");
             testArmy.add(new InfantryUnit("Testunit",10));
 
-            try{
+            assertThrows(IllegalArgumentException.class, () -> {
                 Battle testBattle = new Battle(testArmy,testArmy);
-                fail("Method did not throw IllegalArgumentException");
-            }catch(IllegalArgumentException e){
-
-                assertEquals(e.getMessage(),"Battle cannot contain the same army twice");
-            }
+            });
         }
     }
 
@@ -111,12 +108,9 @@ public class BattleTest {
             testArmyOne.add(new InfantryUnit("TestUnit",10));
             Battle testBattle = new Battle(testArmyOne,testArmyTwo);
 
-            try{
+            assertThrows(IllegalStateException.class, () -> {
                 Army winner = testBattle.simulate();
-                fail("Simulate did not return IllegalStateException");
-            }catch (IllegalStateException e){
-                assertEquals(e.getMessage(),"Both armies must contain units to simulate a battle");
-            }
+            });
         }
     }
 }

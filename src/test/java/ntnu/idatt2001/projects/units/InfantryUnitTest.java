@@ -16,14 +16,10 @@ public class InfantryUnitTest {
         @DisplayName("Constructor initiates object with all parameters")
         public void initiatingWithAllParameters(){
             String name = "TestName";
-            int health = 20;
-            int attack = 15;
-            int armor = 10;
-            InfantryUnit testUnit = new InfantryUnit(name,health,attack,armor);
-            assertSame(name,testUnit.getName());
-            assertSame(health,testUnit.getHealth());
-            assertSame(attack,testUnit.getAttack());
-            assertSame(armor,testUnit.getArmor());
+
+            InfantryUnit testUnit = new InfantryUnit(name,20,15,10);
+
+            assertEquals(name,testUnit.getName());
         }
 
         @Test
@@ -31,31 +27,26 @@ public class InfantryUnitTest {
         public void initiatingWithoutAllParameters(){
             String name = "TestName";
             int health = 20;
+
             InfantryUnit testUnit = new InfantryUnit(name,health);
-            assertSame(name,testUnit.getName());
-            assertSame(health,testUnit.getHealth());
+
+            assertEquals(health,testUnit.getHealth());
         }
 
         @Test
         @DisplayName("Constructor throws IllegalArgumentException with negative values")
         public void initiatingWithNegativeHealth(){
-            try{
+            assertThrows(IllegalArgumentException.class, () -> {
                 InfantryUnit testUnit = new InfantryUnit("Name",-100);
-                fail("Constructor did not throw exception");
-            }catch (IllegalArgumentException e){
-                assertEquals(e.getMessage(),"Inputs cannot be negative or zero");
-            }
+            });
         }
 
         @Test
         @DisplayName("Constructor throws IllegalArgumentException with empty name")
         public void initiatingWithEmptyName(){
-            try{
+            assertThrows(IllegalArgumentException.class, () -> {
                 InfantryUnit testUnit = new InfantryUnit("",100);
-                fail("Constructor did not throw exception");
-            }catch (IllegalArgumentException e){
-                assertEquals(e.getMessage(),"Name cannot be empty");
-            }
+            });
         }
     }
 
@@ -72,6 +63,7 @@ public class InfantryUnitTest {
             InfantryUnit testUnit1 = new InfantryUnit("Name",startHealth);
 
             testUnit.attack(testUnit1);
+
             assertTrue(testUnit1.getHealth() < startHealth);
         }
 
@@ -85,7 +77,8 @@ public class InfantryUnitTest {
                 testUnit.attack(testUnit1);
                 System.out.println(testUnit1.getHealth());
             }
-            assertTrue(testUnit1.getHealth() == 0);
+
+            assertEquals(0, testUnit1.getHealth());
         }
     }
 
@@ -97,6 +90,7 @@ public class InfantryUnitTest {
         @DisplayName("Infantry has 2 attack bonus and 1 resistance")
         public void getCorrectBonuses(){
             InfantryUnit testUnit = new InfantryUnit("Name",20);
+
             assertTrue(testUnit.getAttackBonus() == InfantryUnit.INFANTRY_ATTACK_BONUS
                         && testUnit.getResistBonus() == InfantryUnit.INFANTRY_RESISTANCE_BONUS);
         }

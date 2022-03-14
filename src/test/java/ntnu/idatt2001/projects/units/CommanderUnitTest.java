@@ -1,5 +1,6 @@
 package ntnu.idatt2001.projects.units;
 
+import ntnu.idatt2001.projects.simulation.Battle;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -27,30 +28,26 @@ public class CommanderUnitTest {
         public void initiatingWithoutAllParameters(){
             String name = "TestName";
             int health = 20;
+
             CommanderUnit testUnit = new CommanderUnit(name,health);
+
             assertEquals(health,testUnit.getHealth());
         }
 
         @Test
         @DisplayName("Constructor throws IllegalArgumentException with negative values")
         public void initiatingWithNegativeHealth(){
-            try{
+            assertThrows(IllegalArgumentException.class, () -> {
                 RangedUnit testUnit = new RangedUnit("Name",-100);
-                fail("Constructor did not throw exception");
-            }catch (IllegalArgumentException e){
-                assertEquals(e.getMessage(),"Inputs cannot be negative or zero");
-            }
+            });
         }
 
         @Test
         @DisplayName("Constructor throws IllegalArgumentException with empty name")
         public void initiatingWithEmptyName(){
-            try{
+            assertThrows(IllegalArgumentException.class, () -> {
                 RangedUnit testUnit = new RangedUnit("",100);
-                fail("Constructor did not throw exception");
-            }catch (IllegalArgumentException e){
-                assertEquals(e.getMessage(),"Name cannot be empty");
-            }
+            });
         }
     }
 
@@ -66,6 +63,7 @@ public class CommanderUnitTest {
             CommanderUnit testUnit1 = new CommanderUnit("Name",startHealth);
 
             testUnit.attack(testUnit1);
+
             assertTrue(testUnit1.getHealth() < startHealth);
         }
 
@@ -79,7 +77,8 @@ public class CommanderUnitTest {
                 testUnit.attack(testUnit1);
                 System.out.println(testUnit1.getHealth());
             }
-            assertTrue(testUnit1.getHealth() == 0);
+
+            assertEquals(0, testUnit1.getHealth());
         }
     }
 
@@ -91,6 +90,7 @@ public class CommanderUnitTest {
         @DisplayName("Ranged has 6 attack bonus and 1 resistance before being attacked")
         public void getCorrectStartBonuses(){
             CommanderUnit testUnit = new CommanderUnit("Name",20);
+
             assertTrue(testUnit.getAttackBonus() == CavalryUnit.CAVALRY_CHARGE_ATTACK_BONUS
                         && testUnit.getResistBonus() == CavalryUnit.CAVALRY_RESISTANCE_BONUS);
         }
@@ -100,6 +100,7 @@ public class CommanderUnitTest {
         public void getCorrectBonusAfterAttacked(){
             CommanderUnit testUnit = new CommanderUnit("Name",20);
             CommanderUnit testUnit1 = new CommanderUnit("Name",20);
+
             int attackBonusBeforeAttacking = testUnit.getAttackBonus();
             testUnit.attack(testUnit1);
 
@@ -114,7 +115,7 @@ public class CommanderUnitTest {
 
             testUnit1.attack(testUnit);
 
-            assertTrue(testUnit.getAttackBonus() == CommanderUnit.CAVALRY_CHARGE_ATTACK_BONUS);
+            assertEquals(CommanderUnit.CAVALRY_CHARGE_ATTACK_BONUS, testUnit.getAttackBonus());
         }
     }
 

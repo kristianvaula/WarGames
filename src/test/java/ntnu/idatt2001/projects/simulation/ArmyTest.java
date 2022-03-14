@@ -22,7 +22,9 @@ public class ArmyTest {
         @DisplayName("Initiate a new army using name")
         public void InitiateArmyWithName(){
             String name = "TestName";
+
             Army testArmy = new Army(name);
+
             assertSame(name,testArmy.getName());
         }
 
@@ -34,8 +36,7 @@ public class ArmyTest {
             testList.add(new InfantryUnit("Name",10));
             Army testArmy = new Army(name,testList);
 
-            assertSame(name,testArmy.getName());
-            assertSame(testList,testArmy.getAllUnits());
+            assertEquals(testList,testArmy.getAllUnits());
         }
     }
 
@@ -57,6 +58,7 @@ public class ArmyTest {
         public void addMethodAddsUnit(){
             InfantryUnit testUnit = new InfantryUnit("Axeman",20);
             Army testArmy = new Army("Test army");
+
             testArmy.add(testUnit);
 
             assertEquals(testArmy.getAllUnits().get(0),testUnit);
@@ -68,9 +70,10 @@ public class ArmyTest {
             List<Unit> unitList = new ArrayList<>();
             unitList.add(new InfantryUnit("Axeman",20));
             unitList.add(new CavalryUnit("Pigrider",20));
-
             Army testArmy = new Army("Test army");
+
             testArmy.addAll(unitList);
+
             assertEquals(testArmy.getAllUnits(),unitList);
         }
 
@@ -81,10 +84,11 @@ public class ArmyTest {
             Army testArmy = new Army("Test army");
             testArmy.add(testUnit);
 
-            if (testArmy.getAllUnits().size() > 0) {
-                testArmy.remove(testUnit);
-                assertThrows(IndexOutOfBoundsException.class, () -> testArmy.getAllUnits().get(0));
-            }
+            testArmy.remove(testUnit);
+
+            assertThrows(IndexOutOfBoundsException.class, () -> {
+                Unit unit = testArmy.getAllUnits().get(0);
+            });
         }
 
         @Test
@@ -128,6 +132,7 @@ public class ArmyTest {
         }
 
         @Nested
+        @DisplayName("Equals and hashcode")
         class EqualsAndHashCode{
 
             @Test
@@ -139,7 +144,7 @@ public class ArmyTest {
                 testArmy.add(testUnit);
                 testArmy2.add(testUnit);
 
-                assertTrue(testArmy.equals(testArmy2));
+                assertEquals(testArmy, testArmy2);
             }
 
             @Test
@@ -151,7 +156,7 @@ public class ArmyTest {
                 testArmy.add(testUnit);
                 testArmy2.add(testUnit);
 
-                assertFalse(testArmy.equals(testArmy2));
+                assertNotEquals(testArmy, testArmy2);
             }
 
             @Test
@@ -162,9 +167,11 @@ public class ArmyTest {
                 Army testArmy2 = new Army("Test army");
                 testArmy.add(testUnit);
                 testArmy2.add(testUnit);
+
                 if(testArmy.equals(testArmy2)){
                     assertEquals(testArmy.hashCode(),testArmy2.hashCode());
                 }
+                else fail();
             }
         }
     }

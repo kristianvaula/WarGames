@@ -8,7 +8,7 @@ import java.util.Objects;
  *
  * @author Kristian Vaula Jensen
  */
-public abstract class Unit implements Comparable{
+public abstract class Unit implements Comparable<Unit>{
     // The units descriptive name
     private String name;
     // The value representing the units health
@@ -149,18 +149,15 @@ public abstract class Unit implements Comparable{
      * are the same subclass. Then we check each
      * individual field of the unit.
      *
-     * @param o The object we are comparing
+     * @param u The object we are comparing
      * @return The result of the comparison.
      */
     @Override
-    public int compareTo(Object o) {
-        if(!this.getClass().equals(o.getClass())) return 1;
-
-        Unit unit = (Unit) o;
-        if(!this.getName().equals(unit.getName())) return 1;
-        else if(this.getHealth() > unit.getHealth()) return 1;
-        else if(this.getAttack() > unit.getAttack()) return 1;
-        else if(this.getArmor() > unit.getArmor()) return 1;
+    public int compareTo(Unit u) {
+        if(!this.getName().equals(u.getName())) return 1;
+        else if(this.getHealth() > u.getHealth()) return 1;
+        else if(this.getAttack() > u.getAttack()) return 1;
+        else if(this.getArmor() > u.getArmor()) return 1;
         else return -1;
     }
 

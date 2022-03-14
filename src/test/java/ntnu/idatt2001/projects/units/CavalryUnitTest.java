@@ -1,5 +1,6 @@
 package ntnu.idatt2001.projects.units;
 
+import ntnu.idatt2001.projects.simulation.Battle;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -30,32 +31,26 @@ public class CavalryUnitTest {
         @DisplayName("Constructor initiates object without all parameters")
         public void initiatingWithoutAllParameters(){
             String name = "TestName";
-            int health = 20;
-            CavalryUnit testUnit = new CavalryUnit(name,health);
+
+            CavalryUnit testUnit = new CavalryUnit(name,20);
+
             assertSame(name,testUnit.getName());
-            assertSame(health,testUnit.getHealth());
         }
 
         @Test
         @DisplayName("Constructor throws IllegalArgumentException with negative values")
         public void initiatingWithNegativeHealth(){
-            try{
+            assertThrows(IllegalArgumentException.class, () -> {
                 CavalryUnit testUnit = new CavalryUnit("Name",-100);
-                fail("Constructor did not throw exception");
-            }catch (IllegalArgumentException e){
-                assertEquals(e.getMessage(),"Inputs cannot be negative or zero");
-            }
+            });
         }
 
         @Test
         @DisplayName("Constructor throws IllegalArgumentException with empty name")
         public void initiatingWithEmptyName(){
-            try{
+            assertThrows(IllegalArgumentException.class, () -> {
                 CavalryUnit testUnit = new CavalryUnit("",100);
-                fail("Constructor did not throw exception");
-            }catch (IllegalArgumentException e){
-                assertEquals(e.getMessage(),"Name cannot be empty");
-            }
+            });
         }
     }
 
@@ -71,6 +66,7 @@ public class CavalryUnitTest {
             CavalryUnit testUnit1 = new CavalryUnit("Name",startHealth);
 
             testUnit.attack(testUnit1);
+
             assertTrue(testUnit1.getHealth() < startHealth);
         }
 
@@ -84,7 +80,8 @@ public class CavalryUnitTest {
                 testUnit.attack(testUnit1);
                 System.out.println(testUnit1.getHealth());
             }
-            assertTrue(testUnit1.getHealth() == 0);
+
+            assertEquals(0, testUnit1.getHealth());
         }
     }
 
@@ -96,6 +93,7 @@ public class CavalryUnitTest {
         @DisplayName("Cavalry has 6 attack bonus and 1 resistance before being attacked")
         public void getCorrectStartBonuses(){
             CavalryUnit testUnit = new CavalryUnit("Name",20);
+
             assertTrue(testUnit.getAttackBonus() == CavalryUnit.CAVALRY_CHARGE_ATTACK_BONUS
                         && testUnit.getResistBonus() == CavalryUnit.CAVALRY_RESISTANCE_BONUS);
         }
@@ -105,6 +103,7 @@ public class CavalryUnitTest {
         public void getCorrectBonusAfterAttacked(){
             CavalryUnit testUnit = new CavalryUnit("Name",20);
             CavalryUnit testUnit1 = new CavalryUnit("Name",20);
+
             int attackBonusBeforeAttacking = testUnit.getAttackBonus();
             testUnit.attack(testUnit1);
 
@@ -119,7 +118,7 @@ public class CavalryUnitTest {
 
             testUnit1.attack(testUnit);
 
-            assertTrue(testUnit.getAttackBonus() == CavalryUnit.CAVALRY_CHARGE_ATTACK_BONUS);
+            assertEquals(CavalryUnit.CAVALRY_CHARGE_ATTACK_BONUS, testUnit.getAttackBonus());
         }
     }
 
