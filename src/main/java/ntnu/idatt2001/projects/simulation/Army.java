@@ -69,16 +69,14 @@ public class Army{
     }
 
     /**
-     * Adds a list of units to an army. Iterates through
-     * the list and calls the Army.add() methods.
+     * Adds a list of units to an army.
+     * Uses Java Collection addAll()
+     * to add all units to list
      *
      * @param units The units we are adding to the army
      */
     public void addAll(List<Unit> units){
-        Iterator<Unit> it = units.iterator();
-        while(it.hasNext()){
-            this.add(it.next());
-        }
+        this.units.addAll(units);
     }
 
     /**
