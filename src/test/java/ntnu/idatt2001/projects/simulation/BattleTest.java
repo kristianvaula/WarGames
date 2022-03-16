@@ -1,7 +1,6 @@
 package ntnu.idatt2001.projects.simulation;
 
 import ntnu.idatt2001.projects.units.InfantryUnit;
-import ntnu.idatt2001.projects.units.Unit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
