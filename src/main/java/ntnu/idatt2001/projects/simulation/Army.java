@@ -3,6 +3,7 @@ package ntnu.idatt2001.projects.simulation;
 import ntnu.idatt2001.projects.units.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Army is a collection of units gathered under a
@@ -109,6 +110,60 @@ public class Army{
         return this.units;
     }
 
+    /**
+     * Gets all InfantryUnits
+     * <br> Uses stream operations on
+     * the units list to get all InfantryUnits
+     * @return List of InfantryUnits
+     */
+    public List<Unit> getInfantryUnits(){
+        return units.stream()
+                    .filter(u -> u instanceof InfantryUnit)
+                    .toList();
+    }
+
+    /**
+     * Gets all CavalryUnits
+     * <br> Uses stream operations on
+     * the units list to get all cavalries.
+     * Uses getClass() instead of instanceof
+     * to exclude subclasses.
+     * @return List of CavalryUnits
+     */
+    public List<Unit> getCavalryUnits(){
+        return units.stream()
+                    .filter(u -> u.getClass().equals(CavalryUnit.class))
+                    .toList();
+    }
+
+    /**
+     * Gets all RangedUnits
+     * <br> Uses stream operations on the
+     * units list to get all RangedUnits
+     * @return List of RangedUnits
+     */
+    public List<Unit> getRangedUnits(){
+        return units.stream()
+                    .filter(u -> u instanceof RangedUnit)
+                    .toList();
+    }
+
+    /**
+     * Gets all CommanderUnits
+     * <br> Uses stream operations on the
+     * units list to get all CommanderUnits
+     * @return List of CommanderUnits
+     */
+    public List<Unit> getCommanderUnits(){
+        return units.stream()
+                    .filter(u -> u instanceof CommanderUnit)
+                    .toList();
+    }
+
+    /**
+     * Gets Army Size
+     * @return Int army size
+     */
     public int getArmySize(){
         return this.units.size();
     }
@@ -124,9 +179,7 @@ public class Army{
      */
     public Unit getRandom(){
         Random rand = new Random();
-        int index = rand.nextInt(this.getArmySize());
-
-        return this.units.get(index);
+        return this.units.get(rand.nextInt(this.getArmySize()));
     }
 
 
@@ -139,25 +192,28 @@ public class Army{
      */
     @Override
     public String toString(){
-        StringBuilder infantry = new StringBuilder();
-        StringBuilder cavalry = new StringBuilder();
-        StringBuilder ranged = new StringBuilder();
-
-        for (Unit unit : getAllUnits()){
-            if(unit instanceof InfantryUnit){
-                infantry.append("\n  ").append(unit);
-            }
-            else if(unit instanceof CavalryUnit){
-                cavalry.append("\n  ").append(unit);
-            }
-            else if(unit instanceof RangedUnit){
-                ranged.append("\n  ").append(unit);
-            }
-        }
         StringBuilder output = new StringBuilder(name);
-        output.append("\nInfantry: \n").append(infantry);
-        output.append("\nCavalry: \n").append(cavalry);
-        output.append("\nRanged: \n").append(ranged);
+
+        output.append("\nCommanders: \n");
+        output.append(getCommanderUnits().stream()
+                .sorted((u1,u2) -> -u1.getHealth() + u2.getHealth())
+                .map(u -> u.toString()+ "\n").collect(Collectors.joining()));
+
+        output.append("\nInfantry: \n");
+        output.append(getInfantryUnits().stream()
+                    .sorted((u1,u2) -> -u1.getHealth() + u2.getHealth())
+                    .map(u -> u.toString()+ "\n").collect(Collectors.joining()));
+
+        output.append("\nCavalry: \n");
+        output.append(getCavalryUnits().stream()
+                    .sorted((u1,u2) -> -u1.getHealth() + u2.getHealth())
+                    .map(u -> u.toString()+ "\n").collect(Collectors.joining()));
+
+        output.append("\nRanged: \n");
+        output.append(getRangedUnits().stream()
+                    .sorted((u1,u2) -> -u1.getHealth() + u2.getHealth())
+                    .map(u -> u.toString() + "\n").collect(Collectors.joining()));
+
         return output.toString();
     }
 

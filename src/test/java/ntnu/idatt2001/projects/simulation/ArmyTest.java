@@ -1,12 +1,11 @@
 package ntnu.idatt2001.projects.simulation;
 
-import ntnu.idatt2001.projects.units.CavalryUnit;
-import ntnu.idatt2001.projects.units.InfantryUnit;
-import ntnu.idatt2001.projects.units.Unit;
+import ntnu.idatt2001.projects.units.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,8 +104,186 @@ public class ArmyTest {
         @DisplayName("hasUnits() return false if army doesnt have units")
         public void hasUnitsReturnsFalseIfEmpty(){
             Army testArmy = new Army("Test army");
+
             assertFalse(testArmy.hasUnits());
         }
+
+        @Nested
+        @DisplayName("getInfantryUnits()")
+        public class getInfantryUnitsTests{
+
+            @Test
+            @DisplayName("getInfantryUnits() gets infantry units")
+            public void getInfantryUnits(){
+                Army testArmy = new Army("Test army");
+                testArmy.add(new CavalryUnit("CavalryUnit",20));
+                testArmy.add(new RangedUnit("RangedUnit",20));
+                testArmy.add(new CommanderUnit("CommanderUnit",20));
+                InfantryUnit infantryUnit1 = (new InfantryUnit("InfantryUnit1",20));
+                testArmy.add(infantryUnit1);
+                InfantryUnit infantryUnit2 = (new InfantryUnit("InfantryUnit2",20));
+                testArmy.add(infantryUnit2);
+
+
+                ArrayList<Unit> infantries = new ArrayList<>(testArmy.getInfantryUnits());
+
+                assertTrue(infantries.contains(infantryUnit1)
+                        && infantries.contains(infantryUnit2));
+            }
+
+            @Test
+            @DisplayName("getInfantryUnits() excludes other types")
+            public void getInfantryUnitsExcludesOthers(){
+                Army testArmy = new Army("Test army");
+                testArmy.add(new InfantryUnit("InfantryUnit1",20));
+                RangedUnit rangedUnit = new RangedUnit("RangedUnit",20);
+                testArmy.add(rangedUnit);
+
+                ArrayList<Unit> infantries = new ArrayList<>(testArmy.getInfantryUnits());
+
+                assertFalse(infantries.contains(rangedUnit));
+            }
+        }
+
+        @Nested
+        @DisplayName("getCavalryUnits()")
+        public class getCavalryUnitsTests{
+
+            @Test
+            @DisplayName("getCavalryUnits() gets cavalry units")
+            public void getCavalryUnits(){
+                Army testArmy = new Army("Test army");
+                testArmy.add(new InfantryUnit("InfantryUnit",20));
+                testArmy.add(new RangedUnit("RangedUnit",20));
+                testArmy.add(new CommanderUnit("CommanderUnit",20));
+                CavalryUnit cavalryUnit1 = (new CavalryUnit("CavalryUnit1",20));
+                testArmy.add(cavalryUnit1);
+                CavalryUnit cavalryUnit2 = (new CavalryUnit("CavalryUnit2",20));
+                testArmy.add(cavalryUnit2);
+
+
+                ArrayList<Unit> cavalries = new ArrayList<>(testArmy.getCavalryUnits());
+
+                assertTrue(cavalries.contains(cavalryUnit1)
+                        && cavalries.contains(cavalryUnit2));
+            }
+
+            @Test
+            @DisplayName("getCavalryUnits() excludes other types")
+            public void getCavalryUnitsExcludesOthers(){
+                Army testArmy = new Army("Test army");
+                testArmy.add(new CavalryUnit("CavalryUnit1",20));
+                InfantryUnit infantryUnit = new InfantryUnit("InfantryUnit",20);
+                testArmy.add(infantryUnit);
+
+                ArrayList<Unit> cavalries = new ArrayList<>(testArmy.getCavalryUnits());
+
+                assertFalse(cavalries.contains(infantryUnit));
+            }
+
+            @Test
+            @DisplayName("getCavalryUnits() excludes CommanderUnits")
+            public void getCavalryUnitsExcludeCommanderUnit(){
+                Army testArmy = new Army("Test army");
+                testArmy.add(new CavalryUnit("CavalryUnit1",20));
+                testArmy.add(new CavalryUnit("CavalryUnit2",20));
+                CommanderUnit commanderUnit = new CommanderUnit("CommanderUnit",20);
+                testArmy.add(commanderUnit);
+
+                ArrayList<Unit> cavalries = new ArrayList<>(testArmy.getCavalryUnits());
+
+                assertFalse(cavalries.contains(commanderUnit));
+            }
+        }
+
+        @Nested
+        @DisplayName("getRangedUnits()")
+        public class getRangedUnitsTests{
+
+            @Test
+            @DisplayName("getRangedUnits() gets infantry units")
+            public void getRangedUnits(){
+                Army testArmy = new Army("Test army");
+                testArmy.add(new CavalryUnit("CavalryUnit",20));
+                testArmy.add(new InfantryUnit("InfantryUnit",20));
+                testArmy.add(new CommanderUnit("CommanderUnit",20));
+                RangedUnit rangedUnit1 = (new RangedUnit("RangedUnit1",20));
+                testArmy.add(rangedUnit1);
+                RangedUnit rangedUnit2 = (new RangedUnit("RangedUnit2",20));
+                testArmy.add(rangedUnit2);
+
+
+                ArrayList<Unit> ranged = new ArrayList<>(testArmy.getRangedUnits());
+
+                assertTrue(ranged.contains(rangedUnit1)
+                        && ranged.contains(rangedUnit2));
+            }
+
+            @Test
+            @DisplayName("getRangedUnits() excludes other types")
+            public void getRangedUnitsExcludesOthers(){
+                Army testArmy = new Army("Test army");
+                testArmy.add(new RangedUnit("InfantryUnit1",20));
+                InfantryUnit infantryUnit = new InfantryUnit("InfantryUnit",20);
+                testArmy.add(infantryUnit);
+
+                ArrayList<Unit> ranged = new ArrayList<>(testArmy.getRangedUnits());
+
+                assertFalse(ranged.contains(infantryUnit));
+            }
+        }
+
+        @Nested
+        @DisplayName("getCommanderUnits()")
+        public class getCommanderUnitsTests{
+
+            @Test
+            @DisplayName("getCommanderUnits() gets cavalry units")
+            public void getCommanderUnits(){
+                Army testArmy = new Army("Test army");
+                testArmy.add(new InfantryUnit("InfantryUnit",20));
+                testArmy.add(new RangedUnit("RangedUnit",20));
+                testArmy.add(new CavalryUnit("CommanderUnit",20));
+                CommanderUnit commanderUnit1 = (new CommanderUnit("CommanderUnit1",20));
+                testArmy.add(commanderUnit1);
+                CommanderUnit commanderUnit2 = (new CommanderUnit("CommanderUnit2",20));
+                testArmy.add(commanderUnit2);
+
+
+                ArrayList<Unit> commanders = new ArrayList<>(testArmy.getCommanderUnits());
+
+                assertTrue(commanders.contains(commanderUnit1)
+                        && commanders.contains(commanderUnit2));
+            }
+
+            @Test
+            @DisplayName("getCommanderUnits() excludes other types")
+            public void getCommanderUnitsExcludesOthers(){
+                Army testArmy = new Army("Test army");
+                testArmy.add(new CommanderUnit("CommanderUnit",20));
+                InfantryUnit infantryUnit = new InfantryUnit("InfantryUnit",20);
+                testArmy.add(infantryUnit);
+
+                ArrayList<Unit> commanders = new ArrayList<>(testArmy.getCommanderUnits());
+
+                assertFalse(commanders.contains(infantryUnit));
+            }
+
+            @Test
+            @DisplayName("getCommanderUnits() excludes CavalryUnits")
+            public void getCommanderUnitsExcludeCavalryUnit(){
+                Army testArmy = new Army("Test army");
+                testArmy.add(new CommanderUnit("CommanderUnit1",20));
+                testArmy.add(new CommanderUnit("CommanderUnit2",20));
+                CavalryUnit cavalryUnit = new CavalryUnit("CavalryUnit",20);
+                testArmy.add(cavalryUnit);
+
+                ArrayList<Unit> commanders = new ArrayList<>(testArmy.getCommanderUnits());
+
+                assertFalse(commanders.contains(cavalryUnit));
+            }
+        }
+
 
         @Test
         @DisplayName("getArmySize() returns correct army size")
