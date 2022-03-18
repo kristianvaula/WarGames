@@ -24,20 +24,18 @@ public class UnitAssembler {
     public static List<Unit> requestUnits(Unit templateUnit, int quantity) throws IllegalArgumentException{
         List<Unit> createdUnits;
 
-        if (templateUnit instanceof InfantryUnit){
-            createdUnits = new ArrayList<>(generateInfantry(templateUnit,quantity));
-        }
-        else if (templateUnit instanceof CavalryUnit){
-            createdUnits = new ArrayList<>(generateCavalry(templateUnit,quantity));
-        }
-        else if (templateUnit instanceof RangedUnit){
-            createdUnits = new ArrayList<>(generateRanged(templateUnit,quantity));
-        }
-        else if (templateUnit instanceof CommanderUnit){
-            createdUnits = new ArrayList<>(generateCommander(templateUnit,quantity));
-        }
-        else{
-            throw new IllegalArgumentException("templateUnit unfamiliar subclass");
+        String unitClass = templateUnit.getClass().getSimpleName();
+
+        switch (unitClass){
+            case "InfantryUnit" -> createdUnits = new ArrayList<>(generateInfantry(templateUnit,quantity));
+
+            case "CavalryUnit" -> createdUnits = new ArrayList<>(generateCavalry(templateUnit,quantity));
+
+            case "RangedUnit" -> createdUnits = new ArrayList<>(generateRanged(templateUnit,quantity));
+
+            case "CommanderUnit" -> createdUnits = new ArrayList<>(generateCommander(templateUnit,quantity));
+
+            default -> throw new IllegalArgumentException("templateUnit unfamiliar subclass");
         }
 
         return createdUnits;
