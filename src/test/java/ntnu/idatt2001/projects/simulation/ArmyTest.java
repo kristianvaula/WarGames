@@ -37,6 +37,40 @@ public class ArmyTest {
 
             assertEquals(testList,testArmy.getAllUnits());
         }
+
+        @Test
+        @DisplayName("Initiate a new army using empty name")
+        public void InitiateArmyWithBlankName(){
+            String name = " ";
+            List<Unit> testList = new ArrayList<>();
+            testList.add(new InfantryUnit("Name",10));
+
+            assertThrows(IllegalArgumentException.class, () -> {
+                Army testArmy = new Army(name,testList);
+            });
+        }
+
+        @Test
+        @DisplayName("Initiate a new army using illegal characters")
+        public void InitiateArmyWithIllegalCharacters(){
+            String name = "BadA$$ Army";
+            List<Unit> testList = new ArrayList<>();
+            testList.add(new InfantryUnit("Name",10));
+
+            assertThrows(IllegalArgumentException.class, () -> {
+                Army testArmy = new Army(name,testList);
+            });
+        }
+
+        @Test
+        @DisplayName("Initiate a new army using illegal characters")
+        public void InitiateArmyWithIllegalCharactersTwo(){
+            String name = "Army Nam=";
+
+            assertThrows(IllegalArgumentException.class, () -> {
+                Army testArmy = new Army(name);
+            });
+        }
     }
 
     @Nested

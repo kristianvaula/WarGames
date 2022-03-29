@@ -3,6 +3,7 @@ package ntnu.idatt2001.projects.simulation;
 import ntnu.idatt2001.projects.units.*;
 
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -18,6 +19,9 @@ public class Army{
     //The list that keeps all the units
     private List<Unit> units;
 
+    //Pattern used to check if name contains any characters except letters, digits and "-" "."
+    private static final Pattern namePattern = Pattern.compile("[^a-zA-Z0-9-.\s]");
+
     /**
      * Initiates a new Army object. Takes name and a list
      * of units as arguments.
@@ -25,7 +29,9 @@ public class Army{
      * @param name The name of the army
      * @param units The list of units to add to the army
      */
-    public Army(String name, List<Unit> units) {
+    public Army(String name, List<Unit> units)throws IllegalArgumentException {
+        if(name.isBlank()) throw new IllegalArgumentException("Name cannot be blank");
+        if(namePattern.matcher(name).find()) throw new IllegalArgumentException("Name contains illegal characters");
         this.name = name;
         this.units = units;
     }
@@ -36,7 +42,9 @@ public class Army{
      *
      * @param name The name of the army
      */
-    public Army(String name) {
+    public Army(String name) throws IllegalArgumentException{
+        if(name.isBlank()) throw new IllegalArgumentException("Name cannot be blank");
+        if(namePattern.matcher(name).find()) throw new IllegalArgumentException("Name contains illegal characters");
         this.name = name;
         this.units = new ArrayList<>();
     }
