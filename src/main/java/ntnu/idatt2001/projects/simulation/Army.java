@@ -205,22 +205,22 @@ public class Army{
         output.append("\nCommanders: \n");
         output.append(getCommanderUnits().stream()
                 .sorted((u1,u2) -> -u1.getHealth() + u2.getHealth())
-                .map(u -> u.toString()+ "\n").collect(Collectors.joining()));
+                .map(u -> u + "\n").collect(Collectors.joining()));
 
         output.append("\nInfantry: \n");
         output.append(getInfantryUnits().stream()
                     .sorted((u1,u2) -> -u1.getHealth() + u2.getHealth())
-                    .map(u -> u.toString()+ "\n").collect(Collectors.joining()));
+                    .map(u -> u + "\n").collect(Collectors.joining()));
 
         output.append("\nCavalry: \n");
         output.append(getCavalryUnits().stream()
                     .sorted((u1,u2) -> -u1.getHealth() + u2.getHealth())
-                    .map(u -> u.toString()+ "\n").collect(Collectors.joining()));
+                    .map(u -> u + "\n").collect(Collectors.joining()));
 
         output.append("\nRanged: \n");
         output.append(getRangedUnits().stream()
                     .sorted((u1,u2) -> -u1.getHealth() + u2.getHealth())
-                    .map(u -> u.toString() + "\n").collect(Collectors.joining()));
+                    .map(u -> u + "\n").collect(Collectors.joining()));
 
         return output.toString();
     }
