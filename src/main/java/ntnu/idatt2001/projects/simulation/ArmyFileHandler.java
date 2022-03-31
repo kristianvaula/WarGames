@@ -51,7 +51,7 @@ public class ArmyFileHandler {
     public ArmyFileHandler() {}
 
     /**
-     * Reads and returns an army from a text file.
+     * Reads and returns an army from a csv text file.
      * Checks for the file, and opens it. Then
      * reads line for line and adds corresponding
      * units to the army.
@@ -152,7 +152,7 @@ public class ArmyFileHandler {
      * @return String path
      */
     protected String getFilePath(String armyName){
-        return fileDirectory + DLM + armyName.toLowerCase() + ".txt";
+        return fileDirectory + DLM + armyName.toLowerCase() + ".csv";
     }
 
     /**

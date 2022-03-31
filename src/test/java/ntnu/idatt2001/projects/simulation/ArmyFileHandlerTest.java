@@ -28,10 +28,10 @@ public class ArmyFileHandlerTest {
     private static final String FILE_DIRECTORY = "src" + DLM + "main" + DLM + "resources" + DLM +
             "ntnu" + DLM + "idatt2001" + DLM + "projects" + DLM + "armyTestFiles";
 
-    //Pre initiated txt files used in test classes:
-    //      armynametwo.txt
-    //      corruptarmyname.txt
-    //      corruptunitvalues.txt
+    //Pre initiated csv files used in test classes:
+    //      armynametwo.csv
+    //      corruptarmyname.csv
+    //      corruptunitvalues.csv
     //Please check resources -> armyTestFiles before running tests
 
     @BeforeEach
@@ -63,8 +63,8 @@ public class ArmyFileHandlerTest {
     @AfterEach
     void tearDown() {
         ArrayList<String> files = new ArrayList<>();
-        files.add(FILE_DIRECTORY + DLM + testArmy.getName().toLowerCase() + ".txt");
-        files.add(FILE_DIRECTORY + DLM + emptyArmy.getName().toLowerCase() + ".txt");
+        files.add(FILE_DIRECTORY + DLM + testArmy.getName().toLowerCase() + ".csv");
+        files.add(FILE_DIRECTORY + DLM + emptyArmy.getName().toLowerCase() + ".csv");
 
         boolean deleteSuccess = true;
         for(String filePath : files){
@@ -136,8 +136,8 @@ public class ArmyFileHandlerTest {
     public class readingFromFileTest {
 
         @Test
-        @DisplayName("Reading armyNameTwo.txt")
-        public void readingArmyNameTwoTxt(){
+        @DisplayName("Reading armyNameTwo.csv")
+        public void readingArmyNameTwoCSV(){
             Army readArmy = null;
             try {
                 readArmy = armyFileHandler.readArmyFromFile(armyNameTwo);
@@ -150,8 +150,8 @@ public class ArmyFileHandlerTest {
         }
 
         @Test
-        @DisplayName("Reading corruptunitvalues.txt throws exception")
-        public void readingCorruptUnitValuesTxt(){
+        @DisplayName("Reading corruptunitvalues.csv throws exception")
+        public void readingCorruptUnitValuesCSV(){
             assertThrows(IOException.class, () ->{
                 try {
                     Army army = armyFileHandler.readArmyFromFile(corruptUnitValues);
@@ -163,8 +163,8 @@ public class ArmyFileHandlerTest {
         }
 
         @Test
-        @DisplayName("Reading corruptarmyfile.txt throws exception")
-        public void readingCorruptArmyFileTxt(){
+        @DisplayName("Reading corruptarmyfile.csv throws exception")
+        public void readingCorruptArmyFileCSV(){
             assertThrows(IOException.class, () ->{
                 try {
                     Army army = armyFileHandler.readArmyFromFile(corruptArmyFile);
@@ -177,8 +177,8 @@ public class ArmyFileHandlerTest {
         }
 
         @Test
-        @DisplayName("Reading corruptarmyname.txt throws exception")
-        public void readingCorruptArmyNameTxt(){
+        @DisplayName("Reading corruptarmyname.csv throws exception")
+        public void readingCorruptArmyNameCSV(){
             assertThrows(IOException.class, () ->{
                 try {
                     Army army = armyFileHandler.readArmyFromFile(corruptArmyName);
@@ -197,7 +197,7 @@ public class ArmyFileHandlerTest {
         @Test
         @DisplayName("getFilePath() gets correct file path")
         public void getsCorrectFilePath() {
-            String correctFilePath = FILE_DIRECTORY + DLM + "armyname.txt";
+            String correctFilePath = FILE_DIRECTORY + DLM + "armyname.csv";
             System.out.println(DLM);
             assertEquals(armyFileHandler.getFilePath(testArmy.getName()), correctFilePath);
         }
