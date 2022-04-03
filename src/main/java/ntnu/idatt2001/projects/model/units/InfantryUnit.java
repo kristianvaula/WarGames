@@ -1,4 +1,4 @@
-package ntnu.idatt2001.projects.units;
+package ntnu.idatt2001.projects.model.units;
 
 /**
  * Infantry unit is a low-mobility close combat unit.

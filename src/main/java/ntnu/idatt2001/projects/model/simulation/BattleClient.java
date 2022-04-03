@@ -1,6 +1,6 @@
-package ntnu.idatt2001.projects.simulation;
+package ntnu.idatt2001.projects.model.simulation;
 
-import ntnu.idatt2001.projects.units.*;
+import ntnu.idatt2001.projects.model.units.*;
 
 import java.util.Scanner;
 

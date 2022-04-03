@@ -1,7 +1,7 @@
-package ntnu.idatt2001.projects.simulation;
+package ntnu.idatt2001.projects.model.simulation;
 
 
-import ntnu.idatt2001.projects.units.Unit;
+import ntnu.idatt2001.projects.model.units.Unit;
 
 import java.util.Random;
 

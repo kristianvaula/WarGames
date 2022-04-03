@@ -1,6 +1,10 @@
-package ntnu.idatt2001.projects.simulation;
+package ntnu.idatt2001.projects.io;
 
-import ntnu.idatt2001.projects.units.*;
+import ntnu.idatt2001.projects.model.simulation.Army;
+import ntnu.idatt2001.projects.model.units.CavalryUnit;
+import ntnu.idatt2001.projects.model.units.CommanderUnit;
+import ntnu.idatt2001.projects.model.units.InfantryUnit;
+import ntnu.idatt2001.projects.model.units.RangedUnit;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
@@ -26,7 +30,7 @@ public class ArmyFileHandlerTest {
     private static final String DLM = File.separator;
     // DEFAULT FILE DIRECTORY
     private static final String FILE_DIRECTORY = "src" + DLM + "main" + DLM + "resources" + DLM +
-            "ntnu" + DLM + "idatt2001" + DLM + "projects" + DLM + "armyTestFiles";
+            "ntnu" + DLM + "idatt2001" + DLM + "projects" + DLM + "savefiles" + DLM + "armyTestFiles";
 
     //Pre initiated csv files used in test classes:
     //      armynametwo.csv

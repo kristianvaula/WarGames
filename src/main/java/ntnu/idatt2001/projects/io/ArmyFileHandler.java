@@ -1,6 +1,7 @@
-package ntnu.idatt2001.projects.simulation;
+package ntnu.idatt2001.projects.io;
 
-import ntnu.idatt2001.projects.units.*;
+import ntnu.idatt2001.projects.model.simulation.Army;
+import ntnu.idatt2001.projects.model.units.*;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -34,7 +35,7 @@ public class ArmyFileHandler {
     // FILE DIRECTORY
     private String fileDirectory = "src" + DLM + "main" + DLM + "resources" + DLM +
                                     "ntnu" + DLM + "idatt2001" + DLM + "projects"+ DLM +
-                                    "armyFiles";
+                                    "savefiles" + DLM + "armyFiles";
 
     // DELIMITER
     private static final String DLM = File.separator;

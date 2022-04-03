@@ -1,4 +1,4 @@
-package ntnu.idatt2001.projects.units;
+package ntnu.idatt2001.projects.model.units;
 
 /**
  * A commander is a stronger version of
