@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="540" minWidth="960" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #84828F;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <HBox prefHeight="100.0" prefWidth="200.0" styleClass="header">
+            <StackPane prefHeight="101.0" prefWidth="160.0">
+               <Button alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="135.0" style="-fx-font-size: 20;" styleClass="Button" text="EXIT">
+                  <graphic>
+                     <ImageView fitHeight="57.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@icons/leftarrow.png" />
+                     </ImageView>
+                  </graphic>
+               </Button>
+            </StackPane>
+            <StackPane fx:id="imagePane" maxWidth="640.0" minWidth="640.0" prefHeight="101.0" prefWidth="988.0">
+               <ImageView fitHeight="101.0" fitWidth="205.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@icons/wargames_banner.png" />
+               </ImageView>
+            </StackPane>
+            <StackPane prefHeight="101.0" prefWidth="160.0" />
+         </HBox>
+         <Pane maxHeight="8.0" minHeight="8.0" prefHeight="8.0" prefWidth="960.0" style="-fx-background-color: BB5511;" />
+      </VBox>
+   </top>
+</BorderPane>
