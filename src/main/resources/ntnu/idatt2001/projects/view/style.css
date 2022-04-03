@@ -1,0 +1,19 @@
+*{
+    -fx-font-family: Segoe UI Semibold;
+}
+
+.header{
+    -fx-background-color: #191308;
+    -fx-border-bottom-color: #BB5511;
+    -fx-border-bottom-width: 5px;
+}
+
+.Button{
+    -fx-border-color: #191308;
+    -fx-border-width: 5;
+    -fx-background-color: BB5511;
+    -fx-font-size: 30px;
+    -fx-text-fill: EDFFEC;
+    -fx-padding: 4px 12px;
+
+}
