@@ -27,7 +27,7 @@ public class InfantryUnit extends Unit{
      * @param attack The attack value of the unit
      * @param armor  The defensive resistance of the unit
      */
-    public InfantryUnit(String name, int health, int attack, int armor) throws IllegalArgumentException{
+    public InfantryUnit(String name, int health, int attack, int armor){
         super(name, health, attack, armor);
     }
 
@@ -39,7 +39,7 @@ public class InfantryUnit extends Unit{
      * @param name   The unit descriptive name
      * @param health The value of the units health
      */
-    public InfantryUnit(String name, int health) {
+    public InfantryUnit(String name, int health){
         super(name, health, DEFAULT_INFANTRY_ATTACK, DEFAULT_INFANTRY_ARMOR);
     }
 

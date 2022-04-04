@@ -34,7 +34,7 @@ public class CavalryUnit extends Unit{
      * @param attack The attack value of the unit
      * @param armor  The defensive resistance of the unit
      */
-    public CavalryUnit(String name, int health, int attack, int armor) throws IllegalArgumentException {
+    public CavalryUnit(String name, int health, int attack, int armor){
         super(name, health, attack, armor);
     }
 
