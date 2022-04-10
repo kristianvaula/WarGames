@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -340,6 +341,52 @@ public class ArmyTest {
             testArmy.add(testUnit);
 
             assertEquals(testArmy.getRandom(),testUnit);
+        }
+
+        @Test
+        @DisplayName("getUnitsByName() gets correct units")
+        public void getUnitsByNameGetsUnits(){
+            Army testArmy = new Army("Test army");
+            ArrayList<Unit> infantryList = new ArrayList<>();
+            infantryList.add(new InfantryUnit("Axeman",20));
+            infantryList.add(new InfantryUnit("Axeman",20));
+            infantryList.add(new InfantryUnit("Axeman",20));
+            infantryList.add(new InfantryUnit("Axeman",20));
+            ArrayList<Unit> cavalryList = new ArrayList<>();
+            String knightName = "Knight";
+            cavalryList.add(new CavalryUnit(knightName,20));
+            cavalryList.add(new CavalryUnit(knightName,20));
+            cavalryList.add(new CavalryUnit(knightName,20));
+            cavalryList.add(new CavalryUnit(knightName,20));
+            testArmy.addAll(infantryList);
+            testArmy.addAll(cavalryList);
+
+            LinkedHashMap<String,ArrayList<Unit>> unitsByName = testArmy.getUnitsByName();
+
+            assertEquals(unitsByName.get(knightName),cavalryList);
+        }
+
+        @Test
+        @DisplayName("getUnitsByName() handles different units of same type")
+        public void getUnitsByNameHandlesDifferentUnits(){
+            Army testArmy = new Army("Test army");
+            ArrayList<Unit> axemen = new ArrayList<>();
+            axemen.add(new InfantryUnit("Axeman",20));
+            axemen.add(new InfantryUnit("Axeman",20));
+            axemen.add(new InfantryUnit("Axeman",20));
+            axemen.add(new InfantryUnit("Axeman",20));
+            ArrayList<Unit> swordmen = new ArrayList<>();
+            String swordmanName = "Swordman";
+            swordmen.add(new InfantryUnit("Swordman",20));
+            swordmen.add(new InfantryUnit("Swordman",20));
+            swordmen.add(new InfantryUnit("Swordman",20));
+            swordmen.add(new InfantryUnit("Swordman",20));
+            testArmy.addAll(axemen);
+            testArmy.addAll(swordmen);
+
+            LinkedHashMap<String,ArrayList<Unit>> unitsByName = testArmy.getUnitsByName();
+
+            assertEquals(swordmen,unitsByName.get(swordmanName));
         }
 
         @Nested

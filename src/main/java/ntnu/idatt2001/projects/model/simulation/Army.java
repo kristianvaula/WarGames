@@ -6,6 +6,8 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 /**
  * Army is a collection of units gathered under a
  * common army name. An army can attack a different
@@ -116,6 +118,31 @@ public class Army{
      */
     public List<Unit> getAllUnits(){
         return this.units;
+    }
+
+    /**
+     * Returns a linked hashmap with a unit name
+     * as key and a arrayList of all units with
+     * corresponding unit name as value.
+     * @return The linked hashmap
+     */
+    public LinkedHashMap<String,ArrayList<Unit>> getUnitsByName(){
+        ArrayList<Unit> unitList = new ArrayList<>(getAllUnits().stream()
+                                        .sorted(Unit::compareTo)
+                                        .toList());
+        LinkedHashMap<String,ArrayList<Unit>> results = new LinkedHashMap<>();
+
+        while(!unitList.isEmpty()) { // Run until all units have been added
+            Unit unit = unitList.get(0);
+            List<Unit> unitsWithName = unitList.stream()
+                                        .filter(u -> u.getName()
+                                        .equals(unit.getName()))
+                                        .collect(toList());
+
+            results.put(unit.getName(),new ArrayList<>(unitsWithName));
+            unitList.removeAll(unitsWithName);
+        }
+        return results;
     }
 
     /**
