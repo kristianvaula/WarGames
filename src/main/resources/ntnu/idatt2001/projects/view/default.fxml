@@ -7,9 +7,10 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="540" minWidth="960" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #84828F;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <fx:include fx:id="topBar" source="TopBar.fxml" />
          <HBox prefHeight="100.0" prefWidth="200.0" styleClass="header">
             <StackPane prefHeight="101.0" prefWidth="160.0">
-               <Button alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="135.0" style="-fx-font-size: 20;" styleClass="Button" text="EXIT">
+               <Button alignment="CENTER" mnemonicParsing="false" prefHeight="62.0" prefWidth="147.0" style="-fx-font-size: 20;" styleClass="Button" text="EXIT">
                   <graphic>
                      <ImageView fitHeight="57.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                         <Image url="@icons/leftarrow.png" />
