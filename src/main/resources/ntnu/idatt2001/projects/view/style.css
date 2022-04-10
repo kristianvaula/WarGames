@@ -13,8 +13,13 @@
     -fx-border-width: 5;
     -fx-background-color: #BB5511;
     -fx-font-size: 30px;
-    -fx-text-fill: EDFFEC;
-    -fx-padding: 4px 12px;
+    -fx-text-fill: #EDFFEC;
+    -fx-padding: 5px 12px 5px 12px;
+}
+
+.Button:hover{
+    -fx-background-color:#A84D10;
+    -fx-cursor: hand;
 }
 
 .menuUnitItem{
