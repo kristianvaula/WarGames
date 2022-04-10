@@ -11,9 +11,45 @@
 .Button{
     -fx-border-color: #191308;
     -fx-border-width: 5;
-    -fx-background-color: BB5511;
+    -fx-background-color: #BB5511;
     -fx-font-size: 30px;
     -fx-text-fill: EDFFEC;
     -fx-padding: 4px 12px;
+}
 
+.menuUnitItem{
+    -fx-text-fill:#EDFFEC;
+    -fx-font-size: 16;
+}
+.scroll-bar:vertical .track{
+    -fx-background-color :#646E78;
+    -fx-border-color :#646E78;
+    -fx-background-radius : 0.0em;
+    -fx-border-radius :2.0em;
+}
+
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 10.0 0.0 0.0;
+
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow{
+    -fx-shape : " ";
+    -fx-padding :0.15em 0.0;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";
+    -fx-padding :0.0 0.15em;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color :derive(#646E78,90.0%);
+    -fx-background-insets : 2.0, 0.0, 0.0;
+    -fx-background-radius : 2.0em;
 }
