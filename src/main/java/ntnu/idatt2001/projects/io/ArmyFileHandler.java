@@ -153,7 +153,7 @@ public class ArmyFileHandler {
      * @return String path
      */
     protected String getFilePath(String armyName){
-        return fileDirectory + DLM + armyName.toLowerCase() + ".csv";
+        return fileDirectory + DLM + armyName.toLowerCase().replaceAll(" ","_") + ".csv";
     }
 
     /**

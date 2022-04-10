@@ -33,7 +33,7 @@ public class ArmyFileHandlerTest {
             "ntnu" + DLM + "idatt2001" + DLM + "projects" + DLM + "savefiles" + DLM + "armyTestFiles";
 
     //Pre initiated csv files used in test classes:
-    //      armynametwo.csv
+    //      army_name_two.csv
     //      corruptarmyname.csv
     //      corruptunitvalues.csv
     //Please check resources -> armyTestFiles before running tests
@@ -43,7 +43,7 @@ public class ArmyFileHandlerTest {
         corruptUnitValues = "CorruptUnitValues";
         corruptArmyName = "CorruptArmyName";
         corruptArmyFile = "CorruptArmyFile";
-        armyNameTwo = "ArmyNameTwo";
+        armyNameTwo = "Army Name Two";
 
         armyName = "ArmyName";
         testArmy = new Army(armyName);
