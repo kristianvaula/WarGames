@@ -2,6 +2,7 @@ package ntnu.idatt2001.projects.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -36,7 +37,7 @@ public class TopBarController implements Initializable {
      */
     @FXML
     protected void handleCloseAction(ActionEvent event){
-        Stage stage = (Stage)closeButton.getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 
@@ -46,7 +47,7 @@ public class TopBarController implements Initializable {
      */
     @FXML
     protected void handleMinimizeAction(ActionEvent event){
-        Stage stage = (Stage)minimizeButton.getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
 

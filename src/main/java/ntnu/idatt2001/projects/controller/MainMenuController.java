@@ -16,7 +16,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import ntnu.idatt2001.projects.io.ArmyFileHandler;
 import ntnu.idatt2001.projects.model.simulation.Army;
 import ntnu.idatt2001.projects.model.simulation.Battle;
@@ -94,7 +93,7 @@ public class MainMenuController implements Initializable {
             ArrayList<Unit> specifiedUnits = unitsByName.get(unit);
             HBox rowContainer = new HBox();
             rowContainer.setAlignment(CENTER_LEFT);
-            unitContainer.setMargin(rowContainer,new Insets(5,0,0,10));
+            VBox.setMargin(rowContainer,new Insets(5,0,0,10));
 
             ImageView icon = new ImageView();
             if(getUnitIcons(specifiedUnits.get(0).getClass()) != null){
@@ -160,7 +159,7 @@ public class MainMenuController implements Initializable {
             window.show();
 
         } catch (IOException e) {
-            System.out.println(e.getCause());
+            e.printStackTrace();
             throw e;
         }
     }
@@ -184,7 +183,7 @@ public class MainMenuController implements Initializable {
             window.show();
 
         } catch (IOException e) {
-            System.out.println(e.getCause());
+            e.printStackTrace();
             throw e;
         }
     }
@@ -208,7 +207,7 @@ public class MainMenuController implements Initializable {
             window.show();
 
         } catch (IOException e) {
-            System.out.println(e.getCause());
+            e.printStackTrace();
             throw e;
         }
     }

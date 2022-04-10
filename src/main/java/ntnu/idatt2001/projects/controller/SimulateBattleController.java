@@ -37,7 +37,7 @@ public class SimulateBattleController implements Initializable {
             window.show();
 
         } catch (IOException e) {
-            System.out.println(e.getCause());
+            e.printStackTrace();
             throw e;
         }
     }
