@@ -1,16 +1,20 @@
 package ntnu.idatt2001.projects.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 /**
  * Controller for TopBar.fxml which is used by all application scenes
  */
-public class TopBarController {
+public class TopBarController implements Initializable {
 
     // Offsets
     private double xOffset = 0;
@@ -20,6 +24,11 @@ public class TopBarController {
     @FXML Pane topBarPane;
     @FXML Button closeButton;
     @FXML Button minimizeButton;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
 
     /**
      * Closes the application when the X button is clicked
