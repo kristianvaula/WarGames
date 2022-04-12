@@ -58,3 +58,22 @@
     -fx-background-insets : 2.0, 0.0, 0.0;
     -fx-background-radius : 2.0em;
 }
+
+.TableView {
+    -fx-border-color:#191308;
+    -fx-border-width: 2;
+    -fx-background-color:#646E78;
+}
+
+.table-row-cell:odd{
+    -fx-background-color:#646E78;
+}
+.table-row-cell:even{
+    -fx-background-color:#84828F;
+}
+
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: #EDFFEC;
+}
