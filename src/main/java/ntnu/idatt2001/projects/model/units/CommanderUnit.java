@@ -35,4 +35,9 @@ public class CommanderUnit extends CavalryUnit{
     public CommanderUnit(String name, int health) {
         super(name, health,DEFAULT_COMMANDER_ATTACK,DEFAULT_COMMANDER_ARMOR);
     }
+
+    @Override
+    public String getType(){
+        return "Commander Unit";
+    }
 }
