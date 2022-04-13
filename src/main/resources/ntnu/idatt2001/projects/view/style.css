@@ -1,5 +1,5 @@
 *{
-    -fx-font-family: Segoe UI Semibold;
+    -fx-font-family: "Segoe UI Semibold";
 }
 
 .header{
@@ -12,7 +12,7 @@
     -fx-border-color: #191308;
     -fx-border-width: 5;
     -fx-background-color: #BB5511;
-    -fx-font-size: 30px;
+    -fx-font-size: 26px;
     -fx-text-fill: #EDFFEC;
     -fx-padding: 5px 12px 5px 12px;
 }
@@ -63,6 +63,12 @@
     -fx-border-color:#191308;
     -fx-border-width: 2;
     -fx-background-color:#646E78;
+    -fx-text-fill: #EDFFEC;
+}
+.table-row-cell{
+    -fx-font-size: 18;
+    -fx-text-background-color: #EDFFEC;
+
 }
 
 .table-row-cell:odd{
@@ -70,6 +76,9 @@
 }
 .table-row-cell:even{
     -fx-background-color:#84828F;
+}
+.table-row-cell:selected{
+    -fx-background-color: #191308;
 }
 
 .table-view .column-header,
