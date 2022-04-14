@@ -81,8 +81,28 @@
     -fx-background-color: #191308;
 }
 
+.table-view .label{
+    -fx-background-color: #EDFFEC;
+    -fx-text-fill: #191308;
+    -fx-font-size: 12pt;
+}
 .table-view .column-header,
 .table-view .column-header .filler,
 .table-view .column-header-background .filler {
     -fx-background-color: #EDFFEC;
+}
+.label{
+    -fx-text-fill: #EDFFEC;
+    -fx-font-size: 14pt;
+}
+.smallInputs{
+    -fx-background-color: #EDFFEC;
+    -fx-font-size: 12pt;
+    -fx-text-fill: #191308;
+    -fx-pref-height: 25pt;
+    -fx-min-height: 25pt;
+}
+.choice-box .label {
+    -fx-text-fill: #191308;
+    -fx-font-size: 12pt;
 }

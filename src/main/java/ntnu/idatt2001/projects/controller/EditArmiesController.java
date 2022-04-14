@@ -121,7 +121,25 @@ public class EditArmiesController implements Initializable {
         }
     }
 
-    //TODO ADD SAVE CHANGES METHOD
+    /**
+     * Saves the army to file and
+     */
+    @FXML
+    public void saveChanges(){
+        if(selectedArmy != null){
+            if(!armyNameInput.getText().equals(selectedArmy.getName())){
+                selectedArmy.setName(armyNameInput.getText());
+            }
+            //TODO IMPLEMENT SAViNG TO DATABASE HERE WHEN IMPLEMENTED
+            ArmyFileHandler fileHandler = new ArmyFileHandler();
+            try {
+                fileHandler.writeArmyToFile(selectedArmy);
+            } catch (IOException e) {
+                e.printStackTrace();
+                alertUser(Alert.AlertType.ERROR,"There was an error saving the army, please try again");
+            }
+        }
+    }
 
     /**
      * Displays name and units of selected army
