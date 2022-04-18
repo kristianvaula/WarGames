@@ -145,6 +145,13 @@ public abstract class Unit implements Comparable<Unit>{
     public abstract int getResistBonus();
 
     /**
+     * Returns the class as string
+     *
+     * @return class
+     */
+    public abstract String getType();
+
+    /**
      * Compares two units. First we check if they
      * are the same subclass. Then we check each
      * individual field of the unit.
@@ -154,7 +161,7 @@ public abstract class Unit implements Comparable<Unit>{
      */
     @Override
     public int compareTo(Unit u) {
-        if(this.getClass().equals(u.getClass())) return 1;
+        if(this.getType().equals(u.getType())) return 1;
         else if(!this.getName().equals(u.getName())) return 1;
         else if(this.getHealth() > u.getHealth()) return 1;
         else if(this.getAttack() > u.getAttack()) return 1;

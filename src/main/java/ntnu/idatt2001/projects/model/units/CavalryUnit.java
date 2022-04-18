@@ -81,4 +81,9 @@ public class CavalryUnit extends Unit{
     public int getResistBonus() {
         return CAVALRY_RESISTANCE_BONUS;
     }
+
+    @Override
+    public String getType(){
+        return "Cavalry Unit";
+    }
 }

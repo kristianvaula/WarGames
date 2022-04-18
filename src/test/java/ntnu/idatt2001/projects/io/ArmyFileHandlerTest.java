@@ -86,7 +86,7 @@ public class ArmyFileHandlerTest {
         @Test
         @DisplayName("Writing army to file")
         public void writingArmyToFile(){
-            boolean checkBefore = armyFileHandler.armyFileExists(testArmy.getName());
+            boolean checkBefore = armyFileHandler.armyFileExists(armyFileHandler.getFilePath(testArmy.getName()));
 
             try {
                 armyFileHandler.writeArmyToFile(testArmy);
@@ -95,13 +95,13 @@ public class ArmyFileHandlerTest {
                 fail();
             }
 
-            assertNotEquals(checkBefore,armyFileHandler.armyFileExists(testArmy.getName()));
+            assertNotEquals(checkBefore,armyFileHandler.armyFileExists(armyFileHandler.getFilePath(testArmy.getName())));
         }
 
         @Test
         @DisplayName("Writing army to file")
         public void writingEmptyArmyToFile(){
-            boolean checkBefore = armyFileHandler.armyFileExists(emptyArmy.getName());
+            boolean checkBefore = armyFileHandler.armyFileExists(armyFileHandler.getFilePath(emptyArmy.getName()));
 
             try {
                 armyFileHandler.writeArmyToFile(emptyArmy);
@@ -110,7 +110,7 @@ public class ArmyFileHandlerTest {
                 fail();
             }
 
-            assertNotEquals(checkBefore,armyFileHandler.armyFileExists(emptyArmy.getName()));
+            assertNotEquals(checkBefore,armyFileHandler.armyFileExists(armyFileHandler.getFilePath(emptyArmy.getName())));
         }
 
         @Test
@@ -131,7 +131,7 @@ public class ArmyFileHandlerTest {
                 fail();
             }
 
-            assertTrue(armyFileHandler.armyFileExists(testArmy.getName()));
+            assertTrue(armyFileHandler.armyFileExists(armyFileHandler.getFilePath(testArmy.getName())));
         }
     }
 
@@ -144,7 +144,7 @@ public class ArmyFileHandlerTest {
         public void readingArmyNameTwoCSV(){
             Army readArmy = null;
             try {
-                readArmy = armyFileHandler.readArmyFromFile(armyNameTwo);
+                readArmy = armyFileHandler.getArmyFromFile(armyNameTwo);
             }catch (Exception e){
                 System.out.println(e);
                 fail();
@@ -158,7 +158,7 @@ public class ArmyFileHandlerTest {
         public void readingCorruptUnitValuesCSV(){
             assertThrows(IOException.class, () ->{
                 try {
-                    Army army = armyFileHandler.readArmyFromFile(corruptUnitValues);
+                    Army army = armyFileHandler.getArmyFromFile(corruptUnitValues);
                 }catch(Exception e){
                     System.out.println(e);
                     throw e;
@@ -171,7 +171,7 @@ public class ArmyFileHandlerTest {
         public void readingCorruptArmyFileCSV(){
             assertThrows(IOException.class, () ->{
                 try {
-                    Army army = armyFileHandler.readArmyFromFile(corruptArmyFile);
+                    Army army = armyFileHandler.getArmyFromFile(corruptArmyFile);
 
                 }catch(Exception e){
                     System.out.println(e);
@@ -185,12 +185,27 @@ public class ArmyFileHandlerTest {
         public void readingCorruptArmyNameCSV(){
             assertThrows(IOException.class, () ->{
                 try {
-                    Army army = armyFileHandler.readArmyFromFile(corruptArmyName);
+                    Army army = armyFileHandler.getArmyFromFile(corruptArmyName);
                 }catch(Exception e){
                     System.out.println(e);
                     throw e;
                 }
             });
+        }
+
+        @Test
+        @DisplayName("Reading all default savefiles")
+        public void readingAllDefaultSavefiles(){
+            ArmyFileHandler defaultFileHandler = new ArmyFileHandler();
+            ArrayList<Army> armies = null;
+            try {
+                armies = defaultFileHandler.getArmySavefiles();
+            }catch (Exception e){
+                System.out.println(e);
+                fail();
+            }
+
+            assertTrue(armies.size() > 1 && armies.get(0).hasUnits());
         }
     }
 
@@ -211,7 +226,7 @@ public class ArmyFileHandlerTest {
         public void armyFileExistReturnTrue() {
             String extistingArmyName = armyNameTwo;
 
-            assertTrue(armyFileHandler.armyFileExists(extistingArmyName));
+            assertTrue(armyFileHandler.armyFileExists(armyFileHandler.getFilePath(extistingArmyName)));
         }
 
         @Test
@@ -219,7 +234,7 @@ public class ArmyFileHandlerTest {
         public void armyFileExistReturnFalse() {
             String nonExistingArmyName = "RandomArmyName";
 
-            assertFalse(armyFileHandler.armyFileExists(nonExistingArmyName));
+            assertFalse(armyFileHandler.armyFileExists(armyFileHandler.getFilePath(nonExistingArmyName)));
         }
     }
 }

@@ -9,7 +9,7 @@
     <top>
         <VBox alignment="TOP_CENTER" prefHeight="169.0" prefWidth="960.0" BorderPane.alignment="CENTER">
            <fx:include fx:id="topBar" source="TopBar.fxml" />
-            <HBox prefHeight="100.0" prefWidth="960.0" styleClass="header">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="960.0" styleClass="header">
                 <StackPane prefHeight="101.0" prefWidth="160.0" />
                 <StackPane fx:id="imagePane" maxWidth="640.0" minWidth="640.0" prefHeight="101.0" prefWidth="640.0">
                     <ImageView fitHeight="131.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
@@ -24,41 +24,36 @@
    <center>
       <VBox alignment="CENTER" prefHeight="404.0" prefWidth="537.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets/>
+            <Insets />
          </BorderPane.margin>
-         <Button mnemonicParsing="false" onAction="#loadSimulateBattle" prefHeight="65.0" prefWidth="285.0"
-                 style="-fx-border-color: #191308; -fx-border-width: 2;" styleClass="Button" text="Simulate Battle">
+         <Button mnemonicParsing="false" onAction="#loadSimulateBattle" prefHeight="65.0" prefWidth="285.0" style="-fx-border-color: #191308; -fx-border-width: 2;" styleClass="Button" text="Simulate Battle">
             <VBox.margin>
-               <Insets bottom="20.0"/>
+               <Insets bottom="20.0" />
             </VBox.margin>
             <graphic>
                <ImageView fitHeight="51.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/crossed_arrows.png"/>
+                  <Image url="@icons/crossed_arrows.png" />
                </ImageView>
             </graphic>
          </Button>
-         <Button layoutX="67.0" layoutY="255.0" mnemonicParsing="false" onAction="#loadEditArmies" prefHeight="65.0"
-                 prefWidth="285.0" style="-fx-border-color: #191308; -fx-border-width: 2;" styleClass="Button"
-                 text="  Edit Armies   ">
+         <Button layoutX="67.0" layoutY="255.0" mnemonicParsing="false" onAction="#loadEditArmies" prefHeight="65.0" prefWidth="285.0" style="-fx-border-color: #191308; -fx-border-width: 2;" styleClass="Button" text="  Edit Armies   ">
             <graphic>
                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/anvil.png"/>
+                  <Image url="@icons/anvil.png" />
                </ImageView>
             </graphic>
             <VBox.margin>
-               <Insets bottom="20.0"/>
+               <Insets bottom="20.0" />
             </VBox.margin>
          </Button>
-         <Button layoutX="149.0" layoutY="222.0" mnemonicParsing="false" onAction="#loadImportArmies" prefHeight="65.0"
-                 prefWidth="285.0" style="-fx-border-color: #191308; -fx-border-width: 2;" styleClass="Button"
-                 text="Import Armies">
+         <Button layoutX="149.0" layoutY="222.0" mnemonicParsing="false" onAction="#loadImportArmies" prefHeight="65.0" prefWidth="285.0" style="-fx-border-color: #191308; -fx-border-width: 2;" styleClass="Button" text="Import Armies">
             <graphic>
                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/book.png"/>
+                  <Image url="@icons/book.png" />
                </ImageView>
             </graphic>
             <VBox.margin>
-               <Insets bottom="20.0"/>
+               <Insets bottom="20.0" />
             </VBox.margin>
          </Button>
       </VBox>
@@ -66,24 +61,20 @@
    <right>
       <Pane prefHeight="404.0" prefWidth="280.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets/>
+            <Insets />
          </BorderPane.margin>
-         <VBox alignment="CENTER" layoutY="40.0" prefHeight="304.0" prefWidth="250.0"
-               style="-fx-background-color: BB5511; -fx-border-color: #191308;">
-            <VBox alignment="CENTER" prefHeight="290.0" prefWidth="181.0"
-                  style="-fx-background-color: #646E78; -fx-border-color: #191308;">
+         <VBox alignment="CENTER" layoutY="40.0" prefHeight="304.0" prefWidth="250.0" style="-fx-background-color: BB5511; -fx-border-color: #191308;">
+            <VBox alignment="CENTER" prefHeight="290.0" prefWidth="181.0" style="-fx-background-color: #646E78; -fx-border-color: #191308;">
                <VBox.margin>
-                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0"/>
+                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
                </VBox.margin>
                <Label fx:id="armyNameOutputB" alignment="CENTER" styleClass="menuUnitItem">
                   <VBox.margin>
-                     <Insets bottom="20.0"/>
+                     <Insets bottom="20.0" />
                   </VBox.margin>
                </Label>
-               <ScrollPane hbarPolicy="NEVER" prefHeight="186.0" prefWidth="144.0"
-                           style="-fx-background-color: #646E78;">
-                  <VBox fx:id="armyUnitsOutputB" prefHeight="187.0" prefWidth="232.0"
-                        style="-fx-border-color: #646E78; -fx-background-color: #646E78;"/>
+               <ScrollPane hbarPolicy="NEVER" prefHeight="186.0" prefWidth="144.0" style="-fx-background-color: #646E78;">
+                  <VBox fx:id="armyUnitsOutputB" prefHeight="187.0" prefWidth="232.0" style="-fx-border-color: #646E78; -fx-background-color: #646E78;" />
                </ScrollPane>
             </VBox>
          </VBox>
@@ -91,22 +82,18 @@
    </right>
    <left>
       <Pane prefHeight="404.0" prefWidth="280.0" BorderPane.alignment="TOP_LEFT">
-         <VBox alignment="CENTER" layoutX="30.0" layoutY="40.0" prefHeight="304.0" prefWidth="250.0"
-               style="-fx-background-color: BB5511; -fx-border-color: #191308;">
-            <VBox alignment="CENTER" prefHeight="290.0" prefWidth="181.0"
-                  style="-fx-background-color: #646E78; -fx-border-color: #191308;">
+         <VBox alignment="CENTER" layoutX="30.0" layoutY="40.0" prefHeight="304.0" prefWidth="250.0" style="-fx-background-color: BB5511; -fx-border-color: #191308;">
+            <VBox alignment="CENTER" prefHeight="290.0" prefWidth="181.0" style="-fx-background-color: #646E78; -fx-border-color: #191308;">
                <VBox.margin>
-                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0"/>
+                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
                </VBox.margin>
                <Label fx:id="armyNameOutputA" alignment="CENTER" styleClass="menuUnitItem">
                   <VBox.margin>
-                     <Insets bottom="20.0"/>
+                     <Insets bottom="20.0" />
                   </VBox.margin>
                </Label>
-               <ScrollPane hbarPolicy="NEVER" prefHeight="186.0" prefWidth="144.0"
-                           style="-fx-background-color: #646E78;">
-                  <VBox fx:id="armyUnitsOutputA" prefHeight="187.0" prefWidth="232.0"
-                        style="-fx-border-color: #646E78; -fx-background-color: #646E78;"/>
+               <ScrollPane hbarPolicy="NEVER" prefHeight="186.0" prefWidth="144.0" style="-fx-background-color: #646E78;">
+                  <VBox fx:id="armyUnitsOutputA" prefHeight="187.0" prefWidth="232.0" style="-fx-border-color: #646E78; -fx-background-color: #646E78;" />
                </ScrollPane>
             </VBox>
          </VBox>

@@ -6,6 +6,7 @@ import ntnu.idatt2001.projects.model.units.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -52,23 +53,60 @@ public class ArmyFileHandler {
     public ArmyFileHandler() {}
 
     /**
-     * Reads and returns an army from a csv text file.
-     * Checks for the file, and opens it. Then
-     * reads line for line and adds corresponding
-     * units to the army.
+     * Takes a army name and checks if a corresponding file
+     * exists. If it does we call the readArmyFromFile method.
      * @param armyName Name of army we are trying to read
      * @return the army we have read
      * @throws IOException if file does not exist or is corrupt
      * @throws NumberFormatException if file values are corrupt
      */
-    public Army readArmyFromFile(String armyName) throws IOException,NumberFormatException{
-        if(!armyFileExists(armyName)){
+    public Army getArmyFromFile(String armyName) throws IOException,NumberFormatException{
+        if(!armyFileExists(getFilePath(armyName))){
             throw new IOException("There were no records of " + armyName + ". Please try again");
         }
 
+        File file = new File(getFilePath(armyName));
+        Army army = readArmyFromFile(file);
+
+        return army;
+    }
+
+    /**
+     * Gets all army savefiles and returns them as a list.
+     * @return the army we have read
+     * @throws IOException if file does not exist or is corrupt
+     * @throws NumberFormatException if file values are corrupt
+     */
+    public ArrayList<Army> getArmySavefiles() throws IOException,NumberFormatException{
+        File directory = new File(fileDirectory);
+        String[] fileList = directory.list();
+
+        ArrayList<Army> armies = new ArrayList<>();
+        for(String armyFile : fileList){
+
+            if(!armyFileExists(fileDirectory + DLM + (armyFile))){
+                throw new IOException("There were as issue loading savefile: " + armyFile);
+            }
+            File file = new File(fileDirectory + DLM + (armyFile));
+           armies.add(readArmyFromFile(file));
+        }
+
+        return armies;
+    }
+
+    /**
+     * Reads and returns an army from a csv text file.
+     * Takes in the army file as parameter, reads it and
+     * returns it as an army object.
+     * @param file Army file we are trying to read
+     * @return the army we have read
+     * @throws IOException if file does not exist or is corrupt
+     * @throws NumberFormatException if file values are corrupt
+     */
+    private Army readArmyFromFile(File file) throws IOException,NumberFormatException{
         Army army;
         // try/catch bracket automatically opens and closes file
-        try(Scanner scanner = new Scanner(new File(getFilePath(armyName)))){
+        try(Scanner scanner = new Scanner(file)){
 
             if(!scanner.hasNextLine()) throw new IOException("File does not contain any values");
 
@@ -139,11 +177,11 @@ public class ArmyFileHandler {
     /**
      * Safe way to check if a file exists
      * without worrying about exceptions
-     * @param armyName name the army whose File we are looking for
+     * @param filepath filepath of the army whose File we are looking for
      * @return true if army file exists
      */
-    protected boolean armyFileExists(String armyName){
-        return new File(getFilePath(armyName)).exists();
+    protected boolean armyFileExists(String filepath){
+        return new File(filepath).exists();
     }
 
     /**

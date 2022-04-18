@@ -55,8 +55,8 @@ public class MainMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
             ArmyFileHandler fileHandler = new ArmyFileHandler();
-            Army humanArmy = fileHandler.readArmyFromFile("Human Army");
-            Army orcArmy = fileHandler.readArmyFromFile("Orc Army");
+            Army humanArmy = fileHandler.getArmyFromFile("Human Army");
+            Army orcArmy = fileHandler.getArmyFromFile("Orc Army");
             battle = new Battle(humanArmy,orcArmy);
             displayArmy(battle.getArmyOne(),armyNameOutputA,armyUnitsOutputA);
             displayArmy(battle.getArmyTwo(),armyNameOutputB,armyUnitsOutputB);
@@ -129,7 +129,7 @@ public class MainMenuController implements Initializable {
                 return new Image(new FileInputStream(ICONS_URL + "knight.png"));
             }
             else if(type == RangedUnit.class) {
-                return new Image(new FileInputStream(ICONS_URL + "crossed_arrows.png"));
+                return new Image(new FileInputStream(ICONS_URL + "archer.png"));
             }
             else if(type == InfantryUnit.class){
                 return new Image(new FileInputStream(ICONS_URL + "infantry.png"));

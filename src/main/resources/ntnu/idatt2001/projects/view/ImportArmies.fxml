@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="540" minWidth="960" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #84828F;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ntnu.idatt2001.projects.controller.ImportArmiesController">
     <top>
-        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+        <VBox alignment="TOP_CENTER" prefHeight="153.0" prefWidth="960.0" BorderPane.alignment="CENTER">
             <fx:include fx:id="topBar" source="TopBar.fxml" />
-            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="header">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="header">
                 <StackPane prefHeight="84.0" prefWidth="160.0">
                     <Button alignment="CENTER" mnemonicParsing="false" onAction="#loadMainMenu" prefHeight="62.0" prefWidth="147.0" style="-fx-font-size: 20;" styleClass="Button" text="EXIT">
                         <graphic>
@@ -28,4 +29,79 @@
             <Pane maxHeight="45.0" minHeight="8.0" prefHeight="8.0" prefWidth="960.0" style="-fx-background-color: BB5511;" />
         </VBox>
     </top>
+   <center>
+      <HBox alignment="CENTER" prefHeight="332.0" prefWidth="960.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="armyList" prefHeight="273.0" prefWidth="274.0" style="-fx-background-color: #646E78; -fx-border-color: #191308;">
+              <columns>
+                <TableColumn fx:id="selectArmyColumn" prefWidth="271.1999977588654" text="Select Army" />
+              </columns>
+               <HBox.margin>
+                  <Insets left="20.0" right="100.0" top="20.0" />
+               </HBox.margin>
+            </TableView>
+            <VBox prefHeight="303.0" prefWidth="567.0">
+               <children>
+                  <Label fx:id="armyNameLabel" alignment="CENTER" prefHeight="41.0" prefWidth="538.0" style="-fx-background-color: #BB5511; -fx-font-size: 20; -fx-text-fill: #EDFFEC; -fx-border-color: #191308; -fx-border-width: 2;" text="Human Army">
+                     <VBox.margin>
+                        <Insets left="20.0" right="10.0" top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TableView fx:id="selectedArmyTable" prefHeight="242.0" prefWidth="538.0" style="-fx-background-color: #646E78; -fx-border-color: #191308;">
+                    <columns>
+                      <TableColumn fx:id="typeColumn" prefWidth="180.0" text="Type" />
+                      <TableColumn fx:id="nameColumn" prefWidth="185.0" text="Name" />
+                        <TableColumn fx:id="attackColumn" minWidth="0.0" prefWidth="55.0" text="Attack" />
+                        <TableColumn fx:id="healthColumn" prefWidth="55.0" text="Health" />
+                        <TableColumn fx:id="armorColumn" prefWidth="55.0" text="Armor" />
+                    </columns>
+                     <VBox.margin>
+                        <Insets left="20.0" right="10.0" />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="83.0" prefWidth="960.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#displaySelectedArmy" style="-fx-font-size: 14; -fx-border-width: 1;" styleClass="Button" text="Preview">
+               <HBox.margin>
+                  <Insets bottom="40.0" left="50.0" right="50.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+            <HBox alignment="CENTER" prefHeight="83.0" prefWidth="516.0" style="-fx-background-color: #646E78; -fx-border-color: #191308;">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="50.0" top="10.0" />
+               </HBox.margin>
+               <children>
+                  <Label prefHeight="61.0" prefWidth="148.0" style="-fx-font-size: 16; -fx-text-fill: #EDFFEC;" text="Select which army to replace " wrapText="true">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding></Label>
+                  <VBox alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="152.0">
+                     <children>
+                        <RadioButton fx:id="radioButton1" mnemonicParsing="false" style="-fx-font-size: 14; -fx-text-fill: #EDFFEC;" text="Army1">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin></RadioButton>
+                        <RadioButton fx:id="radioButton2" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-font-size: 14; -fx-text-fill: #EDFFEC;" text="Army2">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin></RadioButton>
+                     </children>
+                  </VBox>
+                  <Button mnemonicParsing="false" onAction="#replaceSelectedArmy" prefHeight="40.0" prefWidth="77.0" style="-fx-font-size: 14; -fx-border-width: 1;" styleClass="Button" text="Replace">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </HBox.margin></Button>
+               </children>
+            </HBox>
+         </children></HBox>
+   </bottom>
 </BorderPane>

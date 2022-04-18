@@ -82,4 +82,9 @@ public class RangedUnit extends Unit{
         //If resistanceBonus bonus can never be below reduction constant.
         return Math.max(resistanceBonus, RANGE_BONUS_REDUCTION);
     }
+
+    @Override
+    public String getType(){
+        return "Ranged Unit";
+    }
 }

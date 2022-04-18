@@ -1,5 +1,5 @@
 *{
-    -fx-font-family: Segoe UI Semibold;
+    -fx-font-family: "Segoe UI Semibold";
 }
 
 .header{
@@ -12,7 +12,7 @@
     -fx-border-color: #191308;
     -fx-border-width: 5;
     -fx-background-color: #BB5511;
-    -fx-font-size: 30px;
+    -fx-font-size: 26px;
     -fx-text-fill: #EDFFEC;
     -fx-padding: 5px 12px 5px 12px;
 }
@@ -57,4 +57,52 @@
     -fx-background-color :derive(#646E78,90.0%);
     -fx-background-insets : 2.0, 0.0, 0.0;
     -fx-background-radius : 2.0em;
+}
+
+.TableView {
+    -fx-border-color:#191308;
+    -fx-border-width: 2;
+    -fx-background-color:#646E78;
+    -fx-text-fill: #EDFFEC;
+}
+.table-row-cell{
+    -fx-font-size: 18;
+    -fx-text-background-color: #EDFFEC;
+
+}
+
+.table-row-cell:odd{
+    -fx-background-color:#646E78;
+}
+.table-row-cell:even{
+    -fx-background-color:#84828F;
+}
+.table-row-cell:selected{
+    -fx-background-color: #191308;
+}
+
+.table-view .label{
+    -fx-background-color: #EDFFEC;
+    -fx-text-fill: #191308;
+    -fx-font-size: 12pt;
+}
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: #EDFFEC;
+}
+.label{
+    -fx-text-fill: #EDFFEC;
+    -fx-font-size: 14pt;
+}
+.smallInputs{
+    -fx-background-color: #EDFFEC;
+    -fx-font-size: 12pt;
+    -fx-text-fill: #191308;
+    -fx-pref-height: 25pt;
+    -fx-min-height: 25pt;
+}
+.choice-box .label {
+    -fx-text-fill: #191308;
+    -fx-font-size: 12pt;
 }
