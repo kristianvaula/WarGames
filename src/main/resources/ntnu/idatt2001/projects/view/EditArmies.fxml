@@ -9,7 +9,7 @@
     <top>
         <VBox alignment="TOP_CENTER" prefHeight="154.0" prefWidth="960.0" BorderPane.alignment="CENTER">
             <fx:include fx:id="topBar" source="TopBar.fxml" />
-            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="header">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="header">
                 <StackPane prefHeight="101.0" prefWidth="160.0">
                     <Button alignment="CENTER" mnemonicParsing="false" onAction="#loadMainMenu" prefHeight="62.0" prefWidth="147.0" style="-fx-font-size: 20;" styleClass="Button" text="EXIT">
                         <graphic>
