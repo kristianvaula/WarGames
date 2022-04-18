@@ -84,6 +84,6 @@ public class CavalryUnit extends Unit{
 
     @Override
     public String getType(){
-        return "CavalryUnit";
+        return "Cavalry Unit";
     }
 }
