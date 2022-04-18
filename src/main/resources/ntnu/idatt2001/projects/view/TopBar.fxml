@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="topBarPane" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#handleClickAction" onMouseDragged="#handleMovementAction" prefHeight="42.0" prefWidth="960.0" style="-fx-background-color: #191308;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ntnu.idatt2001.projects.controller.TopBarController">
+    <children>
+        <Button fx:id="closeButton" layoutX="5.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleCloseAction" style="-fx-background-color: #BB5511; -fx-text-fill: #EDFFEC; -fx-font-size: 14;" styleClass="Button" stylesheets="@style.css" text="X" />
+        <Button fx:id="minimizeButton" layoutX="40.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleMinimizeAction" style="-fx-background-color: #BB5511; -fx-text-fill: #EDFFEC; -fx-font-size: 14;" styleClass="Button" text="_" />
+    </children>
+</Pane>
