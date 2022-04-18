@@ -129,7 +129,7 @@ public class MainMenuController implements Initializable {
                 return new Image(new FileInputStream(ICONS_URL + "knight.png"));
             }
             else if(type == RangedUnit.class) {
-                return new Image(new FileInputStream(ICONS_URL + "crossed_arrows.png"));
+                return new Image(new FileInputStream(ICONS_URL + "archer.png"));
             }
             else if(type == InfantryUnit.class){
                 return new Image(new FileInputStream(ICONS_URL + "infantry.png"));
