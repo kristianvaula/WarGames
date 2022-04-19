@@ -1,9 +1,12 @@
 package ntnu.idatt2001.projects.model.units;
 
+import ntnu.idatt2001.projects.model.simulation.Terrain;
+
 /**
  * Ranged units are low-mobility long range units.
  * Most effective from long range where they are less
- * exposed to enemy close combat units.
+ * exposed to enemy close combat units. Has an advantage on
+ * hills and a disadvantage in forests.
  *
  * @author Kristian Vaula Jensen
  * //@version 2022.02.09
@@ -16,9 +19,12 @@ public class RangedUnit extends Unit{
     //Constant for attack bonus.
     protected static final int RANGED_ATTACK_BONUS = 3;
     //Constant for the resistance bonus at first attack
-    protected static final int RANGED_MAXIMUM_RANGE_BONUS = 6;
+    protected static final int RANGED_MAXIMUM_RESISTANCE_BONUS = 6;
+    //Constants for bonus and reductions based on terrain type
+    protected static final int RANGED_HILL_ATTACK_BONUS = 2;
+    protected static final int RANGED_FOREST_ATTACK_REDUCTION = 2;
     //Constant for the reduction in bonus as the unit gets attacked
-    protected static final int RANGE_BONUS_REDUCTION = 2;
+    protected static final int RANGED_RESISTANCE_BONUS_REDUCTION = 2;
 
     //Constants passed to default attack and armor if
     //not stated in initiation.
@@ -62,13 +68,30 @@ public class RangedUnit extends Unit{
         timesAttacked++;
     }
 
+    /**
+     * Returns the ranged attack bonus. The ranged unit
+     * has an advantage if it is fighting on a hill, and
+     * a disadvantage if fighting in a forest. For other
+     * instances the basic attack bonus is returned.
+     *
+     * @param terrain The terrain in which the opponent is standing on
+     * @return The attack bonus
+     */
     @Override
-    public int getAttackBonus() {
+    public int getAttackBonus(Terrain terrain) {
+        if(terrain == Terrain.HILL){
+            return RANGED_ATTACK_BONUS + RANGED_HILL_ATTACK_BONUS;
+        }
+        else if(terrain == Terrain.FOREST){
+            //Added math.max when using subtraction to ensure that we never return
+            //negative values, even if constants are changed.
+            return Math.max(0,RANGED_ATTACK_BONUS - RANGED_FOREST_ATTACK_REDUCTION);
+        }
         return RANGED_ATTACK_BONUS;
     }
 
     /**
-     * Calculates the ranged units resistance bonus. Ranged units
+     * Returns the ranged units resistance bonus. Ranged units
      * resistance is based on how far away he is from his opponent.
      * Resistance bonus is therefore the max bonus subtracted times
      * attacked multiplied with a reduction constant. Resistance bonus
@@ -77,10 +100,10 @@ public class RangedUnit extends Unit{
      * @return The resistance bonus
      */
     @Override
-    public int getResistBonus() {
-        int resistanceBonus = RANGED_MAXIMUM_RANGE_BONUS - (RANGE_BONUS_REDUCTION * timesAttacked);
+    public int getResistBonus(Terrain terrain) {
+        int resistanceBonus = RANGED_MAXIMUM_RESISTANCE_BONUS - (RANGED_RESISTANCE_BONUS_REDUCTION * timesAttacked);
         //If resistanceBonus bonus can never be below reduction constant.
-        return Math.max(resistanceBonus, RANGE_BONUS_REDUCTION);
+        return Math.max(resistanceBonus, RANGED_RESISTANCE_BONUS_REDUCTION);
     }
 
     @Override
