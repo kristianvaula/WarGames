@@ -1,5 +1,7 @@
 package ntnu.idatt2001.projects.model.units;
 
+import ntnu.idatt2001.projects.model.simulation.Terrain;
+
 import java.util.Objects;
 
 /**
@@ -42,12 +44,13 @@ public abstract class Unit implements Comparable<Unit>{
      * opponents defensive resistance.
      *
      * @param opponent The opponent unit that gets attacked
+     * @param opponentTerrain The terrain on which the defending unit is standing
      */
-    public void attack(Unit opponent){
+    public void attack(Unit opponent, Terrain opponentTerrain){
         //attack-force equals attack value + attack bonus.
-        int attForce = this.getAttack() + this.getAttackBonus();
+        int attForce = this.getAttack() + this.getAttackBonus(opponentTerrain);
         //defensive resistance equals armor + resistance bonus.
-        int oppDefense = opponent.getArmor() + opponent.getResistBonus();
+        int oppDefense = opponent.getArmor() + opponent.getResistBonus(opponentTerrain);
 
         //Ensures that an opponent cannot gain health if resistance is greater than attack
         if ((attForce-oppDefense) >= 0){
@@ -135,14 +138,14 @@ public abstract class Unit implements Comparable<Unit>{
      *
      * @return The attack bonus
      */
-    public abstract int getAttackBonus();
+    public abstract int getAttackBonus(Terrain terrain);
 
     /**
      * Returns the default units resistance bonus
      *
      * @return The resistance bonus
      */
-    public abstract int getResistBonus();
+    public abstract int getResistBonus(Terrain terrain);
 
     /**
      * Returns the class as string
