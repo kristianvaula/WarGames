@@ -24,7 +24,18 @@
                         <Image url="@icons/wargames_banner.png" />
                     </ImageView>
                 </StackPane>
-                <StackPane prefHeight="101.0" prefWidth="160.0" />
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="160.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="27.0" prefWidth="114.0" text="Select Map" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin></Label>
+                  <ChoiceBox fx:id="mapSelector" prefWidth="150.0" styleClass="orange-choice-box">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin></ChoiceBox>
+               </children>
+            </VBox>
             </HBox>
             <Pane maxHeight="8.0" minHeight="8.0" prefHeight="8.0" prefWidth="960.0" style="-fx-background-color: BB5511;" />
         </VBox>
@@ -32,7 +43,7 @@
    <center>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="385.0" prefWidth="176.0">
+            <VBox alignment="TOP_CENTER" prefHeight="365.0" prefWidth="180.0">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
@@ -70,7 +81,7 @@
                   </Pane>
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" layoutX="142.0" layoutY="20.0" prefHeight="385.0" prefWidth="176.0">
+            <VBox alignment="TOP_CENTER" layoutX="142.0" layoutY="20.0" prefHeight="365.0" prefWidth="180.0">
                <children>
                   <Button alignment="CENTER" mnemonicParsing="false" style="-fx-border-width: 1; -fx-font-size: 14;" styleClass="Button" text="Run Slow Simulation">
                      <VBox.margin>
