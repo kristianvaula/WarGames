@@ -1,5 +1,7 @@
 package ntnu.idatt2001.projects.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +11,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -17,8 +21,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ntnu.idatt2001.projects.io.ArmyFileHandler;
+import ntnu.idatt2001.projects.io.TerrainFileHandler;
 import ntnu.idatt2001.projects.model.simulation.Army;
 import ntnu.idatt2001.projects.model.simulation.Battle;
+import ntnu.idatt2001.projects.model.simulation.Map;
 import ntnu.idatt2001.projects.model.units.Unit;
 
 import java.io.FileInputStream;
@@ -32,18 +38,28 @@ public class SimulateBattleController implements Initializable {
 
     //The battle
     Battle battle;
-    Army selectedArmy = null;
+    //Terrain File Handler
+    private final TerrainFileHandler terrainFileHandler = new TerrainFileHandler();
+    //Storing the maps the user can choose
+    private HashMap<String,Map> maps = new HashMap();
 
-    //Max unit health used to base health bars on
-    int maxUnitHealth = 0;
-    //Used to get information about the unit when hovering over it
-    HashMap<ImageView,Unit> unitAndImageViewLinker = new HashMap<>();
+    //Constants for the maps we want to include
+    private static final String[] MAP_NAMES = {"Mixed Terrain","Forest","Hill","Plains"};
+    //Default Selected Map
+    private static final String DEFAULT_MAP = MAP_NAMES[0];
+    //Default Width
+    private static final int WIDTH = 135;
+    //Default Depth
+    private static final int DEPTH = 85;
+
+    //Map ChoiceBox
+    @FXML private ChoiceBox<String> mapSelector;
 
     //Army information displays
-    @FXML Label armyName1;
-    @FXML Label armyName2;
-    @FXML FlowPane unitFlowPane1;
-    @FXML FlowPane unitFlowPane2;
+    @FXML private Label armyName1;
+    @FXML private Label armyName2;
+    @FXML private FlowPane unitFlowPane1;
+    @FXML private FlowPane unitFlowPane2;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,14 +70,36 @@ public class SimulateBattleController implements Initializable {
             Army humanArmy = fileHandler.getArmyFromFile("Human Army");
             Army orcArmy = fileHandler.getArmyFromFile("Orc Army");
             battle = new Battle(humanArmy,orcArmy);
-            armyName1.setText(battle.getArmyOne().getName());
-            armyName2.setText(battle.getArmyTwo().getName());
-            maxUnitHealth = setMaxUnitHealth();
-            displayUnitsAndHealth();
+
+            //Imports maps
+            for(String mapName : MAP_NAMES){
+                maps.put(mapName,new Map(terrainFileHandler.getTerrainFromFile(mapName,DEPTH,WIDTH),DEPTH,WIDTH));
+            }
+            battle.setMap(maps.get(DEFAULT_MAP));
+
         }catch (IOException e){
             e.printStackTrace();
             alertUser(Alert.AlertType.ERROR,"Error occoured while loading files");
         }
+
+        //Fills the map selector choicebox
+        for(String mapName : MAP_NAMES){
+            mapSelector.getItems().add(mapName);
+        }
+        mapSelector.setValue(DEFAULT_MAP);
+        //Add listener to choicebox that calls changed method when user selects a different map
+        mapSelector.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                battle.setMap(maps.get(newValue));
+
+            }
+        });
+
+        armyName1.setText(battle.getArmyOne().getName());
+        armyName2.setText(battle.getArmyTwo().getName());
+
+        displayUnitsAndHealth();
     }
 
     /**
@@ -130,7 +168,7 @@ public class SimulateBattleController implements Initializable {
         //HEALTH BAR
         VBox healthPane = new VBox();
         healthPane.setPrefHeight(8);
-        double paneWidth = Math.floorDiv(unit.getHealth()*30,maxUnitHealth);
+        double paneWidth = Math.floorDiv(unit.getHealth()*30,unit.getInitialHealth());
         healthPane.setPrefWidth(paneWidth);
         healthPane.setMaxWidth(paneWidth);
         healthPane.setStyle("-fx-background-color: red;");
@@ -141,20 +179,10 @@ public class SimulateBattleController implements Initializable {
     }
 
     /**
-     * Finds the highest unit health for both armies.
+     * Displays all the
      */
-    @FXML
-    public int setMaxUnitHealth(){
-        int maxUnitHealth = 0;
-        ArrayList<Unit> allUnits = new ArrayList<>();
-        allUnits.addAll(battle.getArmyOne().getAllUnits());
-        allUnits.addAll(battle.getArmyTwo().getAllUnits());
-        for (Unit unit : allUnits){
-            if(maxUnitHealth < unit.getHealth()){
-                maxUnitHealth = unit.getHealth();
-            }
-        }
-        return maxUnitHealth;
+    private void displayMap(){
+
     }
 
     /**

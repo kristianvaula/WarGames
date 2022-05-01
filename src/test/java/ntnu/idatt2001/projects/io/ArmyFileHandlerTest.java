@@ -217,7 +217,7 @@ public class ArmyFileHandlerTest {
         @DisplayName("getFilePath() gets correct file path")
         public void getsCorrectFilePath() {
             String correctFilePath = FILE_DIRECTORY + DLM + "armyname.csv";
-            System.out.println(DLM);
+
             assertEquals(armyFileHandler.getFilePath(testArmy.getName()), correctFilePath);
         }
 

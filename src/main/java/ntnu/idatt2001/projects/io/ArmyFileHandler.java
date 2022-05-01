@@ -32,6 +32,7 @@ import java.util.regex.Pattern;
  * </p>
  */
 public class ArmyFileHandler {
+    //TODO MAKE BOTH FILEHANDLER POLYMORPHIC WITH SUPERCLASS?
 
     // FILE DIRECTORY
     private String fileDirectory = "src" + DLM + "main" + DLM + "resources" + DLM +
@@ -73,7 +74,7 @@ public class ArmyFileHandler {
 
     /**
      * Gets all army savefiles and returns them as a list.
-     * @return the army we have read
+     * @return the list of armies we have read
      * @throws IOException if file does not exist or is corrupt
      * @throws NumberFormatException if file values are corrupt
      */

@@ -15,6 +15,8 @@ public abstract class Unit implements Comparable<Unit>{
     private String name;
     // The value representing the units health
     private int health;
+    // Initial value for units health
+    private int initialHealth;
     // The value of attacking damage
     private int attack;
     // The value of defensive resistance
@@ -34,6 +36,7 @@ public abstract class Unit implements Comparable<Unit>{
         if(name.isBlank() || name.isEmpty()) throw new IllegalArgumentException("Name cannot be empty");
         this.name = name;
         this.health = health;
+        this.initialHealth = health;
         this.attack = attack;
         this.armor = armor;
     }
@@ -75,6 +78,15 @@ public abstract class Unit implements Comparable<Unit>{
      */
     public int getHealth() {
         return health;
+    }
+
+    /**
+     * Gets initial health
+     *
+     * @return The initial health value
+     */
+    public int getInitialHealth() {
+        return initialHealth;
     }
 
     /**

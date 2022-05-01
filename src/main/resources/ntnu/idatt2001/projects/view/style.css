@@ -102,7 +102,25 @@
     -fx-pref-height: 25pt;
     -fx-min-height: 25pt;
 }
-.choice-box .label {
-    -fx-text-fill: #191308;
-    -fx-font-size: 12pt;
+.orange-choice-box{
+    -fx-background-color: #BB5511;
+    -fx-mark-color:#EDFFEC;
+}
+.orange-choice-box .label {
+    -fx-text-fill: #EDFFEC;
+
+}
+/*Background color of the whole context menu*/
+.orange-choice-box .context-menu {
+    -fx-background-color: #BB5511;
+}
+/*Focused item background color in the list*/
+.orange-choice-box .menu-item:focused {
+    -fx-background-color: #191308;
+}
+/*Text color of non-focused items in the list*/
+.orange-choice-box .menu-item > .label {
+}
+/*Text color of focused item in the list*/
+.orange-choice-box .menu-item:focused > .label {
 }
