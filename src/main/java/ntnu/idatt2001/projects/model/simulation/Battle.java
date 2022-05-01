@@ -16,6 +16,7 @@ public class Battle {
     //The two armies fighting each other
     private Army armyOne;
     private Army armyTwo;
+    private Map map;
 
     /**
      * Initiates a new Battle object. Takes each
@@ -50,6 +51,42 @@ public class Battle {
     }
 
     /**
+     * Gets the map
+     *
+     * @return the map
+     */
+    public Map getMap() {
+        return map;
+    }
+
+    /**
+     * Sets army one
+     *
+     * @param armyOne the army to set
+     */
+    public void setArmyOne(Army armyOne) {
+        this.armyOne = armyOne;
+    }
+
+    /**
+     * Sets army two
+     *
+     * @param armyTwo the army to set
+     */
+    public void setArmyTwo(Army armyTwo) {
+        this.armyTwo = armyTwo;
+    }
+
+    /**
+     * Sets the map
+     *
+     * @param map the map to set
+     */
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
+    /**
      * Simulates the battle. While both of the armies have
      * units we choose one from each army. One of these are
      * chosen randomly to attack the other. We then check to
@@ -72,11 +109,11 @@ public class Battle {
             //The nextBoolean() gives a random true or false value which
             //decides who attacks who
             if(rand.nextBoolean()){
-                armyOneUnit.attack(armyTwoUnit);
+                armyOneUnit.attack(armyTwoUnit,Terrain.PLAINS);
                 if(armyTwoUnit.getHealth() == 0) armyTwo.remove(armyTwoUnit);
             }
             else{
-                armyTwoUnit.attack(armyOneUnit);
+                armyTwoUnit.attack(armyOneUnit,Terrain.PLAINS);
                 if(armyOneUnit.getHealth() == 0) armyOne.remove(armyOneUnit);
             }
         }
@@ -84,7 +121,6 @@ public class Battle {
         if(armyTwo.hasUnits()) return armyTwo;
         return armyOne;
     }
-
 
     /**
      * Creates a String representation of the battles
