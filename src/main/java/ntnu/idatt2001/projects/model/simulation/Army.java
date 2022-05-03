@@ -113,6 +113,20 @@ public class Army{
     }
 
     /**
+     * Tags all units wit a specified
+     * tag that we want to set for the units.
+     * This helps us tell which units are
+     * friendly or enemy.
+     *
+     * @param tag What to tag the units
+     */
+    public void tagAllUnits(String tag){
+        for(Unit unit : getAllUnits()){
+            unit.setTag(tag);
+        }
+    }
+
+    /**
      * Gets the list of all units.
      * @return The List<Unit> units
      */

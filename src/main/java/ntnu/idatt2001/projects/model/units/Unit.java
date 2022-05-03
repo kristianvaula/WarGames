@@ -21,6 +21,8 @@ public abstract class Unit implements Comparable<Unit>{
     private int attack;
     // The value of defensive resistance
     private int armor;
+    // A tag specifies some sort of info of the unit like for example which army he belongs to
+    private String tag;
 
     /**
      * Works as the blueprint for creating a Unit object
@@ -108,6 +110,24 @@ public abstract class Unit implements Comparable<Unit>{
     }
 
     /**
+     * Gets the units tag
+     *
+     * @return unit tag
+     */
+    public String getTag() {
+        return tag;
+    }
+
+    /**
+     * Sets the units tag
+     *
+     * @return the tag
+     */
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    /**
      * Sets the unit health value. Cannot
      * be less than zero.
      *
@@ -190,7 +210,7 @@ public abstract class Unit implements Comparable<Unit>{
      * and all field are equal.
      * @param o The object we are comparing.
      * @return True if units are equal.
-     */
+     *
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -200,7 +220,7 @@ public abstract class Unit implements Comparable<Unit>{
                 && health == unit.health
                 && attack == unit.attack
                 && armor == unit.armor;
-    }
+    }*/
 
     /**
      * Hashes name, health, attack and armor
