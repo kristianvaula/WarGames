@@ -1,5 +1,6 @@
 package ntnu.idatt2001.projects.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -37,8 +38,8 @@ public class TopBarController implements Initializable {
      */
     @FXML
     protected void handleCloseAction(ActionEvent event){
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+        Platform.exit();
+        System.exit(0);
     }
 
     /**
