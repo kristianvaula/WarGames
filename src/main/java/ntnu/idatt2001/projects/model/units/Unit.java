@@ -203,31 +203,4 @@ public abstract class Unit implements Comparable<Unit>{
         else if(this.getArmor() > u.getArmor()) return 1;
         else return -1;
     }
-
-    /**
-     * Checks if one unit equals another.
-     * Two units are equal if the subclass
-     * and all field are equal.
-     * @param o The object we are comparing.
-     * @return True if units are equal.
-     *
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Unit unit = (Unit) o;
-        return name.equals(unit.name)
-                && health == unit.health
-                && attack == unit.attack
-                && armor == unit.armor;
-    }*/
-
-    /**
-     * Hashes name, health, attack and armor
-     * @return The hashCode
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, health, attack, armor);
-    }
 }
