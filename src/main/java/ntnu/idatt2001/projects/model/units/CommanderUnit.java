@@ -38,6 +38,6 @@ public class CommanderUnit extends CavalryUnit{
 
     @Override
     public String getType(){
-        return "Commander Unit";
+        return UnitType.COMMANDER.toString();
     }
 }

@@ -82,6 +82,6 @@ public class InfantryUnit extends Unit{
 
     @Override
     public String getType(){
-        return "Infantry Unit";
+        return UnitType.INFANTRY.toString();
     }
 }
