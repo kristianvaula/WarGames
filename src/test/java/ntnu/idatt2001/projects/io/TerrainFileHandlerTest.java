@@ -24,7 +24,7 @@ public class TerrainFileHandlerTest {
 
     // FILE DIRECTORY
     private String FILE_DIRECTORY = "src" + DLM + "main" + DLM + "resources" + DLM +
-            "ntnu" + DLM + "idatt2001" + DLM + "projects" + DLM + "saveFiles" + DLM + "mapTestfiles";
+            "ntnu" + DLM + "idatt2001" + DLM + "projects" + DLM + "testFiles" + DLM + "mapTestfiles";
     // DELIMITER
     private static final String DLM = File.separator;
 
@@ -114,7 +114,7 @@ public class TerrainFileHandlerTest {
             TerrainFileHandler defaultTerrainFileHandler = new TerrainFileHandler();
 
             try {
-                terrains = defaultTerrainFileHandler.getTerrainSavefiles(DEPTH,WIDTH);
+                terrains = defaultTerrainFileHandler.getTerrainSaveFiles(DEPTH,WIDTH);
             }
             catch (Exception e){
                 e.printStackTrace();

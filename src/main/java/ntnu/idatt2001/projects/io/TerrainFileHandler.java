@@ -1,6 +1,5 @@
 package ntnu.idatt2001.projects.io;
 
-import ntnu.idatt2001.projects.model.simulation.Army;
 import ntnu.idatt2001.projects.model.simulation.Terrain;
 
 import java.io.File;
@@ -32,7 +31,6 @@ import java.util.Scanner;
  *
  */
 public class TerrainFileHandler {
-    //TODO MAKE BOTH FILEHANDLER POLYMORPHIC WITH SUPERCLASS?
 
     // FILE DIRECTORY
     private String fileDirectory = "src" + DLM + "main" + DLM + "resources" + DLM +
@@ -40,15 +38,14 @@ public class TerrainFileHandler {
 
     // DELIMITER
     private static final String DLM = File.separator;
-    // NEWLINE
-    private static final String NWL = "\n";
     //SPLITTER
     private static final String SPL = ",";
     //Terrain types
     private static final HashMap<Integer, Terrain> TERRAIN_TYPES = new HashMap<>();
 
     /**
-     * Initiates an mapFileHandler
+     * Initiates an mapFileHandler.
+     * We classify each of the terrain types as a int value
      */
     public TerrainFileHandler() {
         TERRAIN_TYPES.put(1,Terrain.FOREST);
@@ -59,6 +56,7 @@ public class TerrainFileHandler {
     /**
      * Takes a terrain file name and checks if a corresponding file
      * exists. If it does we call the readTerrainFromFile method.
+     *
      * @param terrainFileName Name of file we are trying to read
      * @return the terrain we have read
      * @throws IOException if file does not exist or is corrupt
@@ -76,12 +74,12 @@ public class TerrainFileHandler {
     }
 
     /**
-     * Gets all terrain savefiles and returns them as a list.
+     * Gets all terrain save files and returns them as a list.
      * @return the list of terrains we have read
      * @throws IOException if file does not exist or is corrupt
      * @throws NumberFormatException if file values are corrupt
      */
-    public ArrayList<Terrain[][]> getTerrainSavefiles(int depth, int width) throws IOException,NumberFormatException{
+    public ArrayList<Terrain[][]> getTerrainSaveFiles(int depth, int width) throws IOException,NumberFormatException{
         File directory = new File(fileDirectory);
         String[] fileList = directory.list();
 
@@ -102,6 +100,7 @@ public class TerrainFileHandler {
      * Reads and returns an terrain from a csv text file.
      * Takes in the file as parameter, reads it and
      * returns it as an terrain array object.
+     *
      * @param file file we are trying to read
      * @return the terrain we have read
      * @throws IOException if file does not exist or is corrupt
