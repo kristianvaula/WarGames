@@ -24,67 +24,86 @@ import ntnu.idatt2001.projects.model.units.UnitType;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controls the edit army page
+ */
 public class EditArmiesController implements Initializable {
 
     //The battle
-    Battle battle;
-    Army selectedArmy = null;
-    Unit selectedUnit = null;
+    private Battle battle;
+    private Army selectedArmy = null;
+    private Unit selectedUnit = null;
+
+    //Army file handler
+    private ArmyFileHandler armyFileHandler = new ArmyFileHandler();
 
     //Add unit
-    @FXML ChoiceBox<String> typeInput;
-    @FXML TextField nameInput;
-    @FXML TextField attackInput;
-    @FXML TextField healthInput;
-    @FXML TextField armorInput;
-
+    @FXML private ChoiceBox<String> typeInput;
+    @FXML private TextField nameInput;
+    @FXML private TextField attackInput;
+    @FXML private TextField healthInput;
+    @FXML private TextField armorInput;
 
     //Army table
-    @FXML TableView<Unit> unitDisplayTable;
-    @FXML TableColumn<Unit,String> typeColumn;
-    @FXML TableColumn<Unit,String> nameColumn;
-    @FXML TableColumn<Unit,String> attackColumn;
-    @FXML TableColumn<Unit,String> healthColumn;
-    @FXML TableColumn<Unit,String> armorColumn;
+    @FXML private TableView<Unit> unitDisplayTable;
+    @FXML private TableColumn<Unit,String> typeColumn;
+    @FXML private TableColumn<Unit,String> nameColumn;
+    @FXML private TableColumn<Unit,String> attackColumn;
+    @FXML private TableColumn<Unit,String> healthColumn;
+    @FXML private TableColumn<Unit,String> armorColumn;
 
     //Misc
-    @FXML TextField armyNameInput;
-    @FXML RadioButton radioButton1;
-    @FXML RadioButton radioButton2;
+    @FXML private TextField armyNameInput;
+    @FXML private RadioButton radioButton1;
+    @FXML private RadioButton radioButton2;
+    @FXML private Label unitCountOutput;
     private ToggleGroup radioToggleGroup;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //Set toggleGroup
+        //SETS UP THE BATTLE DATA
+        setUpBattleData();
+
+        //Set toggleGroup and text
         radioToggleGroup = new ToggleGroup();
         radioButton1.setToggleGroup(radioToggleGroup);
+        radioButton1.setText(battle.getArmyOne().getName());
         radioButton2.setToggleGroup(radioToggleGroup);
+        radioButton2.setText(battle.getArmyTwo().getName());
 
-            //Everytime the radio button selection changes we need to update which
-            //army we are working on
+        //Everytime the radio button selection changes we need to update which
+        //army we are working on
         radioToggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> changed, Toggle oldVal, Toggle newVal) {
-                if((RadioButton)newVal == radioButton1){
-                    selectedArmy = battle.getArmyOne();
+                //Check if we need to do anything
+                if(oldVal != newVal){
+                    //Check which army the new choice is
+                    if(newVal == radioButton1){
+                        selectedArmy = battle.getArmyOne();
+                    }
+                    else if(newVal == radioButton2){
+                        selectedArmy =  battle.getArmyTwo();
+                    }
+                    //Change text and display units
+                    armyNameInput.setText(selectedArmy.getName());
+                    displayUnits();
                 }
-                else if((RadioButton)newVal == radioButton2){
-                    selectedArmy =  battle.getArmyTwo();
-                }
-                displayArmy();
             }
         });
 
-        //Add units fields
+        //Add unit type items to choicebox
         for(UnitType type : UnitType.values()){
             typeInput.getItems().add(type.toString());
-        }
+        }// Select Infantry as default
         typeInput.setValue(UnitType.INFANTRY.toString());
 
-        //Initialize the table for displaying units of single army
+        //Initialize the table for displaying units of the selected army
         unitDisplayTable.setEditable(false);
         unitDisplayTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -93,8 +112,9 @@ public class EditArmiesController implements Initializable {
         healthColumn.setCellValueFactory(new PropertyValueFactory<>("health"));
         armorColumn.setCellValueFactory(new PropertyValueFactory<>("armor"));
 
-            //setRowFactory to get the army of selected row when
-            //user clicks on it
+        //setRowFactory to get the selected item if we press on it
+        //If double click we load the unit fields into the add unit
+        //inputs to easily create more
         unitDisplayTable.setRowFactory(TableView -> {
             TableRow<Unit> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -102,55 +122,99 @@ public class EditArmiesController implements Initializable {
                 if(!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1){
                     selectedUnit = row.getItem();
                 }
+                else if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2){
+                    selectedUnit = row.getItem();
+                    typeInput.setValue(selectedUnit.getType());
+                    nameInput.setText(selectedUnit.getName());
+                    attackInput.setText(String.valueOf(selectedUnit.getAttack()));
+                    healthInput.setText(String.valueOf(selectedUnit.getHealth()));
+                    armorInput.setText(String.valueOf(selectedUnit.getArmor()));
+                }
             });
             return row;
         });
-
-        // GIVES US BATTLE TO WORK WITH BEFORE IMPLEMENTING EMBEDDED DATABASE
-        //TODO REMOVE WHEN TEMPORARY STORAGE IMPLEMENTED
-        try{
-            ArmyFileHandler fileHandler = new ArmyFileHandler();
-            Army humanArmy = fileHandler.getArmyFromFile("Human Army");
-            Army orcArmy = fileHandler.getArmyFromFile("Orc Army");
-            battle = new Battle(humanArmy,orcArmy);
-            radioButton1.setText(battle.getArmyOne().getName());
-            radioButton2.setText(battle.getArmyTwo().getName());
-        }catch (IOException e){
-            e.printStackTrace();
-            alertUser(Alert.AlertType.ERROR,"Error occoured while loading files");
-        }
     }
 
     /**
-     * Saves the army to file and
+     * Sets up the battle used by the controller.
+     * Initiates the battle field of controller as the
+     * two active armies.
      */
     @FXML
-    public void saveChanges(){
-        if(selectedArmy != null){
-            if(!armyNameInput.getText().equals(selectedArmy.getName())){
-                selectedArmy.setName(armyNameInput.getText());
-            }
-            //TODO IMPLEMENT SAViNG TO DATABASE HERE WHEN IMPLEMENTED
-            ArmyFileHandler fileHandler = new ArmyFileHandler();
+    private void setUpBattleData() {
+        Army armyOne,armyTwo;
+        try {
+            List<Army> activeArmies = armyFileHandler.getActiveArmies();
+            armyOne = activeArmies.get(0);
+            armyTwo = activeArmies.get(1);
+        }
+        catch (IllegalStateException e){
+            armyOne = new Army("Army One");
+            armyTwo = new Army("Army Two");
+        }
+        battle = new Battle(armyOne,armyTwo);
+    }
+
+    /**
+     * Adds a unit when user presses add unit.
+     * Checks that there are values in each field.
+     * Then converts to integer, checks that they
+     * are above zero and creates unit.
+     *
+     * @param event Mouseclick
+     */
+    @FXML
+    private void addUnit(ActionEvent event){
+        if(selectedArmy != null) {
             try {
-                fileHandler.writeArmyToFile(selectedArmy);
-            } catch (IOException e) {
-                e.printStackTrace();
-                alertUser(Alert.AlertType.ERROR,"There was an error saving the army, please try again");
+                if(selectedArmy.getArmySize() >= 500){
+                    throw new IllegalStateException("Maximum unit capacity reached, please delete units before adding more");
+                }
+
+                //Check for blanks
+                if (nameInput.getText().isBlank()) {
+                    throw new IllegalArgumentException("Please enter name for unit");
+                } else if (attackInput.getText().isBlank()) {
+                    throw new IllegalArgumentException("Please enter attack value for unit");
+                } else if (healthInput.getText().isBlank()) {
+                    throw new IllegalArgumentException("Please enter health value for unit");
+                } else if (armorInput.getText().isBlank()) {
+                    throw new IllegalArgumentException("Please enter armor value for unit");
+                }
+                //Check that values are numbers above zero
+                int attack = Integer.parseInt(attackInput.getText());
+                int health = Integer.parseInt(healthInput.getText());
+                int armor = Integer.parseInt(armorInput.getText());
+                if (attack <= 1 || health <= 1 || armor <= 1) {
+                    throw new IllegalArgumentException("Attack, health and armor values must be a positive number");
+                }
+                //Gets type
+                for (UnitType type : UnitType.values()) {
+                    if (typeInput.getValue().equals(type.toString())) {
+                        selectedArmy.add(UnitFactory.getUnit(type, nameInput.getText(), health, attack, armor));
+                    }
+                }
+                displayUnits();
+            } catch (IllegalArgumentException e) {
+                alertUser(Alert.AlertType.WARNING, e.getMessage());
             }
         }
+        else alertUser(Alert.AlertType.WARNING,"Please select an army before adding unit");
     }
 
     /**
-     * Displays name and units of selected army
+     * Displays name and units of selected army.
+     * Gets the selected army and adds all units
+     * to table.
      */
     @FXML
-    public void displayArmy(){
+    private void displayUnits(){
         ObservableList<Unit> unitsObservable = FXCollections.observableArrayList();
         Army army = selectedArmy;
 
+        //Display the size
+        unitCountOutput.setText(String.valueOf(selectedArmy.getArmySize()));
         if(army != null){
-            armyNameInput.setText(army.getName());
             unitsObservable.addAll(army.getCommanderUnits());
             unitsObservable.addAll(army.getInfantryUnits());
             unitsObservable.addAll(army.getRangedUnits());
@@ -160,63 +224,70 @@ public class EditArmiesController implements Initializable {
     }
 
     /**
-     * Adds a unit when user presses add unit.
+     * Removes selected Unit when user presses delete button
+     *
+     * @param event Mouseclick
      */
     @FXML
-    public void addUnit(){
-        if(nameInput.getText().isBlank()){
-            alertUser(Alert.AlertType.WARNING,"Please enter name for unit");
+    private void removeUnit(ActionEvent event){
+        if(selectedUnit != null){
+            selectedArmy.remove(unitDisplayTable.getSelectionModel().getSelectedItem());
+            displayUnits();
         }
-        else if(attackInput.getText().isBlank()){
-            alertUser(Alert.AlertType.WARNING,"Please enter attack value for unit");
-        }
-        else if(healthInput.getText().isBlank()){
-            alertUser(Alert.AlertType.WARNING,"Please enter health value for unit");
-        }
-        else if(armorInput.getText().isBlank()){
-            alertUser(Alert.AlertType.WARNING,"Please enter armor value for unit");
-        }
-        else{
-            int attack,health,armor;
-            try{
-                attack = Integer.parseInt(attackInput.getText());
-                health = Integer.parseInt(healthInput.getText());
-                armor = Integer.parseInt(armorInput.getText());
-                if(attack < 1 || health < 1 || armor < 1){
-                    throw new NumberFormatException("Invalid values, must be above zero");
+    }
+
+    /**
+     * Saves the army to file when the "save changes"
+     * button is pressed. If the name of the army is
+     * unchanged we will update the previous army file.
+     * If army name is changed, we will save the army as a
+     * new file. When we save the active armies are also updated.
+     *
+     * @param event Mouseclick
+     */
+    @FXML
+    private void saveChanges(ActionEvent event){
+        //Check that we have selected an army
+        if(selectedArmy != null){
+            armyFileHandler = new ArmyFileHandler();
+            try {
+                //Change selected army name if changed
+                if(!armyNameInput.getText().equals(selectedArmy.getName())){
+                    selectedArmy.setName(armyNameInput.getText());
                 }
-                for(UnitType type : UnitType.values()){
-                    if(typeInput.getValue().equals(type.toString())){
-                        selectedArmy.add(UnitFactory.getUnit(type,nameInput.getText(),health,attack,armor));
-                    }
-                }
-                displayArmy();
-            }catch (NumberFormatException e){
+                //Save army
+                armyFileHandler.setDefaultDirectory();
+                armyFileHandler.writeArmyToFile(selectedArmy);
+                //Update the active armies
+                armyFileHandler.setActiveArmyDirectory();
+                List<Army> armies = new ArrayList<>(Arrays.asList(battle.getArmyOne(), battle.getArmyTwo()));
+                armyFileHandler.setActiveArmies(armies);
+
+                //Change radiobuttons text
+                radioButton1.setText(armies.get(0).getName());
+                radioButton2.setText(armies.get(1).getName());
+
+                //Positive user feedback
+                alertUser(Alert.AlertType.CONFIRMATION,"Changes were successfully saved");
+            }
+            catch (IOException e) { // Alert user if failed
                 e.printStackTrace();
-                alertUser(Alert.AlertType.WARNING,"Attack, health and armor values must be a positive number");
-                ;
+                alertUser(Alert.AlertType.ERROR,e.getMessage());
+            }
+            catch (IllegalArgumentException e){
+                alertUser(Alert.AlertType.WARNING,e.getMessage());
             }
         }
     }
 
     /**
-     * Removes selected Unit when user presses delete button
-     */
-    @FXML
-    public void removeUnit(){
-        if(selectedUnit != null){
-            selectedArmy.remove(unitDisplayTable.getSelectionModel().getSelectedItem());
-            displayArmy();
-        }
-    }
-
-    /**
-     * Loads main menu when the exit button is pressed
+     * Loads main menu when the exit button is pressed.
+     *
      * @param event button click
      * @throws IOException If fxml load fails
      */
     @FXML
-    public void loadMainMenu(ActionEvent event) throws IOException {
+    private void loadMainMenu(ActionEvent event) throws IOException {
         try {
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/MainMenu.fxml"));

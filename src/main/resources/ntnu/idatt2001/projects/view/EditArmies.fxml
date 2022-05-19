@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -34,28 +35,25 @@
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="386.0" prefWidth="343.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="98.0" prefWidth="289.0" style="-fx-background-color: #A84D10; -fx-border-color: #191308;">
+                  <VBox alignment="TOP_CENTER" prefHeight="98.0" prefWidth="289.0" style="-fx-background-color: #A84D10; -fx-border-color: #191308;">
                      <VBox.margin>
                         <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
                      </VBox.margin>
                      <children>
                         <Label alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="287.0" style="-fx-underline: true;" text="Select Army To Edit" textAlignment="CENTER" />
-                        <HBox alignment="CENTER" prefHeight="54.0" prefWidth="289.0">
+                        <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <RadioButton fx:id="radioButton1" mnemonicParsing="false" style="-fx-text-fill: #EDFFEC; -fx-font-size: 16;" text="ArmyOne">
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin></RadioButton>
-                              <RadioButton fx:id="radioButton2" layoutX="105.0" layoutY="37.0" mnemonicParsing="false" style="-fx-text-fill: #EDFFEC; -fx-font-size: 16;" text="ArmyOne">
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
                               </RadioButton>
+                              <RadioButton fx:id="radioButton2" mnemonicParsing="false" style="-fx-text-fill: #EDFFEC; -fx-font-size: 16;" text="ArmyOne" />
                            </children>
                            <VBox.margin>
-                              <Insets />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </VBox.margin>
-                        </HBox>
+                        </VBox>
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" layoutX="20.0" layoutY="30.0" prefHeight="98.0" prefWidth="289.0" style="-fx-background-color: #A84D10; -fx-border-color: #191308;">
@@ -68,7 +66,20 @@
                         </TextField>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="20.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="98.0" prefWidth="289.0" style="-fx-background-color: #A84D10; -fx-border-color: #191308;">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label alignment="BOTTOM_CENTER" prefHeight="37.0" prefWidth="289.0" text="Unit count: " textAlignment="CENTER" />
+                              <Label fx:id="unitCountOutput" alignment="BOTTOM_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="289.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="10.0" right="10.0" top="5.0" />
                      </VBox.margin>
                   </VBox>
                   <Button mnemonicParsing="false" onAction="#saveChanges" style="-fx-border-width: 1;" styleClass="Button" text="Save Army">
@@ -87,10 +98,14 @@
                         <VBox alignment="CENTER" prefHeight="84.0" prefWidth="136.0">
                            <children>
                               <Label text="Type" />
-                              <ChoiceBox fx:id="typeInput" prefHeight="42.0" prefWidth="111.0" styleClass="smallInputs">
+                              <ChoiceBox fx:id="typeInput" prefHeight="42.0" prefWidth="111.0">
                                  <VBox.margin>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                 </VBox.margin></ChoiceBox>
+                                 </VBox.margin>
+                                 <styleClass>
+                                    <String fx:value="smallInputs" />
+                                    <String fx:value="white-choice-box" />
+                                 </styleClass></ChoiceBox>
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="125.0">
