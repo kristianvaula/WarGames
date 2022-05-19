@@ -16,21 +16,21 @@ public class MapTest {
     private static TerrainFileHandler fileHandler;
     private static Map map = null;
     private static final InfantryUnit randUnit = new InfantryUnit("TestUnit",15);
-    private static final int depth = 85;
-    private static final int width = 135;
-    private static final String mixedTerrainName = "mixed_terrain";
+    private static final int DEPTH = 85;
+    private static final int WIDTH = 135;
+    private static final String MIXED_TERRAIN_NAME = "mixed_terrain";
 
     @BeforeAll
     static void init(){
-        fileHandler = new TerrainFileHandler();
+        fileHandler = new TerrainFileHandler(DEPTH,WIDTH);
         Terrain[][] terrains = new Terrain[0][];
         try {
-            terrains = fileHandler.getTerrainFromFile(mixedTerrainName,depth,width);
+            terrains = fileHandler.getTerrainFromFile(MIXED_TERRAIN_NAME);
         } catch (IOException e) {
             e.printStackTrace();
             fail();
         }
-        map = new Map(terrains,depth,width);
+        map = new Map(terrains, DEPTH,WIDTH);
     }
 
     @BeforeEach
@@ -48,15 +48,15 @@ public class MapTest {
             Map testMap = null;
 
             try{
-                Terrain[][] terrains = fileHandler.getTerrainFromFile(mixedTerrainName,depth,width);
-                testMap = new Map(terrains,depth,width);
+                Terrain[][] terrains = fileHandler.getTerrainFromFile(MIXED_TERRAIN_NAME);
+                testMap = new Map(terrains, DEPTH,WIDTH);
             }
             catch(Exception e){
                 e.printStackTrace();
                 fail();
             }
 
-            assertTrue(Terrain.getTerrains().contains(testMap.getLocationAt(depth-1,width-1).getTerrain()));
+            assertTrue(Terrain.getTerrains().contains(testMap.getLocationAt(DEPTH -1,WIDTH-1).getTerrain()));
         }
 
         @Test
@@ -64,10 +64,10 @@ public class MapTest {
         public void initiatingMapWithMissingData(){
             assertThrows(IllegalArgumentException.class, () ->{
                 try{
-                    Terrain[][]terrains = fileHandler.getTerrainFromFile(mixedTerrainName,depth,width);
-                    int randnumb = new Random().nextInt(depth-1);
+                    Terrain[][]terrains = fileHandler.getTerrainFromFile(MIXED_TERRAIN_NAME);
+                    int randnumb = new Random().nextInt(DEPTH -1);
                     terrains[randnumb][randnumb] = null;
-                    Map testMap = new Map(terrains,depth,width);
+                    Map testMap = new Map(terrains, DEPTH,WIDTH);
                 }
                 catch(IOException e){
                     e.printStackTrace();
@@ -84,9 +84,9 @@ public class MapTest {
         public void initiatingMapWithBadTerrains(){
             assertThrows(IllegalArgumentException.class, () ->{
                 try{
-                    Terrain[][]terrains = fileHandler.getTerrainFromFile(mixedTerrainName,depth,width);
+                    Terrain[][]terrains = fileHandler.getTerrainFromFile(MIXED_TERRAIN_NAME);
                     terrains[0] = new Terrain[6];
-                    Map testMap = new Map(terrains,depth,width);
+                    Map testMap = new Map(terrains, DEPTH,WIDTH);
                 }
                 catch(IOException e){
                     e.printStackTrace();
@@ -103,8 +103,8 @@ public class MapTest {
         public void initiatingMapWithBadWidth(){
             assertThrows(IllegalArgumentException.class, () ->{
                 try{
-                    Terrain[][]terrains = fileHandler.getTerrainFromFile(mixedTerrainName,depth,width);
-                    Map testMap = new Map(terrains,depth,126);
+                    Terrain[][]terrains = fileHandler.getTerrainFromFile(MIXED_TERRAIN_NAME);
+                    Map testMap = new Map(terrains, DEPTH,126);
                 }
                 catch(IOException e){
                     e.printStackTrace();

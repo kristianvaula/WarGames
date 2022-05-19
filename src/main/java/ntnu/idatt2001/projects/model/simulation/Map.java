@@ -113,10 +113,10 @@ public class Map {
         if(location == null){
             throw new IllegalArgumentException("Location was null");
         }
-        else if(location.getRow() < 0 || location.getRow() > getDepth()){
+        else if(location.getRow() < 0 || location.getRow() > getDepth()-1){
             throw new IllegalArgumentException("Location row is outside map");
         }
-        else if(location.getCol() < 0 || location.getCol() > getWidth()){
+        else if(location.getCol() < 0 || location.getCol() > getWidth()-1){
             throw new IllegalArgumentException("Location column is outside map");
         }
         else if(!map[location.getRow()][location.getCol()].equals(location)){
@@ -188,7 +188,7 @@ public class Map {
      * @throws IllegalArgumentException if location is invalid
      */
     public Location getLocationAt(int row,int col) throws IllegalArgumentException{
-        if(row < 0 || row > depth || col < 0 || col > width){
+        if(row < 0 || row > depth-1 || col < 0 || col > width-1){
             throw new IllegalArgumentException("Location is outside of map");
         }
         return map[row][col];
