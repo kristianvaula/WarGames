@@ -109,18 +109,18 @@ public class Map {
      * @return True if location is inside map
      * @throws IllegalArgumentException if location object is outside of map
      */
-    protected boolean isLocationValid(Location location) throws IllegalArgumentException{
+    protected boolean isLocationValid(Location location){
         if(location == null){
-            throw new IllegalArgumentException("Location was null");
+            return false;
         }
         else if(location.getRow() < 0 || location.getRow() > getDepth()-1){
-            throw new IllegalArgumentException("Location row is outside map");
+            return false;
         }
         else if(location.getCol() < 0 || location.getCol() > getWidth()-1){
-            throw new IllegalArgumentException("Location column is outside map");
+            return false;
         }
         else if(!map[location.getRow()][location.getCol()].equals(location)){
-            throw new IllegalArgumentException("Location is invalid");
+            return false;
         }
         return true;
     }
@@ -136,24 +136,24 @@ public class Map {
      * @throws IllegalArgumentException If location is invalid
      */
     public List<Location> getAdjacentLocations(Location location) throws IllegalArgumentException {
+        if(!isLocationValid(location)) throw new IllegalArgumentException("Location passed is invalid");
         //The list of locations to be returned.
         List<Location> locations = new ArrayList<>();
-        if (isLocationValid(location)) {
-            //Get all adjacent by looping through row and col from -1 to 1
-            for (int rOffset = -1; rOffset <= 1; rOffset++) {
-                for (int cOffset = -1; cOffset <= 1; cOffset++) {
-                    //Get adjacent location
-                    Location nextLocation = getLocationAt(location.getRow() + rOffset,location.getCol() + cOffset);
-                    //Check if location is valid
-                    if(isLocationValid(nextLocation) && !nextLocation.equals(location)){
-                        //Add to list
-                        locations.add(nextLocation);
-                    }
+        //Get all adjacent by looping through row and col from -1 to 1
+        for (int rOffset = -1; rOffset <= 1; rOffset++) {
+            for (int cOffset = -1; cOffset <= 1; cOffset++) {
+                //Get adjacent location
+                Location nextLocation = getLocationAt(location.getRow() + rOffset,location.getCol() + cOffset);
+                //Check if location is valid
+                if(isLocationValid(nextLocation) && !nextLocation.equals(location)){
+                    //Add to list
+                    locations.add(nextLocation);
                 }
             }
-            // Shuffle the list. Adjacent locations should not have fixed order
-            Collections.shuffle(locations);
         }
+        // Shuffle the list. Adjacent locations should not have fixed order
+        Collections.shuffle(locations);
+
         return locations;
     }
 
@@ -187,11 +187,11 @@ public class Map {
      * @return the location
      * @throws IllegalArgumentException if location is invalid
      */
-    public Location getLocationAt(int row,int col) throws IllegalArgumentException{
-        if(row < 0 || row > depth-1 || col < 0 || col > width-1){
-            throw new IllegalArgumentException("Location is outside of map");
+    public Location getLocationAt(int row,int col){
+        if(row > 0 && row <= depth-1 && col > 0 && col <= width-1){
+            return map[row][col];
         }
-        return map[row][col];
+        return null;
     }
 
     /**
