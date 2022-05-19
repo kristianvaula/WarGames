@@ -147,7 +147,6 @@ public class TerrainFileHandler {
      * @return true if army file exists
      */
     protected boolean fileExists(String filepath){
-        System.out.println("Checking if exists: " + filepath);
         return new File(filepath).exists();
     }
 
@@ -158,7 +157,6 @@ public class TerrainFileHandler {
      * @return String path
      */
     protected String getFilePath(String terrainName){
-        System.out.println("Attempting to find " + terrainName);
         return fileDirectory + DLM + terrainName.toLowerCase().replaceAll(" ","_") + ".csv";
     }
 
