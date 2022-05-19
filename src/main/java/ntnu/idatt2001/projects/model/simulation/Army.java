@@ -10,16 +10,17 @@ import static java.util.stream.Collectors.toList;
 
 /**
  * Army is a collection of units gathered under a
- * common army name. An army can attack a different
- * army.
- *
- * @author Kristian Vaula Jensen
+ * common army name. All units of a given army are
+ * tagged with the army name to distinguish them from
+ * other armies` units. An army can attack a different
+ * army in a Battle. List of units cannot exceed 500 units
+ * to ensure good simulation performance.
  */
 public class Army{
     //The army name
     private String name;
     //The list that keeps all the units
-    private List<Unit> units;
+    private final List<Unit> units;
 
     //Pattern used to check if name contains any characters except letters, digits and "-" "."
     private static final Pattern namePattern = Pattern.compile("[^a-zA-Z0-9-.\s]");
@@ -34,8 +35,10 @@ public class Army{
     public Army(String name, List<Unit> units)throws IllegalArgumentException {
         if(name.isBlank()) throw new IllegalArgumentException("Name cannot be blank");
         if(namePattern.matcher(name).find()) throw new IllegalArgumentException("Name contains illegal characters");
+        if(units.size() > 500) throw new IllegalArgumentException("Unit count cannot exceed 500 units");
         this.name = name;
         this.units = units;
+        tagAllUnits();
     }
 
     /**
@@ -61,22 +64,33 @@ public class Army{
     }
 
     /**
-     * Sets the name of the army
+     * Sets the name of the army.
+     * If army name changes then we need
+     * to re-tag the units.
      *
      * @param name The String name
      */
-    public void setName(String name) {
+    public void setName(String name) throws IllegalArgumentException{
+        if(name.isBlank()) throw new IllegalArgumentException("Name cannot be blank");
+        if(namePattern.matcher(name).find()) throw new IllegalArgumentException("Name contains illegal characters");
         this.name = name;
+        tagAllUnits();
     }
 
     /**
      * Adds a unit to the army. We call for List method
-     * add() with the argument unit.
+     * add() with the argument unit. We tag the unit after
+     * adding it.
      *
      * @param unit The unit we are adding to the army
+     * @throws IllegalArgumentException If unit count could exceed 500 units
      */
-    public void add(Unit unit){
+    public void add(Unit unit) throws IllegalArgumentException{
+        if(getArmySize() >= 500){
+            throw new IllegalArgumentException("Unit count cannot exceed 500 units");
+        }
         this.units.add(unit);
+        unit.setTag(name);
     }
 
     /**
@@ -85,8 +99,12 @@ public class Army{
      * to add all units to list
      *
      * @param units The units we are adding to the army
+     * @throws IllegalArgumentException if unit list exceeds 500 units
      */
-    public void addAll(List<Unit> units){
+    public void addAll(List<Unit> units) throws IllegalArgumentException{
+        if(units.size() > 500){
+            throw new IllegalArgumentException("Unit count cannot exceed 500 units");
+        }
         this.units.addAll(units);
     }
 
@@ -113,16 +131,12 @@ public class Army{
     }
 
     /**
-     * Tags all units wit a specified
-     * tag that we want to set for the units.
-     * This helps us tell which units are
-     * friendly or enemy.
-     *
-     * @param tag What to tag the units
+     * Tags all units with the army name.
+     * Keeps track of which units are enemies
      */
-    public void tagAllUnits(String tag){
+    public void tagAllUnits(){
         for(Unit unit : getAllUnits()){
-            unit.setTag(tag);
+            unit.setTag(name);
         }
     }
 
@@ -149,8 +163,7 @@ public class Army{
         while(!unitList.isEmpty()) { // Run until all units have been added
             Unit unit = unitList.get(0);
             List<Unit> unitsWithName = unitList.stream()
-                                        .filter(u -> u.getName()
-                                        .equals(unit.getName()))
+                                        .filter(u -> u.getName().equals(unit.getName()))
                                         .collect(toList());
 
             results.put(unit.getName(),new ArrayList<>(unitsWithName));
@@ -176,7 +189,10 @@ public class Army{
      * <br> Uses stream operations on
      * the units list to get all cavalries.
      * Uses getClass() instead of instanceof
-     * to exclude subclasses.
+     * to exclude subclasses (like commander)
+     * from also being returned since subclasses
+     * are "instances of" parent classes.
+     *
      * @return List of CavalryUnits
      */
     public List<Unit> getCavalryUnits(){
@@ -241,29 +257,23 @@ public class Army{
      */
     @Override
     public String toString(){
-        StringBuilder output = new StringBuilder(name);
 
-        output.append("\nCommanders: \n");
-        output.append(getCommanderUnits().stream()
-                .sorted((u1,u2) -> -u1.getHealth() + u2.getHealth())
-                .map(u -> u + "\n").collect(Collectors.joining()));
-
-        output.append("\nInfantry: \n");
-        output.append(getInfantryUnits().stream()
-                    .sorted((u1,u2) -> -u1.getHealth() + u2.getHealth())
-                    .map(u -> u + "\n").collect(Collectors.joining()));
-
-        output.append("\nCavalry: \n");
-        output.append(getCavalryUnits().stream()
-                    .sorted((u1,u2) -> -u1.getHealth() + u2.getHealth())
-                    .map(u -> u + "\n").collect(Collectors.joining()));
-
-        output.append("\nRanged: \n");
-        output.append(getRangedUnits().stream()
-                    .sorted((u1,u2) -> -u1.getHealth() + u2.getHealth())
-                    .map(u -> u + "\n").collect(Collectors.joining()));
-
-        return output.toString();
+        return name + "\nCommanders: \n" +
+                getCommanderUnits().stream()
+                        .sorted((u1, u2) -> -u1.getHealth() + u2.getHealth())
+                        .map(u -> u + "\n").collect(Collectors.joining()) +
+                "\nInfantry: \n" +
+                getInfantryUnits().stream()
+                        .sorted((u1, u2) -> -u1.getHealth() + u2.getHealth())
+                        .map(u -> u + "\n").collect(Collectors.joining()) +
+                "\nCavalry: \n" +
+                getCavalryUnits().stream()
+                        .sorted((u1, u2) -> -u1.getHealth() + u2.getHealth())
+                        .map(u -> u + "\n").collect(Collectors.joining()) +
+                "\nRanged: \n" +
+                getRangedUnits().stream()
+                        .sorted((u1, u2) -> -u1.getHealth() + u2.getHealth())
+                        .map(u -> u + "\n").collect(Collectors.joining());
     }
 
     /**
@@ -279,8 +289,7 @@ public class Army{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Army)) return false;
-        Army army = (Army) o;
+        if (!(o instanceof Army army)) return false;
 
         // Creates a stream to ensure that we never change the data, only use
         // it to do our comparison.

@@ -99,6 +99,18 @@ public class ArmyTest {
         }
 
         @Test
+        @DisplayName("add() throws exception if we add unit when >=500 ")
+        public void addThrowsExceptionWhenTooLarge(){
+            Army testArmy = new Army("Test army");
+
+            assertThrows(IllegalArgumentException.class, () -> {
+                for (int i = 0; i < 501; i++) {
+                    testArmy.add(new InfantryUnit("TestUnit",20));
+                }
+            });
+        }
+
+        @Test
         @DisplayName("addAll() adds all units from a list")
         public void addAllAddsAllUnits(){
             List<Unit> unitList = new ArrayList<>();
