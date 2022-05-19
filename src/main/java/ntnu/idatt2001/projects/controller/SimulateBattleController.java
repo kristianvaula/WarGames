@@ -1,7 +1,5 @@
 package ntnu.idatt2001.projects.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,13 +9,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ntnu.idatt2001.projects.io.ArmyFileHandler;
@@ -26,23 +23,30 @@ import ntnu.idatt2001.projects.model.simulation.Army;
 import ntnu.idatt2001.projects.model.simulation.Battle;
 import ntnu.idatt2001.projects.model.simulation.Map;
 import ntnu.idatt2001.projects.model.units.Unit;
+import ntnu.idatt2001.projects.model.units.UnitType;
+import ntnu.idatt2001.projects.view.BattleView;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
+/**
+ * Controls the simulate battle page
+ */
 public class SimulateBattleController implements Initializable {
 
     //The battle
-    Battle battle;
+    private Battle battle;
     //Terrain File Handler
-    private final TerrainFileHandler terrainFileHandler = new TerrainFileHandler();
+    private final TerrainFileHandler terrainFileHandler = new TerrainFileHandler(DEPTH,WIDTH);
+    //Army file handler
+    private final ArmyFileHandler armyFileHandler = new ArmyFileHandler();
     //Storing the maps the user can choose
-    private HashMap<String,Map> maps = new HashMap();
+    private final HashMap<String,Map> maps = new HashMap<>();
 
+    //Constant that sets delay time in simulation
+    private static final int SIMULATION_DELAY_MILLIS = 200;
     //Constants for the maps we want to include
     private static final String[] MAP_NAMES = {"Mixed Terrain","Forest","Hill","Plains"};
     //Default Selected Map
@@ -52,8 +56,16 @@ public class SimulateBattleController implements Initializable {
     //Default Depth
     private static final int DEPTH = 85;
 
+    //Status Display
+    @FXML private Label statusLabel;
+
     //Map ChoiceBox
     @FXML private ChoiceBox<String> mapSelector;
+
+    //Buttons
+    @FXML private Button slowSimulationButton;
+    @FXML private Button fastSimulationButton;
+    @FXML private Button exitButton;
 
     //Army information displays
     @FXML private Label armyName1;
@@ -63,86 +75,182 @@ public class SimulateBattleController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // GIVES US BATTLE TO WORK WITH BEFORE IMPLEMENTING EMBEDDED DATABASE
-        //TODO REMOVE WHEN TEMPORARY STORAGE IMPLEMENTED
-        try{
-            ArmyFileHandler fileHandler = new ArmyFileHandler();
-            Army humanArmy = fileHandler.getArmyFromFile("Human Army");
-            Army orcArmy = fileHandler.getArmyFromFile("Orc Army");
-            battle = new Battle(humanArmy,orcArmy);
+        //Sets up the battle data
+        setUpBattleData();
 
-            //Imports maps
+        try{
+            //Imports maps from directory
             for(String mapName : MAP_NAMES){
-                maps.put(mapName,new Map(terrainFileHandler.getTerrainFromFile(mapName,DEPTH,WIDTH),DEPTH,WIDTH));
+                maps.put(mapName,new Map(terrainFileHandler.getTerrainFromFile(mapName),DEPTH,WIDTH));
             }
             battle.setMap(maps.get(DEFAULT_MAP));
-
-        }catch (IOException e){
+        } // If it fails we alert user
+        catch (Exception e ){
             e.printStackTrace();
-            alertUser(Alert.AlertType.ERROR,"Error occoured while loading files");
+            alertUser(Alert.AlertType.ERROR,"There was an issue loading the maps, please try again.");
         }
 
         //Fills the map selector choicebox
         for(String mapName : MAP_NAMES){
             mapSelector.getItems().add(mapName);
         }
-        mapSelector.setValue(DEFAULT_MAP);
         //Add listener to choicebox that calls changed method when user selects a different map
-        mapSelector.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                battle.setMap(maps.get(newValue));
-
-            }
+        mapSelector.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            battle.getMap().clear();
+            battle.setMap(maps.get(newValue));
+            setUpBattleData();
         });
+        //Select the default map
+        mapSelector.getSelectionModel().select(DEFAULT_MAP);
 
+        //Setting text and calling display units method
         armyName1.setText(battle.getArmyOne().getName());
         armyName2.setText(battle.getArmyTwo().getName());
-
         displayUnitsAndHealth();
+    }
+
+    /**
+     * Sets up the battle data used by the controller.
+     * Gets the active armies that we have selected in
+     * the application. Then we initiate the battle and
+     * set the view.
+     *
+     * If the battle has already been initiated, we will
+     * simply refresh the map and armies.
+     */
+    @FXML
+    private void setUpBattleData() {
+        Army armyOne,armyTwo;
+        try {
+            List<Army> activeArmies = armyFileHandler.getActiveArmies();
+            armyOne = activeArmies.get(0);
+            armyTwo = activeArmies.get(1);
+        }
+        catch (IllegalStateException e){
+            armyOne = new Army("Army One");
+            armyTwo = new Army("Army Two");
+        }
+        if(battle == null){ // Initiates first time
+            battle = new Battle(armyOne,armyTwo);
+            //Add a MapView because we want to graphically display the battle
+            battle.setView(new BattleView(DEPTH,WIDTH,battle.getArmyOne().getName(),battle.getArmyTwo().getName()));
+        }
+        else{ // Resets after last battle
+            battle.getMap().clear();
+            battle.closeMap();
+            battle.setArmyOne(armyOne);
+            battle.setArmyTwo(armyTwo);
+            battle.placeArmies();
+            battle.updateMap();
+        }
+    }
+
+    /**
+     * Calls the run simulation method standard
+     * delay time to display simulation while the
+     * battle is progressing.
+     */
+    @FXML
+    private void runSlowSimulationEvent(){
+        runSimulation(SIMULATION_DELAY_MILLIS);
+    }
+
+    /**
+     * Calls the run simulation method with
+     * no delay to get instantaneous result.
+     */
+    @FXML
+    private void runFastSimulationEvent(){
+         runSimulation(0);
+    }
+
+    /**
+     * Runs the simulation. Starts by deactivating
+     * all buttons. Then calls the setUpBattleData.
+     * We start the simulation and wait for it to finish
+     * and return the winner. Last we display results
+     * and update army display boxes.
+     *
+     * @param millis Delay between each simulation step
+     */
+    @FXML
+    private void runSimulation(int millis){
+        //Preparing:
+        statusLabel.setText("Battle simulation underway");
+        buttonDeactivation(true);
+        setUpBattleData();
+        //Run simulation:
+        Army winner = battle.simulate(millis);
+        //Results:
+        displayUnitsAndHealth();
+        statusLabel.setText("The winner of the battle was " + winner.getName() + " with " + winner.getArmySize() + " units left.");
+        buttonDeactivation(false);
+    }
+
+    /**
+     * Deactivates all buttons. Used while
+     * we run the simulation so that the user
+     * does not affect the running simulation
+     *
+     * @param value True deactivates button, false
+     *              will reactivate them.
+     */
+    @FXML
+    private void buttonDeactivation(boolean value){
+        mapSelector.setDisable(value);
+        exitButton.setDisable(value);
+        slowSimulationButton.setDisable(value);
+        fastSimulationButton.setDisable(value);
     }
 
     /**
      * Calls for generateUnitVBox to display all units
      */
     @FXML
-    public void displayUnitsAndHealth(){
-        for(Unit unit : battle.getArmyOne().getAllUnits()){
+    private void displayUnitsAndHealth(){
+        unitFlowPane1.getChildren().clear();
+        unitFlowPane2.getChildren().clear();
+        //Comparator to compare health and type
+        Comparator<Unit> comparator = Comparator.comparing(Unit::getType)
+                .thenComparing(Unit::getHealth)
+                .reversed();
+
+        List<Unit> armyOne = battle.getArmyOne().getAllUnits()
+                .stream()
+                .sorted(comparator)
+                .collect(Collectors.toList());
+
+        for(Unit unit : armyOne){
             VBox unitContainer = generateUnitVBox(unit);
             unitFlowPane1.getChildren().add(unitContainer);
-            unitFlowPane1.setMargin(unitContainer,new Insets(2,2,2,2));
+            FlowPane.setMargin(unitContainer,new Insets(2,2,2,2));
         }
-        for(Unit unit: battle.getArmyTwo().getAllUnits()){
+        //Units of army two pipeline
+        List<Unit> armyTwo = battle.getArmyTwo().getAllUnits()
+                .stream()
+                .sorted(comparator)
+                .collect(Collectors.toList());
+
+        for(Unit unit: armyTwo){
             VBox unitContainer = generateUnitVBox(unit);
             unitFlowPane2.getChildren().add(unitContainer);
-            unitFlowPane2.setMargin(unitContainer,new Insets(2,2,2,2));
+            FlowPane.setMargin(unitContainer,new Insets(2,2,2,2));
         }
     }
 
-    /**<VBox prefHeight="43.0" prefWidth="30.0" style="-fx-border-color: #191308;">
-     <children>
-         <Pane prefHeight="35.0" prefWidth="30.0" style="-fx-background-color: #646E78;">
-         <children>
-             <ImageView fitHeight="31.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-             <image>
-                 <Image url="@icons/infantry.png" />
-                 </image>
-             </ImageView>
-         </children>
-         </Pane>
-         <Pane prefHeight="8.0" prefWidth="30.0" style="-fx-background-color: red;" />
-     </children>
-     <FlowPane.margin>
-     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-     </FlowPane.margin>
-     </VBox>*/
+    /**
+     * Displays a unit as a tiny VBox with an
+     * icon representing its unit type and a health
+     * bar showing how much of the initial health is
+     * left.
+     */
     @FXML
-    public VBox generateUnitVBox(Unit unit){
+    private VBox generateUnitVBox(Unit unit){
         VBox unitContainer = new VBox();
         unitContainer.setPrefHeight(45);
         unitContainer.setMinHeight(45);
         unitContainer.setPrefHeight(30);
-        unitContainer.setStyle("-fx-border-color:#191308;");
+        unitContainer.setStyle("-fx-border-color:#191308;-fx-background-color: #191308");
         //UNIT ICON
         VBox imagePane = new VBox();
         imagePane.setStyle("fx-background-color: gray;");
@@ -150,16 +258,16 @@ public class SimulateBattleController implements Initializable {
         imagePane.setPrefHeight(30);
 
         ImageView image = new ImageView();
-        if(unit.getType().equals("Infantry Unit")){
+        if(unit.getType().equals(UnitType.INFANTRY.toString())){
             image.setImage(new Image(String.valueOf(getClass().getResource("../view/icons/infantry.png"))));
         }
-        else if(unit.getType().equals("Ranged Unit")){
+        else if(unit.getType().equals(UnitType.RANGED.toString())){
             image.setImage(new Image(String.valueOf(getClass().getResource("../view/icons/archer.png"))));
         }
-        else if(unit.getType().equals("Cavalry Unit")){
+        else if(unit.getType().equals(UnitType.CAVALRY.toString())){
             image.setImage(new Image(String.valueOf(getClass().getResource("../view/icons/knight.png"))));
         }
-        else if(unit.getType().equals("Commander Unit")){
+        else if(unit.getType().equals(UnitType.COMMANDER.toString())){
             image.setImage(new Image(String.valueOf(getClass().getResource("../view/icons/commander.png"))));
         }
         image.setFitHeight(35);
@@ -179,19 +287,13 @@ public class SimulateBattleController implements Initializable {
     }
 
     /**
-     * Displays all the
-     */
-    private void displayMap(){
-
-    }
-
-    /**
      * Loads main menu when the exit button is pressed
      * @param event button click
      * @throws IOException If fxml load fails
      */
     @FXML
-    public void loadMainMenu(ActionEvent event) throws IOException {
+    private void loadMainMenu(ActionEvent event) throws IOException {
+        battle.closeMap();
         try {
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/MainMenu.fxml"));
