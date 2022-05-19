@@ -80,7 +80,7 @@ public class BattleView extends JFrame {
             for(int col = 0; col < map.getWidth(); col++) {
                 Location location = map.getLocationAt(row, col);
                 if(location != null) {
-                    mapView.drawMark(col, row, TERRAIN_COLORS.get(map.getLocationAt(row,col).getTerrain()));
+                    mapView.drawMark(col, row, TERRAIN_COLORS.get(location.getTerrain()));
                 }
             }
         }

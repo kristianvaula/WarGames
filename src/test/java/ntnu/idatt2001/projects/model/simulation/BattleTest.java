@@ -27,10 +27,12 @@ public class BattleTest {
     private static final int STRESS_TEST_RUNS = 800;
     //Amounts of units per army (increase with caution)
     private static final int UNITS_PER_ARMY = 50;
+
     private static final String ARMY_NAME_ONE = "armyOne";
     private static final String ARMY_NAME_TWO = "armyTwo";
     private static final String MAP_NAME = "Mixed Terrain";
 
+    //Set up method for use when running stress test
     private void stressTestSetUp(){
         armyOne = new Army(ARMY_NAME_ONE);
         armyTwo = new Army(ARMY_NAME_TWO);

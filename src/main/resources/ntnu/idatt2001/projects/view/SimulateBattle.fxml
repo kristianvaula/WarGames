@@ -9,9 +9,9 @@
     <top>
         <VBox alignment="TOP_CENTER" prefHeight="155.0" prefWidth="960.0" BorderPane.alignment="CENTER">
             <fx:include fx:id="topBar" source="TopBar.fxml" />
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="header">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" styleClass="header">
                 <StackPane prefHeight="101.0" prefWidth="160.0">
-                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#loadMainMenu" prefHeight="62.0" prefWidth="147.0" style="-fx-font-size: 20;" styleClass="Button" text="EXIT">
+                    <Button fx:id="exitButton" alignment="CENTER" mnemonicParsing="false" onAction="#loadMainMenu" prefHeight="62.0" prefWidth="147.0" style="-fx-font-size: 20;" styleClass="Button" text="EXIT">
                         <graphic>
                             <ImageView fitHeight="57.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                 <Image url="@icons/leftarrow.png" />
@@ -24,88 +24,90 @@
                         <Image url="@icons/wargames_banner.png" />
                     </ImageView>
                 </StackPane>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="160.0">
-               <children>
-                  <Label alignment="CENTER" prefHeight="27.0" prefWidth="114.0" text="Select Map" textAlignment="CENTER">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin></Label>
-                  <ChoiceBox fx:id="mapSelector" prefWidth="150.0" styleClass="orange-choice-box">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin></ChoiceBox>
-               </children>
-            </VBox>
             </HBox>
             <Pane maxHeight="8.0" minHeight="8.0" prefHeight="8.0" prefWidth="960.0" style="-fx-background-color: BB5511;" />
         </VBox>
     </top>
    <center>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <VBox alignment="TOP_CENTER" prefHeight="365.0" prefWidth="180.0">
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </HBox.margin>
-               <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" style="-fx-border-width: 1; -fx-font-size: 14;" styleClass="Button" text="Run Fast Simulation">
-                     <VBox.margin>
-                        <Insets left="5.0" right="5.0" />
-                     </VBox.margin></Button>
-                  <VBox prefHeight="337.0" prefWidth="176.0" style="-fx-background-color: #BB5511; -fx-border-color: #191308;">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
-                     </VBox.margin>
-                     <children>
-                        <Label fx:id="armyName1" alignment="CENTER" prefHeight="27.0" prefWidth="178.0" style="-fx-underline: true;" text="ArmyOne" />
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="290.0" prefWidth="154.0" style="-fx-background-color: #BB5511;" styleClass="scroll-bar">
-                           <content>
-                              <FlowPane fx:id="unitFlowPane1" prefHeight="290.0" prefWidth="139.0" style="-fx-background-color: #BB5511;">
-                                 <children>
-
-                                 </children></FlowPane>
-                           </content></ScrollPane>
-                     </children>
-                  </VBox>
-               </children>
+         <VBox alignment="TOP_CENTER" prefHeight="365.0" prefWidth="190.0">
+            <HBox.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </HBox.margin>
+            <VBox prefHeight="355.0" prefWidth="161.0" style="-fx-background-color: #BB5511;">
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="10.0" />
+               </VBox.margin>
+               <Label fx:id="armyName1" alignment="CENTER" prefHeight="27.0" prefWidth="178.0" style="-fx-border-color: #191308; -fx-font-size: 20;" text="ArmyOne" />
+               <ScrollPane hbarPolicy="NEVER" prefHeight="333.0" prefWidth="161.0" style="-fx-background-color: #BB5511; -fx-border-color: #191308;" styleClass="scroll-bar">
+                  <FlowPane fx:id="unitFlowPane1" prefHeight="323.0" prefWidth="147.0" style="-fx-background-color: #BB5511;" />
+               </ScrollPane>
             </VBox>
-            <VBox prefHeight="365.0" prefWidth="577.0" style="-fx-background-color: #A84D10; -fx-border-color: #191308;">
-               <HBox.margin>
+         </VBox>
+         <VBox alignment="CENTER" prefHeight="365.0" prefWidth="577.0">
+            <HBox.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </HBox.margin>
+            <VBox alignment="CENTER" prefHeight="148.0" prefWidth="538.0" style="-fx-background-color: #A84D10; -fx-border-color: #191308;">
+               <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </HBox.margin>
-               <children>
-                  <Pane fx:id="mapPane" prefHeight="388.0" prefWidth="574.0">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Pane>
-               </children>
+               </VBox.margin>
+               <Label fx:id="statusLabel" prefHeight="150.0" prefWidth="386.0" style="-fx-font-size: 25;" text="Select a map and start simulation!" textAlignment="CENTER" wrapText="true">
+                  <VBox.margin>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </VBox.margin>
+               </Label>
             </VBox>
-            <VBox alignment="TOP_CENTER" layoutX="142.0" layoutY="20.0" prefHeight="365.0" prefWidth="180.0">
-               <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" style="-fx-border-width: 1; -fx-font-size: 14;" styleClass="Button" text="Run Slow Simulation">
+            <HBox alignment="CENTER_RIGHT" prefHeight="118.0" prefWidth="558.0">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <VBox alignment="TOP_CENTER" prefHeight="106.0" prefWidth="288.0">
+                  <HBox.margin>
+                     <Insets right="50.0" top="10.0" />
+                  </HBox.margin>
+                  <HBox alignment="CENTER" fillHeight="false" prefHeight="61.0" prefWidth="288.0" style="-fx-background-color: #191308;">
+                     <Label alignment="CENTER" prefHeight="34.0" prefWidth="115.0" text="Select Map:" textAlignment="CENTER">
+                        <HBox.margin>
+                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </HBox.margin>
+                     </Label>
+                     <ChoiceBox fx:id="mapSelector" prefHeight="2.0" prefWidth="163.0" styleClass="orange-choice-box">
+                        <HBox.margin>
+                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </HBox.margin>
+                     </ChoiceBox>
+                  </HBox>
+                  <HBox alignment="CENTER" fillHeight="false" layoutX="10.0" layoutY="10.0" prefHeight="8.0" prefWidth="288.0" style="-fx-background-color: #BB5511;" />
+               </VBox>
+               <VBox alignment="TOP_CENTER" prefHeight="64.0" prefWidth="174.0">
+                  <Button fx:id="slowSimulationButton" alignment="CENTER" mnemonicParsing="false" onAction="#runSlowSimulationEvent" style="-fx-border-width: 1; -fx-font-size: 14;" styleClass="Button" text="Run Slow Simulation">
                      <VBox.margin>
-                        <Insets left="5.0" right="5.0" />
-                     </VBox.margin></Button>
-                  <VBox prefHeight="337.0" prefWidth="176.0" style="-fx-background-color: #BB5511; -fx-border-color: #191308;">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
                      </VBox.margin>
-                     <children>
-                        <Label fx:id="armyName2" alignment="CENTER" prefHeight="27.0" prefWidth="178.0" style="-fx-underline: true;" text="ArmyOne" />
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="290.0" prefWidth="154.0" style="-fx-background-color: #BB5511;" styleClass="scroll-bar">
-                           <content>
-                              <FlowPane fx:id="unitFlowPane2" prefHeight="290.0" prefWidth="139.0" style="-fx-background-color: #BB5511;" />
-                           </content>
-                        </ScrollPane>
-                     </children>
-                  </VBox>
-               </children>
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </HBox.margin>
-            </VBox>
-         </children>
+                  </Button>
+                  <Button fx:id="fastSimulationButton" alignment="CENTER" mnemonicParsing="false" onAction="#runFastSimulationEvent" prefHeight="32.0" prefWidth="158.0" style="-fx-border-width: 1; -fx-font-size: 14;" styleClass="Button" text="Run Fast Simulation">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="3.0" />
+                     </VBox.margin>
+                  </Button>
+               </VBox>
+            </HBox>
+         </VBox>
+         <VBox alignment="TOP_CENTER" prefHeight="365.0" prefWidth="190.0">
+            <HBox.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </HBox.margin>
+             <VBox prefHeight="355.0" prefWidth="161.0" style="-fx-background-color: #BB5511;">
+                 <VBox.margin>
+                     <Insets left="5.0" right="5.0" top="10.0" />
+                 </VBox.margin>
+                 <Label fx:id="armyName2" alignment="CENTER" prefHeight="27.0" prefWidth="178.0" style="-fx-border-color: #191308;" text="ArmyTwo" />
+                 <ScrollPane hbarPolicy="NEVER" prefHeight="333.0" prefWidth="161.0" style="-fx-background-color: #BB5511; -fx-border-color: #191308;" styleClass="scroll-bar">
+                    <FlowPane fx:id="unitFlowPane2" prefHeight="323.0" prefWidth="147.0" style="-fx-background-color: #BB5511;" />
+                 </ScrollPane>
+             </VBox>
+         </VBox>
       </HBox>
    </center>
 </BorderPane>
