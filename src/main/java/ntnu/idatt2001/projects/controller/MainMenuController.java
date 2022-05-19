@@ -33,10 +33,16 @@ import java.util.ResourceBundle;
 
 import static javafx.geometry.Pos.CENTER_LEFT;
 
+/**
+ * Controls the main menu page
+ */
 public class MainMenuController implements Initializable {
 
     //The battle
-    Battle battle;
+    private Battle battle;
+
+    //Army file handler
+    private ArmyFileHandler armyFileHandler = new ArmyFileHandler();
 
     //Constants for icons
     private static final String DLM = File.separator;
@@ -45,50 +51,61 @@ public class MainMenuController implements Initializable {
                                              "view" + DLM + "icons" + DLM;
 
     //Army display boxes
-    @FXML Label armyNameOutputA;
-    @FXML VBox armyUnitsOutputA;
-    @FXML Label armyNameOutputB;
-    @FXML VBox armyUnitsOutputB;
-
+    @FXML private Label armyNameOutputA;
+    @FXML private VBox armyUnitsOutputA;
+    @FXML private Label armyNameOutputB;
+    @FXML private VBox armyUnitsOutputB;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try{
-            ArmyFileHandler fileHandler = new ArmyFileHandler();
-            Army humanArmy = fileHandler.getArmyFromFile("Human Army");
-            Army orcArmy = fileHandler.getArmyFromFile("Orc Army");
-            battle = new Battle(humanArmy,orcArmy);
-            displayArmy(battle.getArmyOne(),armyNameOutputA,armyUnitsOutputA);
-            displayArmy(battle.getArmyTwo(),armyNameOutputB,armyUnitsOutputB);
-        }catch (IOException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Error occoured while loading files");
-            alert.show();
-        }
+        //Sets up the battle data
+        setUpBattleData();
+
+        //Calls display on both armies
+        displayArmy(battle.getArmyOne(),armyNameOutputA,armyUnitsOutputA);
+        displayArmy(battle.getArmyTwo(),armyNameOutputB,armyUnitsOutputB);
     }
 
     /**
-     * Displays the armies in the main menu
-     * <HBox prefHeight="25.0" prefWidth="210.0">
-     *  <children>
-     *     <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-     *        <image>
-     *          <Image url="@icons/infantry.png" />
-     *        </image>
-     *     </ImageView>
-     *       <Label prefHeight="60.0" prefWidth="191.0" style="-fx-text-fill: #EDFFEC; -fx-font-size: 18;" text="25x  Swordmen">
-     *          <padding>
-     *          <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-     *     </padding></Label>
-     *   </children>
-     * </HBox>
+     * Sets up the battle data used by the controller.
+     * Initiates the battle field of controller as the
+     * two active armies.
      */
     @FXML
-    protected void displayArmy(Army army,Label armyNameContainer, VBox unitContainer){
+    private void setUpBattleData() {
+        Army armyOne,armyTwo;
+        try {
+            List<Army> activeArmies = armyFileHandler.getActiveArmies();
+            armyOne = activeArmies.get(0);
+            armyTwo = activeArmies.get(1);
+        }
+        catch (IllegalStateException e){
+            armyOne = new Army("Army One");
+            armyTwo = new Army("Army Two");
+        }
+        battle = new Battle(armyOne,armyTwo);
+    }
+
+    /**
+     * Displays the armies in the main menu.
+     * Creates a list of all unit types and the
+     * amount of the given unit. We differentiate
+     * between same type units if they have different
+     * names
+     *
+     * @param army Army to display
+     * @param armyNameContainer Container for armyname
+     * @param unitContainer Container for units
+     */
+    @FXML
+    private void displayArmy(Army army,Label armyNameContainer, VBox unitContainer){
+        //Display army name
         armyNameContainer.setText(army.getName());
+        //Get units grouped by name
         LinkedHashMap<String, ArrayList<Unit>> unitsByName = army.getUnitsByName();
         List<String> unitNames = unitsByName.keySet().stream().toList();
 
+        //Iterate through the types and create row for each type
         for(String unit : unitNames){
             ArrayList<Unit> specifiedUnits = unitsByName.get(unit);
             HBox rowContainer = new HBox();
@@ -110,7 +127,6 @@ public class MainMenuController implements Initializable {
 
             unitContainer.getChildren().add(rowContainer);
         }
-
     }
 
     /**
@@ -120,7 +136,7 @@ public class MainMenuController implements Initializable {
      * @return Image icon based on type
      */
     @FXML
-    protected Image getUnitIcons(Class<?> type){
+    private Image getUnitIcons(Class<?> type){
         try{
             if(type == CommanderUnit.class) {
                 return new Image(new FileInputStream(ICONS_URL + "commander.png"));
@@ -147,7 +163,7 @@ public class MainMenuController implements Initializable {
      * @throws IOException If fxml load fails
      */
     @FXML
-    protected void loadSimulateBattle(ActionEvent event) throws IOException {
+    private void loadSimulateBattle(ActionEvent event) throws IOException {
         try {
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/SimulateBattle.fxml"));
@@ -171,7 +187,7 @@ public class MainMenuController implements Initializable {
      * @throws IOException If fxml load fails
      */
     @FXML
-    public void loadEditArmies(ActionEvent event) throws IOException {
+    private void loadEditArmies(ActionEvent event) throws IOException {
         try {
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/EditArmies.fxml"));
@@ -195,7 +211,7 @@ public class MainMenuController implements Initializable {
      * @throws IOException If fxml load fails
      */
     @FXML
-    public void loadImportArmies(ActionEvent event) throws IOException {
+    private void loadImportArmies(ActionEvent event) throws IOException {
         try {
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/ImportArmies.fxml"));
