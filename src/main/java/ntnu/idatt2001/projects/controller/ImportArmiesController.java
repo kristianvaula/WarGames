@@ -20,37 +20,74 @@ import ntnu.idatt2001.projects.model.units.Unit;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controls the import armies page
+ */
 public class ImportArmiesController implements Initializable {
 
     //The battle
-    Battle battle;
-    Army selectedArmy = null;
+    private Battle battle;
+    //Selected army
+    private Army selectedArmy = null;
+
+    //Army file handler
+    private ArmyFileHandler armyFileHandler = new ArmyFileHandler();
 
     //Army list
-    @FXML TableView<Army> armyList;
-    @FXML TableColumn<Army,String> selectArmyColumn;
+    @FXML private TableView<Army> armyList;
+    @FXML private TableColumn<Army,String> selectArmyColumn;
 
     //Selected army table
-    @FXML Label armyNameLabel;
-    @FXML TableView<Unit> selectedArmyTable;
-    @FXML TableColumn<Unit,String> typeColumn;
-    @FXML TableColumn<Unit,String> nameColumn;
-    @FXML TableColumn<Unit,String> attackColumn;
-    @FXML TableColumn<Unit,String> healthColumn;
-    @FXML TableColumn<Unit,String> armorColumn;
+    @FXML private Label armyNameLabel;
+    @FXML private TableView<Unit> selectedArmyTable;
+    @FXML private TableColumn<Unit,String> typeColumn;
+    @FXML private TableColumn<Unit,String> nameColumn;
+    @FXML private TableColumn<Unit,String> attackColumn;
+    @FXML private TableColumn<Unit,String> healthColumn;
+    @FXML private TableColumn<Unit,String> armorColumn;
 
     //Misc
-    @FXML RadioButton radioButton1;
-    @FXML RadioButton radioButton2;
+    @FXML private Label unitCountOutput;
+    @FXML private RadioButton radioButton1;
+    @FXML private RadioButton radioButton2;
     private ToggleGroup radioToggleGroup;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //SETS UP THE BATTLE DATA
+        setUpBattleData();
+
         //Initialize the table for displaying armies by their name
         armyList.setEditable(false);
         selectArmyColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        displayArmyList();
+        //setRowFactory to get the army that the user has
+        //clicked and saved to selectedArmy
+        armyList.setRowFactory(TableView -> {
+            TableRow<Army> row = new TableRow<>();
+
+            row.setOnMouseClicked(event -> {
+                //If single click we select the army for import
+                if(!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1){
+                    selectedArmy = row.getItem();
+                    //Update army size
+                    unitCountOutput.setText(String.valueOf(selectedArmy.getArmySize()));
+                }
+                //If double click we load it straight away
+                else if(!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2){
+                    selectedArmy = row.getItem();
+                    //Update army size
+                    unitCountOutput.setText(String.valueOf(selectedArmy.getArmySize()));
+                    displaySelectedArmy();
+                }
+            });
+            return row;
+        });
 
         //Initialize the table for displaying units of single army
         selectedArmyTable.setEditable(false);
@@ -60,57 +97,45 @@ public class ImportArmiesController implements Initializable {
         healthColumn.setCellValueFactory(new PropertyValueFactory<>("health"));
         armorColumn.setCellValueFactory(new PropertyValueFactory<>("armor"));
 
-        //Set toggleGroup
+        //Set toggleGroup for army radio buttons
         radioToggleGroup = new ToggleGroup();
         radioButton1.setToggleGroup(radioToggleGroup);
+        radioButton1.setText(battle.getArmyOne().getName());
         radioButton2.setToggleGroup(radioToggleGroup);
-
-        //setRowFactory to get the army of selected row when we
-        //press it and then call the displaySelectedArmy
-        armyList.setRowFactory(TableView -> {
-            TableRow<Army> row = new TableRow<>();
-
-            row.setOnMouseClicked(event -> {
-                //If single click we select the army for import
-                if(!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1){
-                    selectedArmy = row.getItem();
-                }
-                //If double click we load it straight away
-                else if(!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2){
-                    selectedArmy = row.getItem();
-                    displaySelectedArmy();
-                }
-            });
-            return row;
-        });
-
-        // GIVES US BATTLE TO WORK WITH BEFORE IMPLEMENTING EMBEDDED DATABASE
-        //TODO REMOVE WHEN TEMPORARY STORAGE IMPLEMENTED
-        try{
-            ArmyFileHandler fileHandler = new ArmyFileHandler();
-            Army humanArmy = fileHandler.getArmyFromFile("Human Army");
-            Army orcArmy = fileHandler.getArmyFromFile("Orc Army");
-            battle = new Battle(humanArmy,orcArmy);
-            displayArmyList();
-            radioButton1.setText(battle.getArmyOne().getName());
-            radioButton2.setText(battle.getArmyTwo().getName());
-        }catch (IOException e){
-            e.printStackTrace();
-            alertUser(Alert.AlertType.ERROR,"Error occoured while loading files");
-        }
-
-
+        radioButton2.setText(battle.getArmyTwo().getName());
     }
 
     /**
-     * Displays armies to the army list table
+     * Sets up the battle data used by the controller.
+     * Initiates the battle field of controller as the
+     * two active armies.
      */
     @FXML
-    public void displayArmyList(){
+    private void setUpBattleData() {
+        Army armyOne,armyTwo;
+        try {
+            List<Army> activeArmies = armyFileHandler.getActiveArmies();
+            armyOne = activeArmies.get(0);
+            armyTwo = activeArmies.get(1);
+        }
+        catch (IllegalStateException e){
+            armyOne = new Army("Army One");
+            armyTwo = new Army("Army Two");
+        }
+        battle = new Battle(armyOne,armyTwo);
+    }
+
+    /**
+     * Displays armies to the army list table.
+     * Uses armyFileHandler to get all army save
+     * files and adds them to the TableView armyList
+     */
+    @FXML
+    private void displayArmyList(){
         ObservableList<Army> armiesObservable = FXCollections.observableArrayList();
-        ArmyFileHandler armyFileHandler = new ArmyFileHandler();
+        armyFileHandler = new ArmyFileHandler();
         try{
-            armiesObservable.setAll(armyFileHandler.getArmySavefiles());
+            armiesObservable.setAll(armyFileHandler.getArmySaveFiles());
         }catch(Exception e){
             e.printStackTrace();
             alertUser(Alert.AlertType.ERROR,"Error occurred while loading files, please try again.");
@@ -119,13 +144,17 @@ public class ImportArmiesController implements Initializable {
     }
 
     /**
-     * Displays the selected army with all its units
+     * Displays the selected army with all its units.
+     * When the user presses the preview button we
+     * get the selected army and enter all the units to
+     * the unit list
      */
     @FXML
-    public void displaySelectedArmy(){
+    private void displaySelectedArmy(){
         ObservableList<Unit> unitsObservable = FXCollections.observableArrayList();
         Army army = selectedArmy;
         armyNameLabel.setText(army.getName());
+        unitCountOutput.setText(String.valueOf(selectedArmy.getArmySize()));
         if(army != null){
             unitsObservable.addAll(army.getCommanderUnits());
             unitsObservable.addAll(army.getInfantryUnits());
@@ -142,49 +171,58 @@ public class ImportArmiesController implements Initializable {
      * button.
      */
     @FXML
-    public void replaceSelectedArmy(){
-        if(selectedArmy != null){
-            Army newArmy = selectedArmy;
+    private void replaceSelectedArmy(){
+        armyFileHandler = new ArmyFileHandler();
+        try{
+            //if user has not selected an army throw exception
+            if(selectedArmy == null){
+                throw new IllegalStateException("New army must be imported before replacing.");
+            }
+            //Else if neither radio buttons are chosen throw exception
+            else if(radioToggleGroup.getSelectedToggle()== null){
+                throw new IllegalStateException("Please select which existing army to replace.");
+            }
+
+            Army armyOne = battle.getArmyOne();
+            Army armyTwo = battle.getArmyTwo();
+            //If radioButton1 is chosen we change armyOne
             if(radioToggleGroup.getSelectedToggle().equals(radioButton1)){
-                try{
-                    Battle replacementBattle = new Battle(selectedArmy,battle.getArmyTwo());
-                    battle = replacementBattle;
-                    radioToggleGroup.getSelectedToggle().setSelected(false);
-                }
-                catch (IllegalArgumentException e){
-                    alertUser(Alert.AlertType.ERROR,e.getMessage());
-                }
-                //TODO UPDATE BATTLE WHEN TEMP STORAGE IMPLEMENTED
+                armyOne = selectedArmy;
             }
+            //Else if radioButton2 is chosen we change armyTwo
             else if(radioToggleGroup.getSelectedToggle().equals(radioButton2)){
-                try{
-                    Battle replacementBattle = new Battle(battle.getArmyOne(),selectedArmy);
-                    battle = replacementBattle;
-                    radioToggleGroup.getSelectedToggle().setSelected(false);
-                }
-                catch (IllegalArgumentException e){
-                    alertUser(Alert.AlertType.ERROR,e.getMessage());
-                }
-                //TODO UPDATE BATTLE WHEN TEMP STORAGE IMPLEMENTED
+                armyTwo = selectedArmy;
             }
-            else{
-                alertUser(Alert.AlertType.WARNING,"Please select which existing army to replace.");
-            }
+
+            //Create new battle with the updated armies
+            battle = new Battle(armyOne,armyTwo);
+            //Save it as active armies
+            armyFileHandler.setActiveArmyDirectory();
+            armyFileHandler.setActiveArmies(new ArrayList<>(Arrays.asList(battle.getArmyOne(), battle.getArmyTwo())));
+            //Positive user feedback
+            alertUser(Alert.AlertType.CONFIRMATION,"Army imported successfully");
+
+            //Update text and remove selection
+            radioButton1.setText(battle.getArmyOne().getName());
+            radioButton2.setText(battle.getArmyTwo().getName());
+            radioToggleGroup.getSelectedToggle().setSelected(false);
         }
-        else{
-            alertUser(Alert.AlertType.WARNING,"New army must be imported before replacing");
+        catch (IllegalStateException e){
+            alertUser(Alert.AlertType.WARNING,e.getMessage());
         }
-        radioButton1.setText(battle.getArmyOne().getName());
-        radioButton2.setText(battle.getArmyTwo().getName());
+        catch(IOException e ){
+            e.printStackTrace();
+            alertUser(Alert.AlertType.ERROR,"Error while importing army, please try again.");
+        }
     }
 
     /**
      * Loads main menu when the exit button is pressed
+     *
      * @param event button click
-     * @throws IOException If fxml load fails
      */
     @FXML
-    public void loadMainMenu(ActionEvent event) throws IOException {
+    private void loadMainMenu(ActionEvent event){
         try {
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/MainMenu.fxml"));
