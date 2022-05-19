@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,7 +31,7 @@ public class ArmyFileHandlerTest {
     private static final String DLM = File.separator;
     // DEFAULT FILE DIRECTORY
     private static final String FILE_DIRECTORY = "src" + DLM + "main" + DLM + "resources" + DLM +
-            "ntnu" + DLM + "idatt2001" + DLM + "projects" + DLM + "savefiles" + DLM + "armyTestFiles";
+            "ntnu" + DLM + "idatt2001" + DLM + "projects" + DLM + "testFiles" + DLM + "armyTestFiles";
 
     //Pre initiated csv files used in test classes:
     //      army_name_two.csv
@@ -91,7 +92,7 @@ public class ArmyFileHandlerTest {
             try {
                 armyFileHandler.writeArmyToFile(testArmy);
             }catch(Exception e){
-                System.out.println(e);
+                e.printStackTrace();
                 fail();
             }
 
@@ -106,7 +107,7 @@ public class ArmyFileHandlerTest {
             try {
                 armyFileHandler.writeArmyToFile(emptyArmy);
             }catch(Exception e){
-                System.out.println(e);
+                e.printStackTrace();
                 fail();
             }
 
@@ -119,7 +120,7 @@ public class ArmyFileHandlerTest {
             try {
                 armyFileHandler.writeArmyToFile(testArmy);
             }catch(Exception e){
-                System.out.println(e);
+                e.printStackTrace();
                 fail();
             }
             testArmy.add(new InfantryUnit("Swordsman",20,10,10));
@@ -127,7 +128,7 @@ public class ArmyFileHandlerTest {
             try {
                 armyFileHandler.writeArmyToFile(testArmy);
             }catch(Exception e){
-                System.out.println(e);
+                e.printStackTrace();
                 fail();
             }
 
@@ -146,7 +147,7 @@ public class ArmyFileHandlerTest {
             try {
                 readArmy = armyFileHandler.getArmyFromFile(armyNameTwo);
             }catch (Exception e){
-                System.out.println(e);
+                e.printStackTrace();
                 fail();
             }
 
@@ -159,8 +160,7 @@ public class ArmyFileHandlerTest {
             assertThrows(IOException.class, () ->{
                 try {
                     Army army = armyFileHandler.getArmyFromFile(corruptUnitValues);
-                }catch(Exception e){
-                    System.out.println(e);
+                }catch(IOException e){
                     throw e;
                 }
             });
@@ -173,8 +173,7 @@ public class ArmyFileHandlerTest {
                 try {
                     Army army = armyFileHandler.getArmyFromFile(corruptArmyFile);
 
-                }catch(Exception e){
-                    System.out.println(e);
+                }catch(IOException e){
                     throw e;
                 }
             });
@@ -187,7 +186,6 @@ public class ArmyFileHandlerTest {
                 try {
                     Army army = armyFileHandler.getArmyFromFile(corruptArmyName);
                 }catch(Exception e){
-                    System.out.println(e);
                     throw e;
                 }
             });
@@ -197,11 +195,11 @@ public class ArmyFileHandlerTest {
         @DisplayName("Reading all default savefiles")
         public void readingAllDefaultSavefiles(){
             ArmyFileHandler defaultFileHandler = new ArmyFileHandler();
-            ArrayList<Army> armies = null;
+            List<Army> armies = null;
             try {
-                armies = defaultFileHandler.getArmySavefiles();
+                armies = defaultFileHandler.getArmySaveFiles();
             }catch (Exception e){
-                System.out.println(e);
+                e.printStackTrace();
                 fail();
             }
 

@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -32,12 +33,9 @@ import java.util.regex.Pattern;
  * </p>
  */
 public class ArmyFileHandler {
-    //TODO MAKE BOTH FILEHANDLER POLYMORPHIC WITH SUPERCLASS?
 
-    // FILE DIRECTORY
-    private String fileDirectory = "src" + DLM + "main" + DLM + "resources" + DLM +
-                                    "ntnu" + DLM + "idatt2001" + DLM + "projects"+ DLM +
-                                    "savefiles" + DLM + "armyFiles";
+    // File directory
+    private String fileDirectory;
 
     // DELIMITER
     private static final String DLM = File.separator;
@@ -45,17 +43,31 @@ public class ArmyFileHandler {
     private static final String NWL = "\n";
     //SPLITTER
     private static final String SPL = ",";
+    //DEFAULT FILE DIRECTORY
+    private static final String DEFAULT_DIRECTORY = "src" + DLM + "main" + DLM + "resources" + DLM +
+            "ntnu" + DLM + "idatt2001" + DLM + "projects"+ DLM +
+            "savefiles" + DLM + "armyFiles";
+
+    //ACTIVE ARMIES FILE DIRECTORY
+    private static final String ACTIVE_ARMY_DIRECTORY = "src" + DLM + "main" + DLM + "resources" + DLM +
+            "ntnu" + DLM + "idatt2001" + DLM + "projects"+ DLM +
+            "savefiles" + DLM + "active";
+
     //Pattern used to check if name contains any characters except letters, digits and "-" "."
     private static final Pattern namePattern = Pattern.compile("[^a-zA-Z0-9-.\s]");
 
     /**
-     * Initiates an armyFileHandler
+     * Initiates an armyFileHandler.
+     * Sets the default file directory
      */
-    public ArmyFileHandler() {}
+    public ArmyFileHandler() {
+        this.fileDirectory = DEFAULT_DIRECTORY;
+    }
 
     /**
      * Takes a army name and checks if a corresponding file
      * exists. If it does we call the readArmyFromFile method.
+     *
      * @param armyName Name of army we are trying to read
      * @return the army we have read
      * @throws IOException if file does not exist or is corrupt
@@ -73,26 +85,98 @@ public class ArmyFileHandler {
     }
 
     /**
-     * Gets all army savefiles and returns them as a list.
+     * Gets all army save files and returns them as a list.
+     *
      * @return the list of armies we have read
      * @throws IOException if file does not exist or is corrupt
      * @throws NumberFormatException if file values are corrupt
      */
-    public ArrayList<Army> getArmySavefiles() throws IOException,NumberFormatException{
-        File directory = new File(fileDirectory);
-        String[] fileList = directory.list();
+    public List<Army> getArmySaveFiles() throws IOException,NumberFormatException{
+        String[] fileList = new File(fileDirectory).list();
 
         ArrayList<Army> armies = new ArrayList<>();
         for(String armyFile : fileList){
 
             if(!armyFileExists(fileDirectory + DLM + (armyFile))){
-                throw new IOException("There were as issue loading savefile: " + armyFile);
+                throw new IOException("There was an issue loading savefile: " + armyFile);
             }
             File file = new File(fileDirectory + DLM + (armyFile));
            armies.add(readArmyFromFile(file));
         }
 
         return armies;
+    }
+
+    /**
+     * Gets the active armies that the user has selected.
+     * Sets the directory to the active army storage.
+     * Then checks that we have files there and returns these.
+     * If there are no active armies we set them from default armies.
+     * As a backup if all fails, we just return empty armies.
+     *
+     * @return List containing both active armies.
+     * @throws IllegalStateException If we are unable to get the active armies
+     */
+    public List<Army> getActiveArmies() throws IllegalStateException{
+        List<Army> activeArmies = new ArrayList<>();
+        try {
+            //We attempt to get the active armies
+            setActiveArmyDirectory();
+            List<Army> armiesFromActive = getArmySaveFiles();
+            //Check if there are any
+            if (armiesFromActive.size() == 2) {
+                //Get them
+                activeArmies.addAll(armiesFromActive);
+            }
+            else { //Else we try to get the two first saved armies
+                setDefaultDirectory();
+                List<Army> armiesFromDefault = getArmySaveFiles();
+                //Check that we have armies
+                if (armiesFromDefault.size() > 1) {
+                    activeArmies.add(armiesFromDefault.get(0));
+                    activeArmies.add(armiesFromDefault.get(1));
+                }
+                else { //If not create a new empty one.
+                    activeArmies.add(new Army("Army One"));
+                    activeArmies.add(new Army("Army Two"));
+                }
+            }
+        }
+        //Should getting the armies from files fail, we simply initiate a blank battle
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalStateException("Active armies could not be found or set");
+        };
+        if(activeArmies.isEmpty()) throw new IllegalStateException("Active armies returned empty");
+        //Return armies
+        return activeArmies;
+    }
+
+    /**
+     * Sets the active armies that the user has selected.
+     * Is called for to save changes made by a user on the
+     * active armies.
+     *
+     * @param activeArmies List of the two active armies we
+     *                     want to set
+     */
+    public void setActiveArmies(List<Army> activeArmies) throws IOException{
+        //Do some checks
+        if(activeArmies.size() != 2) {
+            throw new IllegalArgumentException("Wrong amount of armies passed to method");
+        }
+        if(activeArmies.get(0) == null || activeArmies.get(1) == null) {
+            throw new IllegalArgumentException("Armies not initiated");
+        }
+        //Delete existing active files
+        File[] files = new File(fileDirectory).listFiles();
+        if(files!=null) { //some JVMs return null for empty dirs
+            for(File file: files) {
+                file.delete();
+            }
+        }
+        writeArmyToFile(activeArmies.get(0));
+        writeArmyToFile(activeArmies.get(1));
     }
 
     /**
@@ -137,16 +221,19 @@ public class ArmyFileHandler {
                 if(health < 0 || attack < 0 || armor < 0 || name.isBlank()){
                     throw new IOException("File contains incorrect values and could not be read");
                 }
-
-                switch (type) {
-                    case "InfantryUnit" -> army.add(new InfantryUnit(name, health, attack, armor));
-                    case "RangedUnit" -> army.add(new RangedUnit(name, health, attack, armor));
-                    case "CommanderUnit" -> army.add(new CommanderUnit(name, health, attack, armor));
-                    case "CavalryUnit" -> army.add(new CavalryUnit(name, health, attack, armor));
-                    default -> throw new IOException("File contains incorrect values and could not be read");
+                //Army cannot exceed 500 units
+                if(army.getArmySize() < 500){
+                    switch (type) {
+                        case "InfantryUnit" -> army.add(new InfantryUnit(name, health, attack, armor));
+                        case "RangedUnit" -> army.add(new RangedUnit(name, health, attack, armor));
+                        case "CommanderUnit" -> army.add(new CommanderUnit(name, health, attack, armor));
+                        case "CavalryUnit" -> army.add(new CavalryUnit(name, health, attack, armor));
+                        default -> throw new IOException("File contains incorrect values and could not be read");
+                    }
                 }
             }
         }
+
         return army;
     }
 
@@ -158,6 +245,9 @@ public class ArmyFileHandler {
      * @throws IOException if failed to write to file
      */
     public void writeArmyToFile(Army army) throws IOException{
+        if(namePattern.matcher(army.getName()).find()){
+            throw new IOException("Name of army contains illegal characters");
+        }
         try(FileWriter fileWriter = new FileWriter(getFilePath(army.getName()))) {
             fileWriter.write(army.getName() + NWL);
 
@@ -204,5 +294,24 @@ public class ArmyFileHandler {
      */
     public void setFileDirectory(String fileDirectory) {
        this.fileDirectory = fileDirectory;
+    }
+
+    /**
+     * Sets the file directory in which we write
+     * and read files to the directory for active armies.
+     * We use this to save our selections of armies between
+     * pages.
+     */
+    public void setActiveArmyDirectory() {
+        this.fileDirectory = ACTIVE_ARMY_DIRECTORY;
+    }
+
+    /**
+     * Sets the file directory in which we write
+     * and read files to the default directory. Can be used
+     * to regret setting a custom file directory.
+     */
+    public void setDefaultDirectory() {
+        this.fileDirectory = DEFAULT_DIRECTORY;
     }
 }
