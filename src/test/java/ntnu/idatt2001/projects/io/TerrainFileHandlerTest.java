@@ -43,7 +43,7 @@ public class TerrainFileHandlerTest {
         corruptWidth = "CorruptWidth";
         mixedTerrain = "Mixed Terrain";
 
-        terrainFileHandler = new TerrainFileHandler();
+        terrainFileHandler = new TerrainFileHandler(DEPTH,WIDTH);
         terrainFileHandler.setFileDirectory(FILE_DIRECTORY);
     }
 
@@ -57,7 +57,7 @@ public class TerrainFileHandlerTest {
             Terrain[][] readTerrain = null;
 
             try {
-                readTerrain = terrainFileHandler.getTerrainFromFile(mixedTerrain,DEPTH,WIDTH);
+                readTerrain = terrainFileHandler.getTerrainFromFile(mixedTerrain);
             }catch (Exception e){
                 e.printStackTrace();
                 fail();
@@ -71,7 +71,7 @@ public class TerrainFileHandlerTest {
         public void readingCorruptDepthCSV(){
             assertThrows(IOException.class, () ->{
                 try {
-                    Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptDepth,DEPTH,WIDTH);
+                    Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptDepth);
                 }
                 catch(Exception e){
                     e.printStackTrace();
@@ -85,7 +85,7 @@ public class TerrainFileHandlerTest {
         public void readingCorruptValueCSV(){
             assertThrows(IOException.class, () ->{
                 try {
-                    Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptValue,DEPTH,WIDTH);
+                    Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptValue);
                 }
                 catch(Exception e){
                     e.printStackTrace();
@@ -99,7 +99,7 @@ public class TerrainFileHandlerTest {
         public void readingCorruptWidthCSV(){
             assertThrows(IOException.class, () ->{
                 try {
-                    Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptWidth,DEPTH,WIDTH);
+                    Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptWidth);
                 }catch(Exception e){
                     e.printStackTrace();
                     throw e;
@@ -111,10 +111,10 @@ public class TerrainFileHandlerTest {
         @DisplayName("Reading all default savefiles")
         public void readingAllDefaultSavefiles(){
             ArrayList<Terrain[][]> terrains = null;
-            TerrainFileHandler defaultTerrainFileHandler = new TerrainFileHandler();
+            TerrainFileHandler defaultTerrainFileHandler = new TerrainFileHandler(DEPTH,WIDTH);
 
             try {
-                terrains = defaultTerrainFileHandler.getTerrainSaveFiles(DEPTH,WIDTH);
+                terrains = defaultTerrainFileHandler.getTerrainSaveFiles();
             }
             catch (Exception e){
                 e.printStackTrace();

@@ -31,6 +31,10 @@ import java.util.Scanner;
  *
  */
 public class TerrainFileHandler {
+    //Depth of the Terrain arrays
+    private int arrayDepth;
+    //Width of the Terrain arrays
+    private int arrayWidth;
 
     // FILE DIRECTORY
     private String fileDirectory = "src" + DLM + "main" + DLM + "resources" + DLM +
@@ -45,9 +49,17 @@ public class TerrainFileHandler {
 
     /**
      * Initiates an mapFileHandler.
-     * We classify each of the terrain types as a int value
+     * Define the depth of the width of the Terrain arrays
+     * the file handler will be looking for and working with.
+     * We classify each of the terrain types as a int value.
+     *
+     * @param depth int depth of the Terrain arrays
+     * @param width int width of the Terrain arrays
      */
-    public TerrainFileHandler() {
+    public TerrainFileHandler(int depth, int width) {
+        this.arrayDepth = depth;
+        this.arrayWidth = width;
+
         TERRAIN_TYPES.put(1,Terrain.FOREST);
         TERRAIN_TYPES.put(2,Terrain.PLAINS);
         TERRAIN_TYPES.put(3,Terrain.HILL);
@@ -62,24 +74,25 @@ public class TerrainFileHandler {
      * @throws IOException if file does not exist or is corrupt
      * @throws NumberFormatException if file values are corrupt
      */
-    public Terrain[][] getTerrainFromFile(String terrainFileName,int depth, int width) throws IOException,NumberFormatException{
+    public Terrain[][] getTerrainFromFile(String terrainFileName) throws IOException,NumberFormatException{
         if(!fileExists(getFilePath(terrainFileName))){
             throw new IOException("There were no records of " + terrainFileName + ". Please try again");
         }
 
         File file = new File(getFilePath(terrainFileName));
-        Terrain[][] terrain = readTerrainFromFile(file,depth,width);
+        Terrain[][] terrain = readTerrainFromFile(file);
 
         return terrain;
     }
 
     /**
      * Gets all terrain save files and returns them as a list.
+     *
      * @return the list of terrains we have read
      * @throws IOException if file does not exist or is corrupt
      * @throws NumberFormatException if file values are corrupt
      */
-    public ArrayList<Terrain[][]> getTerrainSaveFiles(int depth, int width) throws IOException,NumberFormatException{
+    public ArrayList<Terrain[][]> getTerrainSaveFiles() throws IOException,NumberFormatException{
         File directory = new File(fileDirectory);
         String[] fileList = directory.list();
 
@@ -90,7 +103,7 @@ public class TerrainFileHandler {
                 throw new IOException("There were no records of " + terrainFile + ". Please try again");
             }
             File file = new File(fileDirectory + DLM + (terrainFile));
-            terrains.add(readTerrainFromFile(file,depth,width));
+            terrains.add(readTerrainFromFile(file));
         }
 
         return terrains;
@@ -106,8 +119,8 @@ public class TerrainFileHandler {
      * @throws IOException if file does not exist or is corrupt
      * @throws NumberFormatException if file values are corrupt
      */
-    private Terrain[][] readTerrainFromFile(File file,int depth,int width) throws IOException,NumberFormatException{
-        Terrain[][] terrainGrid = new Terrain[depth][width];
+    private Terrain[][] readTerrainFromFile(File file) throws IOException,NumberFormatException{
+        Terrain[][] terrainGrid = new Terrain[arrayDepth][arrayWidth];
         // try/catch bracket automatically opens and closes file
         try(Scanner scanner = new Scanner(file)){
 
@@ -119,7 +132,7 @@ public class TerrainFileHandler {
                 String line = scanner.nextLine();
                 String[] values = line.split(SPL);
 
-                if(values.length != width) {
+                if(values.length != arrayWidth) {
                     throw new IOException("File is corrupt and could not be read");
                 }
                 //Sets values for unit attributes
@@ -133,7 +146,7 @@ public class TerrainFileHandler {
                 }
                 depthCounter++;
             }
-            if(depthCounter != depth) {
+            if(depthCounter != arrayDepth) {
                 throw new IOException("File did not match depth criteria");
             }
         }
@@ -143,6 +156,7 @@ public class TerrainFileHandler {
     /**
      * Safe way to check if a file exists
      * without worrying about exceptions
+     *
      * @param filepath filepath of the army whose File we are looking for
      * @return true if army file exists
      */
@@ -153,6 +167,7 @@ public class TerrainFileHandler {
     /**
      * Gets the potential/real file path
      * of an terrain based on its name
+     *
      * @param terrainName name of terrain file whose path we get
      * @return String path
      */
@@ -165,6 +180,7 @@ public class TerrainFileHandler {
      * and read files. Used when we want to save
      * the files to a different directory, for example
      * when we are doing tests.
+     *
      * @param fileDirectory the new directory
      */
     public void setFileDirectory(String fileDirectory) {
