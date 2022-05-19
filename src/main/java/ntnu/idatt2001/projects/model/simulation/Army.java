@@ -279,9 +279,7 @@ public class Army{
     /**
      * Checks if two armies are equal. For two armies
      * to be equal they need to have the same name
-     * and the same exact units. We check this by
-     * creating sorted lists with stream and comparing
-     * the content.
+     * and the same unit list
      *
      * @param o The army we are comparing to
      * @return True if armies are equal.
@@ -289,13 +287,10 @@ public class Army{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Army army)) return false;
+        if (!(o instanceof Army)) return false;
+        Army army = (Army) o;
 
-        // Creates a stream to ensure that we never change the data, only use
-        // it to do our comparison.
-        List<Unit> oSortedArmy = army.units.stream().sorted(Unit::compareTo).toList();
-        List<Unit> thisSortedArmy = this.units.stream().sorted(Unit::compareTo).toList();
-        return this.getName().equals(army.getName()) && thisSortedArmy.equals(oSortedArmy);
+        return this.getName().equals(army.getName()) && this.getAllUnits().equals(army.getAllUnits());
     }
 
     /**
