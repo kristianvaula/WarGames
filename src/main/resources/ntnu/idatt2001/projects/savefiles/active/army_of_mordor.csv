@@ -1,0 +1,101 @@
+Army of Mordor
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+InfantryUnit,Orc,10,15,15
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+RangedUnit,Crossboworc,10,16,10
+CavalryUnit,Scout,12,20,12
+CavalryUnit,Scout,12,20,12
+CavalryUnit,Scout,12,20,12
+CavalryUnit,Scout,12,20,12
+CavalryUnit,Scout,12,20,12
+CavalryUnit,Scout,12,20,12
+CavalryUnit,Scout,12,20,12
+CavalryUnit,Scout,12,20,12
+CavalryUnit,Scout,12,20,12
+CavalryUnit,Scout,12,20,12
+CavalryUnit,Raider,15,20,20
+CavalryUnit,Raider,15,20,20
+CavalryUnit,Raider,15,20,20
+CavalryUnit,Raider,15,20,20
+CavalryUnit,Raider,15,20,20
+CavalryUnit,Raider,15,20,20
+CavalryUnit,Raider,15,20,20
+CavalryUnit,Raider,15,20,20
+CavalryUnit,Raider,15,20,20
+CavalryUnit,Raider,15,20,20
+CavalryUnit,Raider,15,20,20
+CavalryUnit,Raider,15,20,20
+CavalryUnit,Raider,15,20,20
+CavalryUnit,Mountain Troll,20,25,18
+CavalryUnit,Mountain Troll,20,25,18
+CavalryUnit,Mountain Troll,20,25,18
+CavalryUnit,Mountain Troll,20,25,18
+CavalryUnit,Mountain Troll,20,25,18
+CavalryUnit,Mountain Troll,20,25,18
+CavalryUnit,Mountain Troll,20,25,18
+CavalryUnit,Mountain Troll,20,25,18
+CavalryUnit,Mountain Troll,20,25,18
+CavalryUnit,Mountain Troll,20,25,18
+CavalryUnit,Mountain Troll,20,25,18
+CavalryUnit,Mountain Troll,20,25,18
+CavalryUnit,Mountain Troll,20,25,18
+CavalryUnit,Mountain Troll,20,25,18
+CavalryUnit,Mountain Troll,20,25,18
+CommanderUnit,King,50,30,30
