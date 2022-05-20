@@ -12,6 +12,8 @@ public class CavalryUnitTest {
     private static final Terrain FOREST = Terrain.FOREST;
     private static final Terrain PLAINS = Terrain.PLAINS;
     private static final Terrain HILL = Terrain.HILL;
+    //Maximum value for attack,health,armor stats
+    private static final int MAXIMUM_STAT_VALUE = 99;
 
     @Nested
     @DisplayName("Testing initiation of a new cavalry unit")
@@ -43,6 +45,14 @@ public class CavalryUnitTest {
             assertThrows(IllegalArgumentException.class, () -> {
                 CavalryUnit testUnit = new CavalryUnit(name,-100);
             });
+        }
+
+        @Test
+        @DisplayName("Constructor will change values that are too high")
+        public void initiatingWithTooHighValueChangesValueToMax(){
+            CavalryUnit testUnit = new CavalryUnit(name,150);
+
+            assertEquals(testUnit.getHealth(),MAXIMUM_STAT_VALUE);
         }
 
         @Test
@@ -81,6 +91,18 @@ public class CavalryUnitTest {
             }
 
             assertEquals(0, testUnit1.getHealth());
+        }
+
+        @Test
+        @DisplayName("Attack method decreases armor value")
+        public void attackMethodDecreasesArmor(){
+            int startArmor = 20;
+            CavalryUnit testUnit = new CavalryUnit(name,15,15,startArmor);
+            CavalryUnit testUnit1 = new CavalryUnit(name,15,15,startArmor);
+
+            testUnit.attack(testUnit1,PLAINS);
+
+            assertTrue(testUnit1.getArmor() < startArmor);
         }
     }
 

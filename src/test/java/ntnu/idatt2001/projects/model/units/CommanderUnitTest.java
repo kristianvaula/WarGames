@@ -12,6 +12,8 @@ public class CommanderUnitTest {
     private static final Terrain FOREST = Terrain.FOREST;
     private static final Terrain PLAINS = Terrain.PLAINS;
     private static final Terrain HILL = Terrain.HILL;
+    //Maximum value for attack,health,armor stats
+    private static final int MAXIMUM_STAT_VALUE = 99;
 
     @Nested
     @DisplayName("Testing initiation of a new commander unit")
@@ -41,6 +43,14 @@ public class CommanderUnitTest {
             assertThrows(IllegalArgumentException.class, () -> {
                 CommanderUnit testUnit = new CommanderUnit(name,-100);
             });
+        }
+
+        @Test
+        @DisplayName("Constructor will change values that are too high")
+        public void initiatingWithTooHighValueChangesValueToMax(){
+            CommanderUnit testUnit = new CommanderUnit(name,150);
+
+            assertEquals(testUnit.getHealth(),MAXIMUM_STAT_VALUE);
         }
 
         @Test
@@ -79,6 +89,18 @@ public class CommanderUnitTest {
             }
 
             assertEquals(0, testUnit1.getHealth());
+        }
+
+        @Test
+        @DisplayName("Attack method decreases armor value")
+        public void attackMethodDecreasesArmor(){
+            int startArmor = 20;
+            CommanderUnit testUnit = new CommanderUnit(name,15,15,startArmor);
+            CommanderUnit testUnit1 = new CommanderUnit(name,15,15,startArmor);
+
+            testUnit.attack(testUnit1,PLAINS);
+
+            assertTrue(testUnit1.getArmor() < startArmor);
         }
     }
 

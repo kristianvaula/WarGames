@@ -12,6 +12,8 @@ public class RangedUnitTest {
     private static final Terrain FOREST = Terrain.FOREST;
     private static final Terrain PLAINS = Terrain.PLAINS;
     private static final Terrain HILL = Terrain.HILL;
+    //Maximum value for attack,health,armor stats
+    private static final int MAXIMUM_STAT_VALUE = 99;
 
     @Nested
     @DisplayName("Testing initiation of a new ranged unit")
@@ -39,6 +41,14 @@ public class RangedUnitTest {
             assertThrows(IllegalArgumentException.class, () -> {
                 RangedUnit testUnit = new RangedUnit(name,-100);
             });
+        }
+
+        @Test
+        @DisplayName("Constructor will change values that are too high")
+        public void initiatingWithTooHighValueChangesValueToMax(){
+            RangedUnit testUnit = new RangedUnit(name,150);
+
+            assertEquals(testUnit.getHealth(),MAXIMUM_STAT_VALUE);
         }
 
         @Test
@@ -77,6 +87,18 @@ public class RangedUnitTest {
             }
 
             assertEquals(0, testUnit1.getHealth());
+        }
+
+        @Test
+        @DisplayName("Attack method decreases armor value")
+        public void attackMethodDecreasesArmor(){
+            int startArmor = 20;
+            RangedUnit testUnit = new RangedUnit(name,15,15,startArmor);
+            RangedUnit testUnit1 = new RangedUnit(name,15,15,startArmor);
+
+            testUnit.attack(testUnit1,PLAINS);
+
+            assertTrue(testUnit1.getArmor() < startArmor);
         }
     }
 

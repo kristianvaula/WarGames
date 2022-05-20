@@ -24,8 +24,18 @@ public abstract class Unit implements Comparable<Unit>{
     // A tag specifies some sort of info of the unit like for example which army he belongs to
     private String tag;
 
+    //Constant used to calculate the wear on defendants armor upon attack
+    //Half of the attackers attack value scaled equals wear on armor
+    private static final double ARMOR_REDUCTION_SCALAR = 0.25;
+    //Maximum value for attack,health,armor stats
+    private static final int MAXIMUM_STAT_VALUE = 99;
+
     /**
-     * Works as the blueprint for creating a Unit object
+     * Abstract superclass that blueprint for creating a Unit object.
+     * Contains both abstract methods and general methods that
+     * is implemented for all unit subclasses. A unit cannot have
+     * a stat above 99. This limit is set to ensure better balance
+     * in the battles and correct proportion between units.
      *
      * @param name   The unit descriptive name
      * @param health The value of the units health
@@ -37,16 +47,17 @@ public abstract class Unit implements Comparable<Unit>{
         if(health <= 0 || attack <= 0 || armor <= 0) throw new IllegalArgumentException("Inputs cannot be negative or zero");
         if(name.isBlank() || name.isEmpty()) throw new IllegalArgumentException("Name cannot be empty");
         this.name = name;
-        this.health = health;
-        this.initialHealth = health;
-        this.attack = attack;
-        this.armor = armor;
+        this.health = Math.min(health,MAXIMUM_STAT_VALUE);
+        this.initialHealth = this.health;
+        this.attack = Math.min(attack,MAXIMUM_STAT_VALUE);
+        this.armor = Math.min(armor,MAXIMUM_STAT_VALUE);
     }
 
     /**
      * Attack an opponent. Health impact on opponent equals
      * the difference between the units attack-force and the
-     * opponents defensive resistance.
+     * opponents defensive resistance. The defendant has his
+     * armor reduced by a scalar of the attack value
      *
      * @param opponent The opponent unit that gets attacked
      * @param opponentTerrain The terrain on which the defending unit is standing
@@ -56,12 +67,15 @@ public abstract class Unit implements Comparable<Unit>{
         int attForce = this.getAttack() + this.getAttackBonus(opponentTerrain);
         //defensive resistance equals armor + resistance bonus.
         int oppDefense = opponent.getArmor() + opponent.getResistBonus(opponentTerrain);
-
-        //Ensures that an opponent cannot gain health if resistance is greater than attack
+        //Ensure that an opponent cannot gain health if resistance is greater than attack
         if ((attForce-oppDefense) >= 0){
             int attCalculation = opponent.getHealth() - attForce + oppDefense;
             opponent.takeDamage(attCalculation);
         }
+        //Calculate and simulate armor wear on the defendant
+        //Attack value multiplied by reduction scalar equals armor reduction
+        int newArmorValue = opponent.getArmor() - (int)Math.floor(attForce / ARMOR_REDUCTION_SCALAR);
+        opponent.setArmor(Math.max(0,newArmorValue));
     }
 
     /**
@@ -129,12 +143,23 @@ public abstract class Unit implements Comparable<Unit>{
 
     /**
      * Sets the unit health value. Cannot
-     * be less than zero.
+     * be less than zero or more than 99.
      *
      * @param health The health value
      */
     public void setHealth(int health) {
-        this.health = Math.max(health, 0);
+        this.health = Math.max(Math.min(health,99), 0);
+    }
+
+    /**
+     * Sets the unit armor value.
+     * Cannot be less than zereo or
+     * more than 99.
+     *
+     * @param armor The armor value
+     */
+    public void setArmor(int armor) {
+        this.armor = Math.max(Math.min(armor,99), 0);
     }
 
     /**
@@ -146,23 +171,6 @@ public abstract class Unit implements Comparable<Unit>{
      */
     public void takeDamage(int health){
         this.setHealth(health);
-    }
-
-    /**
-     * Returns a text-representation of a
-     * unit object. Contains all information
-     * about the unit.
-     *
-     * @return The unit represented as a String
-     */
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder("| ");
-        sb.append(name).append(" | HP: ");
-        sb.append(health).append(" | ATT: ");
-        sb.append(attack).append(" | DEF: ");
-        sb.append(armor).append(" |");
-        return sb.toString();
     }
 
     /**
@@ -202,5 +210,22 @@ public abstract class Unit implements Comparable<Unit>{
         else if(this.getAttack() > u.getAttack()) return 1;
         else if(this.getArmor() > u.getArmor()) return 1;
         else return -1;
+    }
+
+    /**
+     * Returns a text-representation of a
+     * unit object. Contains all information
+     * about the unit.
+     *
+     * @return The unit represented as a String
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("| ");
+        sb.append(name).append(" | HP: ");
+        sb.append(health).append(" | ATT: ");
+        sb.append(attack).append(" | DEF: ");
+        sb.append(armor).append(" |");
+        return sb.toString();
     }
 }

@@ -188,6 +188,10 @@ public class EditArmiesController implements Initializable {
                 if (attack <= 1 || health <= 1 || armor <= 1) {
                     throw new IllegalArgumentException("Attack, health and armor values must be a positive number");
                 }
+                else if(attack > 99 || health > 99 || armor > 99){
+                    alertUser(Alert.AlertType.WARNING,"Maximum value of unit stats are 99." +
+                            " You can still add units with higher values, but they will automatically be decreased.");
+                }
                 //Gets type
                 for (UnitType type : UnitType.values()) {
                     if (typeInput.getValue().equals(type.toString())) {
