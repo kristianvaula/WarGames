@@ -70,7 +70,7 @@
                </VBox.margin>
                <Label fx:id="armyNameOutputB" alignment="CENTER" styleClass="menuUnitItem">
                   <VBox.margin>
-                     <Insets bottom="20.0" />
+                     <Insets bottom="10.0" />
                   </VBox.margin>
                </Label>
                <ScrollPane hbarPolicy="NEVER" prefHeight="186.0" prefWidth="144.0" style="-fx-background-color: #646E78;">
@@ -89,7 +89,7 @@
                </VBox.margin>
                <Label fx:id="armyNameOutputA" alignment="CENTER" styleClass="menuUnitItem">
                   <VBox.margin>
-                     <Insets bottom="20.0" />
+                     <Insets bottom="10.0" />
                   </VBox.margin>
                </Label>
                <ScrollPane hbarPolicy="NEVER" prefHeight="186.0" prefWidth="144.0" style="-fx-background-color: #646E78;">
