@@ -113,10 +113,10 @@ public class Map {
         if(location == null){
             return false;
         }
-        else if(location.getRow() < 0 || location.getRow() > getDepth()-1){
+        else if(location.getRow() <= 0 || location.getRow() > getDepth()-1){
             return false;
         }
-        else if(location.getCol() < 0 || location.getCol() > getWidth()-1){
+        else if(location.getCol() <= 0 || location.getCol() > getWidth()-1){
             return false;
         }
         else if(!map[location.getRow()][location.getCol()].equals(location)){
@@ -188,7 +188,7 @@ public class Map {
      * @throws IllegalArgumentException if location is invalid
      */
     public Location getLocationAt(int row,int col){
-        if(row > 0 && row <= depth-1 && col > 0 && col <= width-1){
+        if(row >= 0 && row <= depth-1 && col >= 0 && col <= width-1){
             return map[row][col];
         }
         return null;
