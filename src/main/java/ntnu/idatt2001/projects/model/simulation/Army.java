@@ -279,7 +279,7 @@ public class Army{
     /**
      * Checks if two armies are equal. For two armies
      * to be equal they need to have the same name
-     * and the same unit list
+     * and the same units in their unit list.
      *
      * @param o The army we are comparing to
      * @return True if armies are equal.
@@ -290,7 +290,7 @@ public class Army{
         if (!(o instanceof Army)) return false;
         Army army = (Army) o;
 
-        return this.getName().equals(army.getName()) && this.getAllUnits().equals(army.getAllUnits());
+        return this.getName().equals(army.getName()) && this.getAllUnits().containsAll(army.getAllUnits());
     }
 
     /**
