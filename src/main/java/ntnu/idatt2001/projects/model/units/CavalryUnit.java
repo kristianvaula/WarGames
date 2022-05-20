@@ -7,8 +7,6 @@ import ntnu.idatt2001.projects.model.simulation.Terrain;
  * unit. Most effective upon first impact and generally
  * on open flat surfaces like plains. Has a disadvantage in
  * close quarters like forests.
- *
- * @author Kristian Vaula Jensen
  */
 public class CavalryUnit extends Unit{
 
@@ -95,7 +93,7 @@ public class CavalryUnit extends Unit{
      * in a forest.
      *
      * @param terrain The terrain in which the opponent is standing on
-     * @return
+     * @return The resistance bonus
      */
     @Override
     public int getResistBonus(Terrain terrain) {

@@ -22,12 +22,11 @@ public class TerrainFileHandlerTest {
     private static final int WIDTH = 135;
     private static final int DEPTH = 85;
 
-    // FILE DIRECTORY
-    private String FILE_DIRECTORY = "src" + DLM + "main" + DLM + "resources" + DLM +
-            "ntnu" + DLM + "idatt2001" + DLM + "projects" + DLM + "testFiles" + DLM + "mapTestfiles";
     // DELIMITER
     private static final String DLM = File.separator;
-
+    // FILE DIRECTORY
+    private static final String FILE_DIRECTORY = "src" + DLM + "main" + DLM + "resources" + DLM +
+            "ntnu" + DLM + "idatt2001" + DLM + "projects" + DLM + "testFiles" + DLM + "mapTestfiles";
 
     //Pre initiated csv files used in test classes:
     //      corruptdepth.csv
@@ -69,25 +68,19 @@ public class TerrainFileHandlerTest {
         @Test
         @DisplayName("Reading corruptdepth.csv throws exception")
         public void readingCorruptDepthCSV(){
-            assertThrows(IOException.class, () ->{
-                Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptDepth);
-            });
+            assertThrows(IOException.class, () -> terrainFileHandler.getTerrainFromFile(corruptDepth));
         }
 
         @Test
         @DisplayName("Reading corruptvalue.csv throws exception")
         public void readingCorruptValueCSV(){
-            assertThrows(IOException.class, () ->{
-               Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptValue);
-            });
+            assertThrows(IOException.class, () -> terrainFileHandler.getTerrainFromFile(corruptValue));
         }
 
         @Test
         @DisplayName("Reading corruptwidth.csv throws exception")
         public void readingCorruptWidthCSV(){
-            assertThrows(IOException.class, () ->{
-                Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptWidth);
-            });
+            assertThrows(IOException.class, () -> terrainFileHandler.getTerrainFromFile(corruptWidth));
         }
 
         @Test

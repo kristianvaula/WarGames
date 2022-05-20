@@ -7,8 +7,6 @@ import ntnu.idatt2001.projects.model.simulation.Terrain;
  * Most effective in close vicinity. Preferred terrain
  * is forests where it is better protected from the high
  * speeds of cavalries and ranged attacks.
- *
- * @author Kristian Vaula Jensen
  */
 public class InfantryUnit extends Unit{
 

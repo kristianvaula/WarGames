@@ -34,10 +34,9 @@ public class TopBarController implements Initializable {
 
     /**
      * Closes the application when the X button is clicked
-     * @param event click on X button
      */
     @FXML
-    protected void handleCloseAction(ActionEvent event){
+    protected void handleCloseAction(){
         Platform.exit();
         System.exit(0);
     }

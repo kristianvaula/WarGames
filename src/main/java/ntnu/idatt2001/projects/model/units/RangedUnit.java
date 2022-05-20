@@ -7,9 +7,6 @@ import ntnu.idatt2001.projects.model.simulation.Terrain;
  * Most effective from long range where they are less
  * exposed to enemy close combat units. Has an advantage on
  * hills and a disadvantage in forests.
- *
- * @author Kristian Vaula Jensen
- * //@version 2022.02.09
  */
 public class RangedUnit extends Unit{
 

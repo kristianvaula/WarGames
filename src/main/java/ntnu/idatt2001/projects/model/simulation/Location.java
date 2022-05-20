@@ -11,7 +11,7 @@ public class Location {
     private final int col;
 
     //Terrain
-    private Terrain terrain;
+    private final Terrain terrain;
 
     /**
      * Initiates a location.

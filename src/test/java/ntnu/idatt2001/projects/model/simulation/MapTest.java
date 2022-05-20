@@ -65,16 +65,13 @@ public class MapTest {
             assertThrows(IllegalArgumentException.class, () ->{
                 try{
                     Terrain[][]terrains = fileHandler.getTerrainFromFile(MIXED_TERRAIN_NAME);
-                    int randnumb = new Random().nextInt(DEPTH -1);
-                    terrains[randnumb][randnumb] = null;
+                    int randNumb = new Random().nextInt(DEPTH -1);
+                    terrains[randNumb][randNumb] = null;
                     Map testMap = new Map(terrains, DEPTH,WIDTH);
                 }
                 catch(IOException e){
                     e.printStackTrace();
                     fail();
-                }
-                catch (IllegalArgumentException e){
-                    throw e;
                 }
             });
         }
@@ -92,9 +89,6 @@ public class MapTest {
                     e.printStackTrace();
                     fail();
                 }
-                catch (IllegalArgumentException e){
-                    throw e;
-                }
             });
         }
 
@@ -109,9 +103,6 @@ public class MapTest {
                 catch(IOException e){
                     e.printStackTrace();
                     fail();
-                }
-                catch (IllegalArgumentException e){
-                    throw e;
                 }
             });
         }

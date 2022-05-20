@@ -157,38 +157,19 @@ public class ArmyFileHandlerTest {
         @Test
         @DisplayName("Reading corruptunitvalues.csv throws exception")
         public void readingCorruptUnitValuesCSV(){
-            assertThrows(IOException.class, () ->{
-                try {
-                    Army army = armyFileHandler.getArmyFromFile(corruptUnitValues);
-                }catch(IOException e){
-                    throw e;
-                }
-            });
+            assertThrows(IOException.class, () -> armyFileHandler.getArmyFromFile(corruptUnitValues));
         }
 
         @Test
         @DisplayName("Reading corruptarmyfile.csv throws exception")
         public void readingCorruptArmyFileCSV(){
-            assertThrows(IOException.class, () ->{
-                try {
-                    Army army = armyFileHandler.getArmyFromFile(corruptArmyFile);
-
-                }catch(IOException e){
-                    throw e;
-                }
-            });
+            assertThrows(IOException.class, () -> armyFileHandler.getArmyFromFile(corruptArmyFile));
         }
 
         @Test
         @DisplayName("Reading corruptarmyname.csv throws exception")
         public void readingCorruptArmyNameCSV(){
-            assertThrows(IOException.class, () ->{
-                try {
-                    Army army = armyFileHandler.getArmyFromFile(corruptArmyName);
-                }catch(Exception e){
-                    throw e;
-                }
-            });
+            assertThrows(IOException.class, () -> armyFileHandler.getArmyFromFile(corruptArmyName));
         }
 
         @Test

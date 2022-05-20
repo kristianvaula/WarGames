@@ -2,8 +2,6 @@ package ntnu.idatt2001.projects.model.units;
 
 import ntnu.idatt2001.projects.model.simulation.Terrain;
 
-import java.util.Objects;
-
 /**
  * Unit is an abstract class representing the shared characteristics
  * off all types of units.
@@ -12,13 +10,13 @@ import java.util.Objects;
  */
 public abstract class Unit implements Comparable<Unit>{
     // The units descriptive name
-    private String name;
+    private final String name;
     // The value representing the units health
     private int health;
     // Initial value for units health
-    private int initialHealth;
+    private final int initialHealth;
     // The value of attacking damage
-    private int attack;
+    private final int attack;
     // The value of defensive resistance
     private int armor;
     // A tag specifies some sort of info of the unit like for example which army he belongs to
@@ -134,8 +132,6 @@ public abstract class Unit implements Comparable<Unit>{
 
     /**
      * Sets the units tag
-     *
-     * @return the tag
      */
     public void setTag(String tag) {
         this.tag = tag;
@@ -221,11 +217,9 @@ public abstract class Unit implements Comparable<Unit>{
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("| ");
-        sb.append(name).append(" | HP: ");
-        sb.append(health).append(" | ATT: ");
-        sb.append(attack).append(" | DEF: ");
-        sb.append(armor).append(" |");
-        return sb.toString();
+        return "| " + name + " | HP: " +
+                health + " | ATT: " +
+                attack + " | DEF: " +
+                armor + " |";
     }
 }

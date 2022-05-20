@@ -119,10 +119,7 @@ public class Map {
         else if(location.getCol() <= 0 || location.getCol() > getWidth()-1){
             return false;
         }
-        else if(!map[location.getRow()][location.getCol()].equals(location)){
-            return false;
-        }
-        return true;
+        else return map[location.getRow()][location.getCol()].equals(location);
     }
 
     /**

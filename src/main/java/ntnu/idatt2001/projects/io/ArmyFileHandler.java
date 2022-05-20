@@ -79,9 +79,8 @@ public class ArmyFileHandler {
         }
 
         File file = new File(getFilePath(armyName));
-        Army army = readArmyFromFile(file);
 
-        return army;
+        return readArmyFromFile(file);
     }
 
     /**
@@ -93,6 +92,7 @@ public class ArmyFileHandler {
      */
     public List<Army> getArmySaveFiles() throws IOException,NumberFormatException{
         String[] fileList = new File(fileDirectory).list();
+        if(fileList == null) throw new IOException("Could not find any files");
 
         ArrayList<Army> armies = new ArrayList<>();
         for(String armyFile : fileList){
@@ -146,8 +146,8 @@ public class ArmyFileHandler {
         catch (Exception e) {
             e.printStackTrace();
             throw new IllegalStateException("Active armies could not be found or set");
-        };
-        if(activeArmies.isEmpty()) throw new IllegalStateException("Active armies returned empty");
+        }
+
         //Return armies
         return activeArmies;
     }

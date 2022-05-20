@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BattleTest {
     private static Battle battle;
-    private static Random random = new Random();
+    private static final Random RANDOM = new Random();
     private static Army armyOne;
     private static Army armyTwo;
 
@@ -37,7 +37,7 @@ public class BattleTest {
         armyOne = new Army(ARMY_NAME_ONE);
         armyTwo = new Army(ARMY_NAME_TWO);
         for (int i = 0; i < UNITS_PER_ARMY; i++) {
-            UnitType randType = UnitType.getUnitTypes().get(random.nextInt(UnitType.getUnitTypes().size()));
+            UnitType randType = UnitType.getUnitTypes().get(RANDOM.nextInt(UnitType.getUnitTypes().size()));
             armyOne.add(UnitFactory.getUnit(randType,"TestUnit",20));
             armyTwo.add(UnitFactory.getUnit(randType,"TestUnit",20));
         }
@@ -59,7 +59,7 @@ public class BattleTest {
         armyOne = new Army(ARMY_NAME_ONE);
         armyTwo = new Army(ARMY_NAME_TWO);
         for (int i = 0; i < UNITS_PER_ARMY; i++) {
-            UnitType randType = UnitType.getUnitTypes().get(random.nextInt(UnitType.getUnitTypes().size()));
+            UnitType randType = UnitType.getUnitTypes().get(RANDOM.nextInt(UnitType.getUnitTypes().size()));
             armyOne.add(UnitFactory.getUnit(randType,"TestUnit",20));
             armyTwo.add(UnitFactory.getUnit(randType,"TestUnit1",20));
         }
@@ -125,7 +125,7 @@ public class BattleTest {
         @Test
         @DisplayName("One of the armies are empty after simulation")
         public void OneOfArmiesAreEmptyAfterSimulation(){
-            Army winner = battle.simulate(SIMULATION_DELAY_MILLIS);
+            battle.simulate(SIMULATION_DELAY_MILLIS);
 
             assertFalse(battle.getArmyOne().hasUnits() && battle.getArmyTwo().hasUnits());
         }
@@ -137,9 +137,7 @@ public class BattleTest {
 
             Battle testBattle = new Battle(emptyArmyOne,armyTwo);
 
-            assertThrows(IllegalStateException.class, () -> {
-                Army winner = testBattle.simulate(SIMULATION_DELAY_MILLIS);
-            });
+            assertThrows(IllegalStateException.class, () -> testBattle.simulate(SIMULATION_DELAY_MILLIS));
         }
 
         @Test

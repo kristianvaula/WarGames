@@ -155,7 +155,7 @@ public class ImportArmiesController implements Initializable {
         Army army = selectedArmy;
         armyNameLabel.setText(army.getName());
         unitCountOutput.setText(String.valueOf(selectedArmy.getArmySize()));
-        if(army != null){
+        if(selectedArmy != null){
             unitsObservable.addAll(army.getCommanderUnits());
             unitsObservable.addAll(army.getInfantryUnits());
             unitsObservable.addAll(army.getRangedUnits());

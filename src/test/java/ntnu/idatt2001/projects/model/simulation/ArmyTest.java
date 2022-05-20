@@ -46,9 +46,7 @@ public class ArmyTest {
             List<Unit> testList = new ArrayList<>();
             testList.add(new InfantryUnit("Name",10));
 
-            assertThrows(IllegalArgumentException.class, () -> {
-                Army testArmy = new Army(name,testList);
-            });
+            assertThrows(IllegalArgumentException.class, () -> new Army(name,testList));
         }
 
         @Test
@@ -58,9 +56,7 @@ public class ArmyTest {
             List<Unit> testList = new ArrayList<>();
             testList.add(new InfantryUnit("Name",10));
 
-            assertThrows(IllegalArgumentException.class, () -> {
-                Army testArmy = new Army(name,testList);
-            });
+            assertThrows(IllegalArgumentException.class, () -> new Army(name,testList));
         }
 
         @Test
@@ -68,9 +64,7 @@ public class ArmyTest {
         public void InitiateArmyWithIllegalCharactersTwo(){
             String name = "Army Nam=";
 
-            assertThrows(IllegalArgumentException.class, () -> {
-                Army testArmy = new Army(name);
-            });
+            assertThrows(IllegalArgumentException.class, () -> new Army(name));
         }
     }
 
@@ -132,9 +126,7 @@ public class ArmyTest {
 
             testArmy.remove(testUnit);
 
-            assertThrows(IndexOutOfBoundsException.class, () -> {
-                Unit unit = testArmy.getAllUnits().get(0);
-            });
+            assertThrows(IndexOutOfBoundsException.class, () -> testArmy.getAllUnits().get(0));
         }
 
         @Test

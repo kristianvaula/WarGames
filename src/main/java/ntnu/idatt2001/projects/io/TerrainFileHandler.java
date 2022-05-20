@@ -32,9 +32,9 @@ import java.util.Scanner;
  */
 public class TerrainFileHandler {
     //Depth of the Terrain arrays
-    private int arrayDepth;
+    private final int arrayDepth;
     //Width of the Terrain arrays
-    private int arrayWidth;
+    private final int arrayWidth;
 
     // FILE DIRECTORY
     private String fileDirectory = "src" + DLM + "main" + DLM + "resources" + DLM +
@@ -80,9 +80,8 @@ public class TerrainFileHandler {
         }
 
         File file = new File(getFilePath(terrainFileName));
-        Terrain[][] terrain = readTerrainFromFile(file);
 
-        return terrain;
+        return readTerrainFromFile(file);
     }
 
     /**
@@ -93,8 +92,9 @@ public class TerrainFileHandler {
      * @throws NumberFormatException if file values are corrupt
      */
     public ArrayList<Terrain[][]> getTerrainSaveFiles() throws IOException,NumberFormatException{
-        File directory = new File(fileDirectory);
-        String[] fileList = directory.list();
+        String[] fileList = new File(fileDirectory).list();
+        if(fileList == null) throw new IOException("Could not find any files");
+
 
         ArrayList<Terrain[][]> terrains = new ArrayList<>();
         for(String terrainFile : fileList){

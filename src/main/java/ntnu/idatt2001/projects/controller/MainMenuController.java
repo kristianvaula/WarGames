@@ -8,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -42,7 +41,7 @@ public class MainMenuController implements Initializable {
     private Battle battle;
 
     //Army file handler
-    private ArmyFileHandler armyFileHandler = new ArmyFileHandler();
+    private final ArmyFileHandler armyFileHandler = new ArmyFileHandler();
 
     //Constants for icons
     private static final String DLM = File.separator;

@@ -1,7 +1,5 @@
 package ntnu.idatt2001.projects.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -78,22 +76,19 @@ public class EditArmiesController implements Initializable {
 
         //Everytime the radio button selection changes we need to update which
         //army we are working on
-        radioToggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> changed, Toggle oldVal, Toggle newVal) {
-                //Check if we need to do anything
-                if(oldVal != newVal){
-                    //Check which army the new choice is
-                    if(newVal == radioButton1){
-                        selectedArmy = battle.getArmyOne();
-                    }
-                    else if(newVal == radioButton2){
-                        selectedArmy =  battle.getArmyTwo();
-                    }
-                    //Change text and display units
-                    armyNameInput.setText(selectedArmy.getName());
-                    displayUnits();
+        radioToggleGroup.selectedToggleProperty().addListener((changed, oldVal, newVal) -> {
+            //Check if we need to do anything
+            if(oldVal != newVal){
+                //Check which army the new choice is
+                if(newVal == radioButton1){
+                    selectedArmy = battle.getArmyOne();
                 }
+                else if(newVal == radioButton2){
+                    selectedArmy =  battle.getArmyTwo();
+                }
+                //Change text and display units
+                armyNameInput.setText(selectedArmy.getName());
+                displayUnits();
             }
         });
 
@@ -160,11 +155,9 @@ public class EditArmiesController implements Initializable {
      * Checks that there are values in each field.
      * Then converts to integer, checks that they
      * are above zero and creates unit.
-     *
-     * @param event Mouseclick
      */
     @FXML
-    private void addUnit(ActionEvent event){
+    private void addUnit(){
         if(selectedArmy != null) {
             try {
                 if(selectedArmy.getArmySize() >= 500){
@@ -218,7 +211,7 @@ public class EditArmiesController implements Initializable {
 
         //Display the size
         unitCountOutput.setText(String.valueOf(selectedArmy.getArmySize()));
-        if(army != null){
+        if(selectedArmy != null){
             unitsObservable.addAll(army.getCommanderUnits());
             unitsObservable.addAll(army.getInfantryUnits());
             unitsObservable.addAll(army.getRangedUnits());
@@ -229,11 +222,9 @@ public class EditArmiesController implements Initializable {
 
     /**
      * Removes selected Unit when user presses delete button
-     *
-     * @param event Mouseclick
      */
     @FXML
-    private void removeUnit(ActionEvent event){
+    private void removeUnit(){
         if(selectedUnit != null){
             selectedArmy.remove(unitDisplayTable.getSelectionModel().getSelectedItem());
             displayUnits();
@@ -246,11 +237,9 @@ public class EditArmiesController implements Initializable {
      * unchanged we will update the previous army file.
      * If army name is changed, we will save the army as a
      * new file. When we save the active armies are also updated.
-     *
-     * @param event Mouseclick
      */
     @FXML
-    private void saveChanges(ActionEvent event){
+    private void saveChanges(){
         //Check that we have selected an army
         if(selectedArmy != null){
             armyFileHandler = new ArmyFileHandler();

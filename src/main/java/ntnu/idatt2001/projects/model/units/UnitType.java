@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Enum for the different unit types.
+ */
 public enum UnitType {
     INFANTRY,
     CAVALRY,
