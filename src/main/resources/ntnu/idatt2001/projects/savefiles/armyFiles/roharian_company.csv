@@ -1,41 +1,41 @@
 Roharian Company
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-CavalryUnit,Light Cavalry,10,15,15
-RangedUnit,Bowman,10,16,10
-RangedUnit,Bowman,10,16,10
-RangedUnit,Bowman,10,16,10
-RangedUnit,Bowman,10,16,10
-RangedUnit,Bowman,10,16,10
-RangedUnit,Longbowman,12,20,12
-RangedUnit,Longbowman,12,20,12
-RangedUnit,Longbowman,12,20,12
-RangedUnit,Longbowman,12,20,12
-RangedUnit,Longbowman,12,20,12
-RangedUnit,Dunedain,15,20,20
-RangedUnit,Dunedain,15,20,20
-RangedUnit,Dunedain,15,20,20
-CavalryUnit,Marshal,20,25,18
-CavalryUnit,Marshal,20,25,18
-CavalryUnit,Marshal,20,25,18
-CavalryUnit,Marshal,20,25,18
-CavalryUnit,Marshal,20,25,18
-CommanderUnit,King,50,30,30
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+CavalryUnit,Light Cavalry,10,8,15
+RangedUnit,Bowman,10,10,10
+RangedUnit,Bowman,10,10,10
+RangedUnit,Bowman,10,10,10
+RangedUnit,Bowman,10,10,10
+RangedUnit,Bowman,10,10,10
+RangedUnit,Longbowman,12,15,12
+RangedUnit,Longbowman,12,15,12
+RangedUnit,Longbowman,12,15,12
+RangedUnit,Longbowman,12,15,12
+RangedUnit,Longbowman,12,15,12
+RangedUnit,Dunedain,15,15,20
+RangedUnit,Dunedain,15,15,20
+RangedUnit,Dunedain,15,15,20
+CavalryUnit,Marshal,20,20,18
+CavalryUnit,Marshal,20,20,18
+CavalryUnit,Marshal,20,20,18
+CavalryUnit,Marshal,20,20,18
+CavalryUnit,Marshal,20,20,18
+CommanderUnit,King,50,25,30

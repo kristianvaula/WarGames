@@ -1,41 +1,41 @@
 Hord of Isengard
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-InfantryUnit,Uruk-Hai,10,15,15
-RangedUnit,Uruk Archer,10,16,10
-RangedUnit,Uruk Archer,10,16,10
-RangedUnit,Uruk Archer,10,16,10
-RangedUnit,Uruk Archer,10,16,10
-RangedUnit,Uruk Archer,10,16,10
-RangedUnit,Sniper,12,20,12
-RangedUnit,Sniper,12,20,12
-RangedUnit,Sniper,12,20,12
-RangedUnit,Sniper,12,20,12
-RangedUnit,Sniper,12,20,12
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+InfantryUnit,Uruk-Hai,10,8,15
+RangedUnit,Uruk Archer,10,10,10
+RangedUnit,Uruk Archer,10,10,10
+RangedUnit,Uruk Archer,10,10,10
+RangedUnit,Uruk Archer,10,10,10
+RangedUnit,Uruk Archer,10,10,10
+RangedUnit,Sniper,12,15,12
+RangedUnit,Sniper,12,15,12
+RangedUnit,Sniper,12,15,12
+RangedUnit,Sniper,12,15,12
+RangedUnit,Sniper,12,15,12
 InfantryUnit,Snaga Thrak,15,20,20
 InfantryUnit,Snaga Thrak,15,20,20
 InfantryUnit,Snaga Thrak,15,20,20
-InfantryUnit,Snaga Thrak,20,25,18
-InfantryUnit,Snaga Thrak,20,25,18
-InfantryUnit,Snaga Thrak,20,25,18
-InfantryUnit,Snaga Thrak,20,25,18
-InfantryUnit,Snaga Thrak,20,25,18
-CommanderUnit,Uruk Commander,50,30,30
+InfantryUnit,Snaga Thrak,20,20,18
+InfantryUnit,Snaga Thrak,20,20,18
+InfantryUnit,Snaga Thrak,20,20,18
+InfantryUnit,Snaga Thrak,20,20,18
+InfantryUnit,Snaga Thrak,20,20,18
+CommanderUnit,Uruk Commander,50,25,30
