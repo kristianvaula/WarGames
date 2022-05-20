@@ -70,13 +70,7 @@ public class TerrainFileHandlerTest {
         @DisplayName("Reading corruptdepth.csv throws exception")
         public void readingCorruptDepthCSV(){
             assertThrows(IOException.class, () ->{
-                try {
-                    Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptDepth);
-                }
-                catch(Exception e){
-                    e.printStackTrace();
-                    throw e;
-                }
+                Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptDepth);
             });
         }
 
@@ -84,13 +78,7 @@ public class TerrainFileHandlerTest {
         @DisplayName("Reading corruptvalue.csv throws exception")
         public void readingCorruptValueCSV(){
             assertThrows(IOException.class, () ->{
-                try {
-                    Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptValue);
-                }
-                catch(Exception e){
-                    e.printStackTrace();
-                    throw e;
-                }
+               Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptValue);
             });
         }
 
@@ -98,12 +86,7 @@ public class TerrainFileHandlerTest {
         @DisplayName("Reading corruptwidth.csv throws exception")
         public void readingCorruptWidthCSV(){
             assertThrows(IOException.class, () ->{
-                try {
-                    Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptWidth);
-                }catch(Exception e){
-                    e.printStackTrace();
-                    throw e;
-                }
+                Terrain[][] terrain = terrainFileHandler.getTerrainFromFile(corruptWidth);
             });
         }
 

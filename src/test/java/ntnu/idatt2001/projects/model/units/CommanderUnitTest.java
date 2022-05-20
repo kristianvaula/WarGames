@@ -76,7 +76,6 @@ public class CommanderUnitTest {
 
             while(testUnit1.getHealth() > 0) {
                 testUnit.attack(testUnit1,HILL);
-                System.out.println(testUnit1.getHealth());
             }
 
             assertEquals(0, testUnit1.getHealth());
