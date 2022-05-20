@@ -196,6 +196,7 @@ public class ImportArmiesController implements Initializable {
 
             //Create new battle with the updated armies
             battle = new Battle(armyOne,armyTwo);
+
             //Save it as active armies
             armyFileHandler.setActiveArmyDirectory();
             armyFileHandler.setActiveArmies(new ArrayList<>(Arrays.asList(battle.getArmyOne(), battle.getArmyTwo())));
@@ -207,7 +208,7 @@ public class ImportArmiesController implements Initializable {
             radioButton2.setText(battle.getArmyTwo().getName());
             radioToggleGroup.getSelectedToggle().setSelected(false);
         }
-        catch (IllegalStateException e){
+        catch (IllegalArgumentException e){
             alertUser(Alert.AlertType.WARNING,e.getMessage());
         }
         catch(IOException e ){
