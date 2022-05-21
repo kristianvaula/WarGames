@@ -1,6 +1,8 @@
 package ntnu.idatt2001.projects.view;
 
-import ntnu.idatt2001.projects.model.simulation.*;
+import ntnu.idatt2001.projects.model.simulation.Location;
+import ntnu.idatt2001.projects.model.simulation.Map;
+import ntnu.idatt2001.projects.model.simulation.Terrain;
 import ntnu.idatt2001.projects.model.units.Unit;
 
 import java.awt.*;
@@ -14,7 +16,8 @@ import java.util.HashMap;
  * from Objects First With Java. Following the authors David J.Barnes and
  * Michael Kölling solution (posted in the wiki of this projects` GitLab)
  * I was able to convert their "SimulatorView.java" into something i could
- * use to display my simulation.
+ * use to display my simulation. I tried implementing this as a javafx solution
+ * but was unsuccessful. Therefore i have had to use javax.Swing.
  *
  * The view displays a colored rectangle for each location
  * representing its terrain. The color of each locations is

@@ -43,6 +43,8 @@ public class ArmyFileHandler {
     private static final String NWL = "\n";
     //SPLITTER
     private static final String SPL = ",";
+    //Pattern used to check if name contains any characters except letters, digits and "-" "."
+    private static final Pattern NAME_PATTERN = Pattern.compile("[^a-zA-Z0-9-.\s]");
     //DEFAULT FILE DIRECTORY
     private static final String DEFAULT_DIRECTORY = "src" + DLM + "main" + DLM + "resources" + DLM +
             "ntnu" + DLM + "idatt2001" + DLM + "projects"+ DLM +
@@ -52,9 +54,6 @@ public class ArmyFileHandler {
     private static final String ACTIVE_ARMY_DIRECTORY = "src" + DLM + "main" + DLM + "resources" + DLM +
             "ntnu" + DLM + "idatt2001" + DLM + "projects"+ DLM +
             "savefiles" + DLM + "active";
-
-    //Pattern used to check if name contains any characters except letters, digits and "-" "."
-    private static final Pattern namePattern = Pattern.compile("[^a-zA-Z0-9-.\s]");
 
     /**
      * Initiates an armyFileHandler.
@@ -199,7 +198,7 @@ public class ArmyFileHandler {
             String nameOfArmy = scanner.nextLine().trim().replace("\n", "").replace("\r", "");
 
             //Calls namePattern with a matcher on nameOfArmy and checks it for illegal characters
-            if(namePattern.matcher(nameOfArmy).find()){
+            if(NAME_PATTERN.matcher(nameOfArmy).find()){
                 throw new IOException("Name of army contains illegal characters");
             }
             army = new Army(nameOfArmy);
@@ -223,13 +222,15 @@ public class ArmyFileHandler {
                 }
                 //Army cannot exceed 500 units
                 if(army.getArmySize() < 500){
+                    UnitType unitType = null;
                     switch (type) {
-                        case "InfantryUnit" -> army.add(new InfantryUnit(name, health, attack, armor));
-                        case "RangedUnit" -> army.add(new RangedUnit(name, health, attack, armor));
-                        case "CommanderUnit" -> army.add(new CommanderUnit(name, health, attack, armor));
-                        case "CavalryUnit" -> army.add(new CavalryUnit(name, health, attack, armor));
+                        case "InfantryUnit" -> unitType = UnitType.INFANTRY;
+                        case "RangedUnit" -> unitType = UnitType.RANGED;
+                        case "CommanderUnit" -> unitType = UnitType.COMMANDER;
+                        case "CavalryUnit" -> unitType = UnitType.CAVALRY;
                         default -> throw new IOException("File contains incorrect values and could not be read");
                     }
+                    army.add(UnitFactory.getUnit(unitType,name, health, attack, armor));
                 }
             }
         }
@@ -245,7 +246,7 @@ public class ArmyFileHandler {
      * @throws IOException if failed to write to file
      */
     public void writeArmyToFile(Army army) throws IOException{
-        if(namePattern.matcher(army.getName()).find()){
+        if(NAME_PATTERN.matcher(army.getName()).find()){
             throw new IOException("Name of army contains illegal characters");
         }
         try(FileWriter fileWriter = new FileWriter(getFilePath(army.getName()))) {

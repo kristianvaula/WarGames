@@ -46,7 +46,7 @@ public class SimulateBattleController implements Initializable {
     private final HashMap<String,Map> maps = new HashMap<>();
 
     //Constant that sets delay time in simulation
-    private static final int SIMULATION_DELAY_MILLIS = 200;
+    private static final int SIMULATION_DELAY_MILLIS = 250;
     //Constants for the maps we want to include
     private static final String[] MAP_NAMES = {"Mixed Terrain","Forest","Hill","Plains"};
     //Default Selected Map

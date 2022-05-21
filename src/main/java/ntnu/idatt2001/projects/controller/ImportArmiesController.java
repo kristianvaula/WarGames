@@ -208,7 +208,7 @@ public class ImportArmiesController implements Initializable {
             radioButton2.setText(battle.getArmyTwo().getName());
             radioToggleGroup.getSelectedToggle().setSelected(false);
         }
-        catch (IllegalArgumentException e){
+        catch (IllegalArgumentException | IllegalStateException e){
             alertUser(Alert.AlertType.WARNING,e.getMessage());
         }
         catch(IOException e ){
