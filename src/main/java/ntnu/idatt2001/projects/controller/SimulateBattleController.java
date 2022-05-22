@@ -72,11 +72,18 @@ public class SimulateBattleController implements Initializable {
     @FXML private Label armyName2;
     @FXML private FlowPane unitFlowPane1;
     @FXML private FlowPane unitFlowPane2;
+    private HashMap<String,Image> icons = new HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Sets up the battle data
         setUpBattleData();
+
+        //Import icons
+        icons.put(UnitType.INFANTRY.toString(),new Image(String.valueOf(getClass().getResource("../view/icons/infantry.png"))));
+        icons.put(UnitType.RANGED.toString(),new Image(String.valueOf(getClass().getResource("../view/icons/archer.png"))));
+        icons.put(UnitType.CAVALRY.toString(),new Image(String.valueOf(getClass().getResource("../view/icons/knight.png"))));
+        icons.put(UnitType.COMMANDER.toString(),new Image(String.valueOf(getClass().getResource("../view/icons/commander.png"))));
 
         try{
             //Imports maps from directory
@@ -242,34 +249,29 @@ public class SimulateBattleController implements Initializable {
      * Displays a unit as a tiny VBox with an
      * icon representing its unit type and a health
      * bar showing how much of the initial health is
-     * left.
+     * left. First we try getting the pre-made fxml
+     * VBox and using controller to set values. If this
+     * fails we make it manually by setting each value
+     * and style. We want to use pre made to enhance
+     * performance.
      */
     @FXML
     private VBox generateUnitVBox(Unit unit){
-        VBox unitContainer = new VBox();
+        VBox unitContainer = null;
+        //We can get the icon for either of the methods.
+        unitContainer = new VBox();
         unitContainer.setPrefHeight(45);
         unitContainer.setMinHeight(45);
-        unitContainer.setPrefHeight(30);
+        unitContainer.setPrefWidth(30);
         unitContainer.setStyle("-fx-border-color:#191308;-fx-background-color: #191308");
         //UNIT ICON
         VBox imagePane = new VBox();
         imagePane.setStyle("fx-background-color: gray;");
         imagePane.setPrefHeight(35);
-        imagePane.setPrefHeight(30);
+        imagePane.setPrefWidth(30);
 
         ImageView image = new ImageView();
-        if(unit.getType().equals(UnitType.INFANTRY.toString())){
-            image.setImage(new Image(String.valueOf(getClass().getResource("../view/icons/infantry.png"))));
-        }
-        else if(unit.getType().equals(UnitType.RANGED.toString())){
-            image.setImage(new Image(String.valueOf(getClass().getResource("../view/icons/archer.png"))));
-        }
-        else if(unit.getType().equals(UnitType.CAVALRY.toString())){
-            image.setImage(new Image(String.valueOf(getClass().getResource("../view/icons/knight.png"))));
-        }
-        else if(unit.getType().equals(UnitType.COMMANDER.toString())){
-            image.setImage(new Image(String.valueOf(getClass().getResource("../view/icons/commander.png"))));
-        }
+        image.setImage(icons.get(unit.getType()));
         image.setFitHeight(35);
         image.setFitWidth(30);
         imagePane.getChildren().add(image);
@@ -283,6 +285,7 @@ public class SimulateBattleController implements Initializable {
         //ADD TO UNIT CONTAINER
         unitContainer.getChildren().add(imagePane);
         unitContainer.getChildren().add(healthPane);
+
         return unitContainer;
     }
 
