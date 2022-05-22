@@ -164,6 +164,69 @@ public class ImportArmiesController implements Initializable {
         selectedArmyTable.setItems(unitsObservable);
     }
 
+
+    /**
+     * Replaces an army with one the user has
+     * selected. Which army is replaced is decided
+     * using the radio buttons next to the "Replace"
+     * button.
+     */
+    @FXML
+    private void newArmy(){
+        armyFileHandler = new ArmyFileHandler();
+
+        try{
+            //Else if neither radio buttons are chosen throw exception
+            if(radioToggleGroup.getSelectedToggle()== null){
+                throw new IllegalStateException("Please select which existing army to replace.");
+            }
+
+            if(radioToggleGroup.getSelectedToggle().equals(radioButton1)){
+                selectedArmy = new Army("ArmyOne");
+            }
+            //Else if radioButton2 is chosen we change armyTwo
+            else if(radioToggleGroup.getSelectedToggle().equals(radioButton2)){
+                selectedArmy = new Army("ArmyTwo");
+            }
+            replaceSelectedArmy();
+            displaySelectedArmy();
+        }
+
+        catch (IllegalArgumentException | IllegalStateException e){
+            alertUser(Alert.AlertType.WARNING,e.getMessage());
+        }
+    }
+
+    /**
+     * Deletes an army from the savefiles.
+     * Takes name of selected army and calls
+     * file handler delete army save file method.
+     */
+    @FXML
+    private void deleteArmy(){
+        armyFileHandler = new ArmyFileHandler();
+
+        try{
+            if(selectedArmy == null){
+                throw new IllegalStateException("New army must be imported before deleting.");
+            }
+
+            String armyName = selectedArmy.getName();
+            if(armyName.equals(battle.getArmyOne().getName()) || armyName.equals(battle.getArmyTwo().getName())){
+                throw new IllegalStateException("You cannot delete an active army. Import a different army before deleting.");
+            }
+            armyFileHandler.deleteArmySaveFile(armyName);
+            alertUser(Alert.AlertType.CONFIRMATION,"Deletion successfully");
+            displayArmyList();
+        }
+        catch (IllegalArgumentException | IllegalStateException e){
+            alertUser(Alert.AlertType.WARNING,e.getMessage());
+        }
+        catch (IOException e){
+            alertUser(Alert.AlertType.ERROR,e.getMessage());
+        }
+    }
+
     /**
      * Replaces an army with one the user has
      * selected. Which army is replaced is decided
@@ -187,10 +250,16 @@ public class ImportArmiesController implements Initializable {
             Army armyTwo = battle.getArmyTwo();
             //If radioButton1 is chosen we change armyOne
             if(radioToggleGroup.getSelectedToggle().equals(radioButton1)){
+                if(selectedArmy.getName().equals(battle.getArmyTwo().getName())){
+                    throw new IllegalStateException("You cannot select the same army twice.");
+                }
                 armyOne = selectedArmy;
             }
             //Else if radioButton2 is chosen we change armyTwo
             else if(radioToggleGroup.getSelectedToggle().equals(radioButton2)){
+                if(selectedArmy.getName().equals(battle.getArmyOne().getName())){
+                    throw new IllegalStateException("You cannot select the same army twice.");
+                }
                 armyTwo = selectedArmy;
             }
 
