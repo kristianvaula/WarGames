@@ -36,7 +36,7 @@ public class Map {
      */
     public Map(Terrain[][] terrain,int depth, int width) throws IllegalArgumentException{
         //Check that the terrain matches the map size
-        if(terrain.length != depth || terrain[new Random().nextInt(depth)-1].length != width){
+        if(terrain.length != depth || terrain[new Random().nextInt(depth-1)].length != width){
             throw new IllegalArgumentException("Terrain is missing data");
         }
         this.depth = depth;
