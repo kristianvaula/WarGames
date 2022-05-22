@@ -46,6 +46,7 @@ public class EditArmiesController implements Initializable {
     @FXML private TextField attackInput;
     @FXML private TextField healthInput;
     @FXML private TextField armorInput;
+    @FXML private TextField quantityInput;
 
     //Army table
     @FXML private TableView<Unit> unitDisplayTable;
@@ -61,6 +62,7 @@ public class EditArmiesController implements Initializable {
     @FXML private RadioButton radioButton2;
     @FXML private Label unitCountOutput;
     private ToggleGroup radioToggleGroup;
+    private boolean performanceWarning = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -107,6 +109,8 @@ public class EditArmiesController implements Initializable {
         healthColumn.setCellValueFactory(new PropertyValueFactory<>("health"));
         armorColumn.setCellValueFactory(new PropertyValueFactory<>("armor"));
 
+        //Set quantity to 1 by default
+        quantityInput.setText("1");
         //setRowFactory to get the selected item if we press on it
         //If double click we load the unit fields into the add unit
         //inputs to easily create more
@@ -124,6 +128,7 @@ public class EditArmiesController implements Initializable {
                     attackInput.setText(String.valueOf(selectedUnit.getAttack()));
                     healthInput.setText(String.valueOf(selectedUnit.getHealth()));
                     armorInput.setText(String.valueOf(selectedUnit.getArmor()));
+                    quantityInput.setText("1");
                 }
             });
             return row;
@@ -173,22 +178,48 @@ public class EditArmiesController implements Initializable {
                     throw new IllegalArgumentException("Please enter health value for unit");
                 } else if (armorInput.getText().isBlank()) {
                     throw new IllegalArgumentException("Please enter armor value for unit");
+                } else if (quantityInput.getText().isBlank()) {
+                    throw new IllegalArgumentException("Please unit quantity");
                 }
+
                 //Check that values are numbers above zero
-                int attack = Integer.parseInt(attackInput.getText());
-                int health = Integer.parseInt(healthInput.getText());
-                int armor = Integer.parseInt(armorInput.getText());
-                if (attack <= 1 || health <= 1 || armor <= 1) {
-                    throw new IllegalArgumentException("Attack, health and armor values must be a positive number");
+                int attack,health,armor,quantity;
+                try{
+                    attack = Integer.parseInt(attackInput.getText());
+                    health = Integer.parseInt(healthInput.getText());
+                    armor = Integer.parseInt(armorInput.getText());
+                    quantity = Integer.parseInt(quantityInput.getText());
                 }
+                catch (NumberFormatException e){
+                    e.printStackTrace();
+                    throw new IllegalArgumentException("Attack, health, armor and quantity must be a positive number");
+                }
+
+                if (attack < 1 || health < 1 || armor < 1 || quantity < 1){
+                    System.out.println(attack + " " + health + " " +armor + " " +quantity + " ");
+                    throw new IllegalArgumentException("Attack, health, armor and quantity must be a positive number");
+                }
+                //Check maximum values
                 else if(attack > 99 || health > 99 || armor > 99){
                     alertUser(Alert.AlertType.WARNING,"Maximum value of unit stats are 99." +
-                            " You can still add units with higher values, but they will automatically be decreased.");
+                            " Unit values higher than this will automatically be decreased.");
                 }
-                //Gets type
+                //Check for maximum capacity
+                else if(quantity + selectedArmy.getArmySize() >= 500){
+                    quantity = 500 - selectedArmy.getArmySize();
+                    alertUser(Alert.AlertType.WARNING,"Maximum army capacity of 500 reached.");
+                }
+                //Warn about load performance
+                if(selectedArmy.getArmySize() < 250 && quantity + selectedArmy.getArmySize() >= 250 && !performanceWarning){
+                    alertUser(Alert.AlertType.INFORMATION, "Adding more than 250 units might affect simulation load time.");
+                    performanceWarning = true;
+                }
+                //Get units
                 for (UnitType type : UnitType.values()) {
                     if (typeInput.getValue().equals(type.toString())) {
-                        selectedArmy.add(UnitFactory.getUnit(type, nameInput.getText(), health, attack, armor));
+                        List<Unit> unitsToAdd = UnitFactory.getMultipleUnits(type, nameInput.getText(), health, attack, armor,quantity);
+                        if(unitsToAdd != null) selectedArmy.addAll(unitsToAdd);
+                        else alertUser(Alert.AlertType.ERROR,"There was an error adding units, please try again");
                     }
                 }
                 displayUnits();
