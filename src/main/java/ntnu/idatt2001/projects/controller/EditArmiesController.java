@@ -276,8 +276,12 @@ public class EditArmiesController implements Initializable {
             armyFileHandler = new ArmyFileHandler();
             try {
                 //Change selected army name if changed
-                if(!armyNameInput.getText().equals(selectedArmy.getName())){
-                    selectedArmy.setName(armyNameInput.getText());
+                String armyName = armyNameInput.getText();
+                if(!armyName.equals(selectedArmy.getName())){
+                    if(armyName.equals(battle.getArmyOne().getName()) || armyName.equals(battle.getArmyTwo().getName())){
+                        throw new IllegalArgumentException("Two armies cannot have the same name");
+                    }
+                    selectedArmy.setName(armyName);
                 }
                 //Save army
                 armyFileHandler.setDefaultDirectory();

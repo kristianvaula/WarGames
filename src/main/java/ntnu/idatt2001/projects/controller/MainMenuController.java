@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -164,6 +165,10 @@ public class MainMenuController implements Initializable {
     @FXML
     private void loadSimulateBattle(ActionEvent event) throws IOException {
         try {
+            if(!battle.getArmyOne().hasUnits() || !battle.getArmyTwo().hasUnits() ){
+                throw new IllegalStateException("Armies must contain units before simulation can start");
+            }
+
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/SimulateBattle.fxml"));
             Parent root = fxmlLoader.load();
@@ -173,9 +178,13 @@ public class MainMenuController implements Initializable {
             window.setResizable(false);
             window.show();
 
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             throw e;
+        }
+        catch (IllegalStateException e){
+            alertUser(Alert.AlertType.WARNING,e.getMessage());
         }
     }
 
@@ -225,5 +234,17 @@ public class MainMenuController implements Initializable {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    /**
+     * Generic alert method
+     * @param alertType the type of alert we give
+     * @param message message for user
+     */
+    @FXML
+    private void alertUser(Alert.AlertType alertType, String message){
+        Alert alert = new Alert(alertType);
+        alert.setContentText(message);
+        alert.show();
     }
 }
