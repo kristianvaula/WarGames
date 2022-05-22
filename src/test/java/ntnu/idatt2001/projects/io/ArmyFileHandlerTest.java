@@ -191,6 +191,24 @@ public class ArmyFileHandlerTest {
     @Nested
     @DisplayName("Other methods")
     public class methodTesting {
+        @Test
+        @DisplayName("Deleting army works")
+        public void deletingArmyWorks(){
+            String armyName = "armyNameExample";
+            Army testArmy = new Army(armyName);
+
+            try {
+                armyFileHandler.writeArmyToFile(testArmy);
+                assertTrue(armyFileHandler.armyFileExists(armyFileHandler.getFilePath(armyName)));
+
+                armyFileHandler.deleteArmySaveFile(armyName);
+            } catch (IOException e) {
+                e.printStackTrace();
+                fail();
+            }
+
+            assertFalse(armyFileHandler.armyFileExists(armyFileHandler.getFilePath(armyName)));
+        }
 
         @Test
         @DisplayName("getFilePath() gets correct file path")

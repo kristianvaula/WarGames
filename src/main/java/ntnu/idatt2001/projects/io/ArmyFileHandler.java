@@ -179,6 +179,23 @@ public class ArmyFileHandler {
     }
 
     /**
+     * Deletes an army.
+     * Uses delete File delete if
+     * file exists
+     *
+     * @param armyName Name of army we are deleting
+     * @throws IOException if deletion fails or army file does not exist
+     */
+    public void deleteArmySaveFile(String armyName) throws IOException{
+        if(!armyFileExists(getFilePath(armyName))){
+            throw new IOException("There were no records of " + armyName + ". Please try again");
+        }
+        if(!new File(getFilePath(armyName)).delete()){
+            throw new IOException("There was an error deleting " + armyName + ". Please try again");
+        }
+    }
+
+    /**
      * Reads and returns an army from a csv text file.
      * Takes in the army file as parameter, reads it and
      * returns it as an army object.
