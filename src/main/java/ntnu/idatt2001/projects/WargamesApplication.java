@@ -2,13 +2,11 @@ package ntnu.idatt2001.projects;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -18,12 +16,9 @@ public class WargamesApplication extends Application{
     @Override
     public void start(Stage primaryStage) throws IOException {
         //Add event handler to close button so that we are sure everything closes
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent e) {
-                Platform.exit();
-                System.exit(0);
-            }
+        primaryStage.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(0);
         });
         
         try {
@@ -37,7 +32,7 @@ public class WargamesApplication extends Application{
             primaryStage.show();
 
         } catch (IOException e) {
-            System.out.println(e.getCause());
+            e.printStackTrace();
             throw e;
         }
     }

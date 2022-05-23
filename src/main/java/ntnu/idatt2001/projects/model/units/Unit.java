@@ -149,7 +149,7 @@ public abstract class Unit implements Comparable<Unit>{
 
     /**
      * Sets the unit armor value.
-     * Cannot be less than zereo or
+     * Cannot be less than zero or
      * more than 99.
      *
      * @param armor The armor value

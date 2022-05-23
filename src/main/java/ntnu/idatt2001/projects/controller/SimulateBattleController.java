@@ -72,7 +72,7 @@ public class SimulateBattleController implements Initializable {
     @FXML private Label armyName2;
     @FXML private FlowPane unitFlowPane1;
     @FXML private FlowPane unitFlowPane2;
-    private HashMap<String,Image> icons = new HashMap<>();
+    private final HashMap<String,Image> icons = new HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -257,9 +257,8 @@ public class SimulateBattleController implements Initializable {
      */
     @FXML
     private VBox generateUnitVBox(Unit unit){
-        VBox unitContainer = null;
         //We can get the icon for either of the methods.
-        unitContainer = new VBox();
+        VBox unitContainer = new VBox();
         unitContainer.setPrefHeight(45);
         unitContainer.setMinHeight(45);
         unitContainer.setPrefWidth(30);

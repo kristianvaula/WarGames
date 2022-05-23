@@ -171,7 +171,9 @@ public class ArmyFileHandler {
         File[] files = new File(fileDirectory).listFiles();
         if(files!=null) { //some JVMs return null for empty dirs
             for(File file: files) {
-                file.delete();
+                if(!file.delete()){
+                    throw new IOException("Failed to delete file " + file.getName());
+                }
             }
         }
         writeArmyToFile(activeArmies.get(0));
@@ -239,7 +241,7 @@ public class ArmyFileHandler {
                 }
                 //Army cannot exceed 500 units
                 if(army.getArmySize() < 500){
-                    UnitType unitType = null;
+                    UnitType unitType;
                     switch (type) {
                         case "InfantryUnit" -> unitType = UnitType.INFANTRY;
                         case "RangedUnit" -> unitType = UnitType.RANGED;

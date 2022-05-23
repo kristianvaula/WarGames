@@ -291,7 +291,7 @@ public class EditArmiesController implements Initializable {
                 List<Army> armies = new ArrayList<>(Arrays.asList(battle.getArmyOne(), battle.getArmyTwo()));
                 armyFileHandler.setActiveArmies(armies);
 
-                //Change radiobuttons text
+                //Change radio buttons text
                 radioButton1.setText(armies.get(0).getName());
                 radioButton2.setText(armies.get(1).getName());
 

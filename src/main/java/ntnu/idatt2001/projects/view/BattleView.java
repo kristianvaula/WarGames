@@ -29,7 +29,7 @@ import java.util.HashMap;
  */
 public class BattleView extends JFrame {
     //Instance of local class mapView
-    private MapView mapView;
+    private final MapView mapView;
 
     //Hashmaps for linking colors to armies
     private final HashMap<String,Color> ARMY_COLORS = new HashMap<>();
