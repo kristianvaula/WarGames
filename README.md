@@ -15,3 +15,4 @@ For my part I had an early idea of the aesthetic and workflow of the application
 
 ![Simulate Page](https://github.com/kristianvaula/WarGames/blob/master/simulate2.png)
 
+Run: Maven -> clean install javafx:run
